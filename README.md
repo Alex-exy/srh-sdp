@@ -18,7 +18,7 @@ https://xmind.works/share/SNgxsFmI?xid=rHME6Tnn
 ## Technology Stack
 * Java
 * Swing
-* PostgreSQl
+* PostgreSQL
 
 ## System Architecture
 
