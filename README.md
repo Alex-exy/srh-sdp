@@ -6,7 +6,7 @@ SRH Software Development Practice Module
 Student and faculty can borrow books with different limits & durations. Each book will have different ID. Also, each book
 of the same name and same author (but different number of copies) will have different ID. Entry of all the book will be
 done, who borrows that book and when and also duration. Detail of fine (when the book is not returned on time) is also
-stored. Books are acquired thru either purchase, donation or on-loan (with a set time period). Certain books may have
+stored. Books are acquired through either purchase, donation or on-loan (with a set time period). Certain books may have
 restrictions on if they can be removed from the library in which case its borrowing duration may be less than a day but
 multiple reservations may be made at one time. Think of any university library. 
 
@@ -19,14 +19,15 @@ https://xmind.works/share/SNgxsFmI?xid=rHME6Tnn
 * Java
 * Swing
 * PostgreSQL
+* Maven
+* Junit
 
 ## System Architecture
 
 ## ER Models
 
 ## Team Development Conventions
-1. Code Style
-https://google.github.io/styleguide/javaguide.html
+1. Code Style: [Google Java code style](https://google.github.io/styleguide/javaguide.html).
+There is also a corresponding [IntelliJ Plugin](https://plugins.jetbrains.com/plugin/8527-google-java-format) available.
 
-2. Git Commit Message Convertion
-https://www.conventionalcommits.org/en/v1.0.0/
+2. [Git Commit Message Convention](https://www.conventionalcommits.org/en/v1.0.0/).
