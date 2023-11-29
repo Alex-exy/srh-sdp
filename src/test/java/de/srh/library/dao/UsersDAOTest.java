@@ -5,9 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import de.srh.library.entity.User;
 import de.srh.library.util.PasswordUtils;
 import java.util.UUID;
-
 import org.junit.jupiter.api.*;
-
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class UsersDAOTest {

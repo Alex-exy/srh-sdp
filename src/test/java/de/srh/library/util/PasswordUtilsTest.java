@@ -8,19 +8,19 @@ class PasswordUtilsTest {
 
   @Test
   void hashPw() {
-      String password = "123456";
-      String hashedPassword = PasswordUtils.hashPw(password);
+    String password = "123456";
+    String hashedPassword = PasswordUtils.hashPw(password);
 
-      assertNotNull(hashedPassword);
-      assertNotEquals(password, hashedPassword);
+    assertNotNull(hashedPassword);
+    assertNotEquals(password, hashedPassword);
   }
 
   @Test
   void checkPw() {
-      String password = "123456";
-      String hashedPassword = PasswordUtils.hashPw(password);
+    String password = "123456";
+    String hashedPassword = PasswordUtils.hashPw(password);
 
-      assertTrue(PasswordUtils.checkPw(password, hashedPassword));
-      assertFalse(PasswordUtils.checkPw("1234567", hashedPassword));
+    assertTrue(PasswordUtils.checkPw(password, hashedPassword));
+    assertFalse(PasswordUtils.checkPw("1234567", hashedPassword));
   }
 }
