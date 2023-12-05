@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="de.srh.library.ui.login.LoginWindow">
-  <grid id="27dc6" binding="LoginWindow" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+  <grid id="27dc6" binding="loginWindow" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="20" y="20" width="791" height="436"/>
+      <xy x="20" y="20" width="1040" height="820"/>
     </constraints>
     <properties>
       <foreground color="-14605013"/>
@@ -20,12 +20,12 @@
         </properties>
         <border type="none"/>
         <children>
-          <component id="e3ffe" class="javax.swing.JLabel" binding="Title">
+          <component id="e3ffe" class="javax.swing.JLabel" binding="pageTitle">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <font name="Roboto" size="22" style="1"/>
+              <font name="Roboto" size="24" style="1"/>
               <text value="Heidelberg Library System"/>
             </properties>
           </component>
@@ -49,12 +49,12 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="717e5" class="javax.swing.JLabel" binding="LoginTitle">
+              <component id="717e5" class="javax.swing.JLabel" binding="loginTitle">
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <font name="Roboto" size="22"/>
+                  <font name="Roboto" size="22" style="1"/>
                   <text value="- - - Login - - -"/>
                 </properties>
               </component>
@@ -83,6 +83,7 @@
                   </grid>
                 </constraints>
                 <properties>
+                  <font name="Roboto Thin" size="10" style="0"/>
                   <text value="password"/>
                   <toolTipText value="Enter Password"/>
                 </properties>
@@ -95,6 +96,7 @@
                   </grid>
                 </constraints>
                 <properties>
+                  <font name="Roboto Thin" size="10" style="0"/>
                   <text value="username"/>
                   <toolTipText value="Enter Username"/>
                 </properties>
@@ -105,6 +107,7 @@
                 </constraints>
                 <properties>
                   <font name="Roboto" size="16" style="0"/>
+                  <hideActionText value="true"/>
                   <text value="Login"/>
                 </properties>
               </component>
@@ -125,7 +128,7 @@
                   </grid>
                 </constraints>
                 <properties>
-                  <font name="Roboto" size="14" style="0"/>
+                  <font name="Roboto" size="16" style="0"/>
                   <text value="Create New Account"/>
                 </properties>
               </component>
@@ -136,18 +139,18 @@
                   </grid>
                 </constraints>
                 <properties>
-                  <font name="Roboto" size="14" style="0"/>
+                  <font name="Roboto" size="16" style="0"/>
                   <text value="Reset Password&#10;"/>
                 </properties>
               </component>
-              <component id="722c9" class="javax.swing.JButton" binding="FAQButton" default-binding="true">
+              <component id="722c9" class="javax.swing.JButton" binding="faqButton">
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false">
                     <minimum-size width="200" height="10"/>
                   </grid>
                 </constraints>
                 <properties>
-                  <font name="Roboto" size="14" style="0"/>
+                  <font name="Roboto" size="16" style="0"/>
                   <text value="FAQ"/>
                 </properties>
               </component>
