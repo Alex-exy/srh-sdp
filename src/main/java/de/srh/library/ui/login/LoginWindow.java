@@ -28,11 +28,11 @@ public class LoginWindow extends JFrame {
         //Create login window
         setAutoRequestFocus(false);
         setContentPane(loginWindow);
-        setTitle("Please Login");
+        setTitle("Login Page");
         setSize(1280, 720);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
-        logger.info("Starting login window ...");
+        logger.info("Opening login window ...");
 
         //Example user data for testing
         String testID = "asdf";
@@ -79,10 +79,10 @@ public class LoginWindow extends JFrame {
                     dispose();
                     MainMenu mainMenu = new MainMenu();
                     mainMenu.setVisible(true);
-                    // ! Save user login information (Save logged-in user)
+                    // ! Save user login information (Temporary save logged-in user until log out in main menu window)
 
                 } else {
-                    JOptionPane.showMessageDialog(null, "Wrong password or username! \nPlease try again!");
+                    JOptionPane.showMessageDialog(null, "Wrong password or username. \nPlease try again!");
                 }
             }
         });

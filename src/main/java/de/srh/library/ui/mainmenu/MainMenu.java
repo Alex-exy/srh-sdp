@@ -1,5 +1,6 @@
 package de.srh.library.ui.mainmenu;
 
+import de.srh.library.ui.infossettings.InfosSettings;
 import de.srh.library.ui.login.LoginWindow;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +28,7 @@ public class MainMenu extends JFrame {
         setSize(1280, 720);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
-        logger.info("Opening main menu ...");
+        logger.info("Opening main menu window ...");
         browseLibraries.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -37,19 +38,19 @@ public class MainMenu extends JFrame {
         borrowReturn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
             }
         });
         infosSettings.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                dispose();
+                InfosSettings infosSettings = new InfosSettings();
+                infosSettings.setVisible(true);
             }
         });
         logOut.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
                 dispose();
                 LoginWindow loginWindow = new LoginWindow();
                 loginWindow.setVisible(true);
