@@ -2,6 +2,7 @@ package de.srh.library.ui.infossettings;
 
 import de.srh.library.ui.login.LoginWindow;
 import de.srh.library.ui.mainmenu.MainMenu;
+import de.srh.library.ui.resetpassword.ResetPassword;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -73,7 +74,8 @@ public class InfosSettings extends JFrame {
         resetPasswordButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //Open change password window POPUP, able to close without closing the programm
+                ResetPassword resetPassword= new ResetPassword();
+                resetPassword.setVisible(true);
             }
         });
         returnButton.addActionListener(new ActionListener() {

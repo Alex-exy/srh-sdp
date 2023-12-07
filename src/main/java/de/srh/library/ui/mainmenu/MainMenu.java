@@ -1,13 +1,17 @@
 package de.srh.library.ui.mainmenu;
 
+import de.srh.library.ui.borrowreturn.BorrowReturn;
 import de.srh.library.ui.infossettings.InfosSettings;
 import de.srh.library.ui.login.LoginWindow;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.geom.Rectangle2D;
+import java.awt.geom.RoundRectangle2D;
 import java.util.Arrays;
 
 public class MainMenu extends JFrame {
@@ -25,7 +29,7 @@ public class MainMenu extends JFrame {
         setContentPane(mainMenuWindow);
         setTitle("Main Menu");
         setSize(1280, 720);
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setVisible(true);
         logger.info("Opening main menu window ...");
         browseLibraries.addActionListener(new ActionListener() {
@@ -37,6 +41,9 @@ public class MainMenu extends JFrame {
         borrowReturn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                dispose();
+                BorrowReturn borrowReturn = new BorrowReturn();
+                borrowReturn.setVisible(true);
             }
         });
         infosSettings.addActionListener(new ActionListener() {

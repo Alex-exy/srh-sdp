@@ -12,6 +12,7 @@ import de.srh.library.service.login.Login;
 import de.srh.library.service.login.LoginImpl;
 import de.srh.library.ui.createnewuser.CreateNewUser;
 import de.srh.library.ui.mainmenu.MainMenu;
+import de.srh.library.ui.resetpassword.ResetPassword;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -62,7 +63,6 @@ public class LoginWindow extends JFrame {
             }
         });
 
-
         //Login button action
         loginButton.addActionListener(new ActionListener() {
             @Override
@@ -101,7 +101,8 @@ public class LoginWindow extends JFrame {
         resetPasswordButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("ResetPassword Pressed");
+                ResetPassword resetPassword = new ResetPassword();
+                resetPassword.setVisible(true);
             }
         });
         faqButton.addActionListener(new ActionListener() {

@@ -45,7 +45,9 @@
             <properties>
               <background color="-6562817"/>
             </properties>
-            <border type="none"/>
+            <border type="line">
+              <color color="-16777216"/>
+            </border>
             <children>
               <grid id="cfd5c" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                 <margin top="10" left="10" bottom="10" right="10"/>
@@ -154,7 +156,9 @@
               <background color="-6562817"/>
               <foreground color="-6562817"/>
             </properties>
-            <border type="none"/>
+            <border type="line">
+              <color color="-16777216"/>
+            </border>
             <children>
               <grid id="8b22a" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                 <margin top="10" left="10" bottom="10" right="10"/>
@@ -200,10 +204,10 @@
                           <component id="e1bc5" class="javax.swing.JList" binding="borrowedBookList">
                             <constraints/>
                             <properties>
-                              <background color="-5524801"/>
+                              <background color="-3353375"/>
                               <font name="Roboto" size="14" style="0"/>
                               <foreground color="-16777216"/>
-                              <selectionBackground color="-7367005"/>
+                              <selectionBackground color="-5524801"/>
                             </properties>
                           </component>
                         </children>
@@ -223,7 +227,9 @@
               <background color="-6562817"/>
               <foreground color="-6562817"/>
             </properties>
-            <border type="none"/>
+            <border type="line">
+              <color color="-16777216"/>
+            </border>
             <children>
               <grid id="2be31" layout-manager="GridLayoutManager" row-count="4" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                 <margin top="10" left="10" bottom="10" right="10"/>
