@@ -257,7 +257,7 @@
                     </constraints>
                     <properties>
                       <font name="Roboto" size="14" style="0"/>
-                      <text value="book id"/>
+                      <text value="- Book ID -"/>
                     </properties>
                   </component>
                   <component id="d2053" class="javax.swing.JButton" binding="borrowButton" default-binding="true">
@@ -302,7 +302,7 @@
               </grid>
             </constraints>
             <properties>
-              <font name="Roboto" size="10" style="0"/>
+              <font name="Roboto" size="12" style="0"/>
               <horizontalTextPosition value="0"/>
               <text value="Go Back"/>
             </properties>

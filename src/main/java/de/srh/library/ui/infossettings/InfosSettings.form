@@ -198,7 +198,7 @@
               </grid>
             </constraints>
             <properties>
-              <font name="Roboto" size="10" style="0"/>
+              <font name="Roboto" size="12" style="0"/>
               <horizontalTextPosition value="0"/>
               <text value="Go Back"/>
             </properties>

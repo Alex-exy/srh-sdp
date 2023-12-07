@@ -65,8 +65,7 @@ public class BorrowReturn extends JFrame {
 
                 if (borrowedBooks.contains(borrowBookID.getText().toString())) {
                     JOptionPane.showMessageDialog(null, "Book already borrowed!");
-                }
-                else {
+                } else {
                     enteredBookID = borrowBookID.getText().toString();
                     borrowedBooks.add(enteredBookID);
                     updateBorrowedBookList();
@@ -96,6 +95,7 @@ public class BorrowReturn extends JFrame {
             }
         });
     }
+
     public void updateBorrowedBookList() {
         //Get database data from current borrowed books from the user
         borrowedBookList.setListData(borrowedBooks.toArray());

@@ -21,7 +21,6 @@ public class MainMenu extends JFrame {
 
     public MainMenu() {
 
-        //Create main window
         setAutoRequestFocus(false);
         setContentPane(mainMenuWindow);
         setTitle("Main Menu");

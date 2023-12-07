@@ -10,6 +10,7 @@ import de.srh.library.dto.ApiResponse;
 import de.srh.library.dto.ApiResponseCode;
 import de.srh.library.service.login.Login;
 import de.srh.library.service.login.LoginImpl;
+import de.srh.library.ui.createnewuser.CreateNewUser;
 import de.srh.library.ui.mainmenu.MainMenu;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,7 +32,6 @@ public class LoginWindow extends JFrame {
 
     public LoginWindow() throws HeadlessException {
 
-        //Create login window
         setAutoRequestFocus(false);
         setContentPane(loginWindow);
         setTitle("Login Page");
@@ -48,8 +48,7 @@ public class LoginWindow extends JFrame {
             public void focusGained(FocusEvent e) {
                 if (usernameField.getText().equals("username")) {
                     usernameField.setText("");
-                }
-                else {
+                } else {
                 }
             }
         });
@@ -58,8 +57,7 @@ public class LoginWindow extends JFrame {
             public void focusGained(FocusEvent e) {
                 if (Objects.equals(String.valueOf(passwordField.getPassword()), "password")) {
                     passwordField.setText("");
-                }
-                else {
+                } else {
                 }
             }
         });
@@ -75,7 +73,7 @@ public class LoginWindow extends JFrame {
                 char[] password = passwordField.getPassword();
 
                 ApiResponse loginResponse = loginService.checkPassword(username, String.valueOf(password));
-                switch (ApiResponseCode.getByCode(loginResponse.getCode())){
+                switch (ApiResponseCode.getByCode(loginResponse.getCode())) {
                     case SUCCESS:
                         JOptionPane.showMessageDialog(null, "Welcome user " + username);
 
@@ -92,11 +90,12 @@ public class LoginWindow extends JFrame {
             }
         });
 
-        //Change to associated new menus
         createNewAccountButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("CreateNewAccount Pressed");
+                dispose();
+                CreateNewUser createNewUser = new CreateNewUser();
+                createNewUser.setVisible(true);
             }
         });
         resetPasswordButton.addActionListener(new ActionListener() {
@@ -113,11 +112,12 @@ public class LoginWindow extends JFrame {
         });
     }
 
-    //Testing only:
+    //Testing only
     public static boolean checkLoginData() {
         //Check entered user data with database
         return false;
     }
+
     public static void main(String[] args) {
         new LoginWindow();
     }

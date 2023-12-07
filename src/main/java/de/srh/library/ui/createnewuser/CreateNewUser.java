@@ -1,13 +1,13 @@
 package de.srh.library.ui.createnewuser;
 
 import de.srh.library.ui.login.LoginWindow;
-import de.srh.library.ui.mainmenu.MainMenu;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 
 public class CreateNewUser extends JFrame {
 
@@ -28,7 +28,6 @@ public class CreateNewUser extends JFrame {
     private JLabel labelRole;
     private JButton buttonContinue;
 
-
     public CreateNewUser() {
 
         selectRole.addItem("Nothing Selected");
@@ -36,7 +35,6 @@ public class CreateNewUser extends JFrame {
         selectRole.addItem("Stadtbücherei Heidelberg");
         selectRole.addItem("Hauptbibliothek Heidelberg");
 
-        //Create new user window
         setAutoRequestFocus(false);
         setContentPane(createNewUser);
         setTitle("New User Registration");
@@ -55,8 +53,7 @@ public class CreateNewUser extends JFrame {
         });
     }
 
-    //Test Main
-    public static void main(String[] args){
+    public static void main(String[] args) {
         CreateNewUser createNewUser = new CreateNewUser();
     }
 }

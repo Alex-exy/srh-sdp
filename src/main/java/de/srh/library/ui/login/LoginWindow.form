@@ -83,7 +83,7 @@
                   </grid>
                 </constraints>
                 <properties>
-                  <font name="Roboto" size="10" style="0"/>
+                  <font name="Roboto" size="12" style="0"/>
                   <text value="password"/>
                   <toolTipText value="Enter Password"/>
                 </properties>
@@ -96,7 +96,7 @@
                   </grid>
                 </constraints>
                 <properties>
-                  <font name="Roboto" size="10" style="0"/>
+                  <font name="Roboto" size="12" style="0"/>
                   <text value="username"/>
                   <toolTipText value="Enter Username"/>
                 </properties>
