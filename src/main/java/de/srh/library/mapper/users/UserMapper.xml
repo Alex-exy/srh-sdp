@@ -1,0 +1,23 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="de.srh.library.mapper.users.UserMapper">
+    <select id="getUserByEmail" resultType="de.srh.library.entity.User">
+        select * from users where email = #{email}
+    </select>
+
+    <insert id="insertUser" parameterType="de.srh.library.entity.User">
+        <selectKey keyProperty="userId" resultType="java.lang.Long" order="AFTER">
+            select currval(pg_get_serial_sequence('users', 'user_id')) AS user_id
+        </selectKey>
+
+        insert INTO users (
+        email, user_role, first_name, family_name, address,
+        user_status, password_hash
+        )
+        VALUES (
+        #{email}, #{userRole}, #{firstName}, #{familyName}, #{address},
+        #{userStatus}, #{passwordHash}
+        )
+    </insert>
+</mapper>
