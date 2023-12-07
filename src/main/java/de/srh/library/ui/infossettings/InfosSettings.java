@@ -8,13 +8,11 @@ import org.slf4j.LoggerFactory;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 
 public class InfosSettings extends JFrame {
 
     private static final Logger logger = LoggerFactory.getLogger(LoginWindow.class);
-    private JPanel infosSettings;
+    private JPanel infosSettingsWindow;
     private JLabel pageTitle;
     private JTextField userEmail;
     private JTextField userAddress;
@@ -38,7 +36,7 @@ public class InfosSettings extends JFrame {
     public InfosSettings() {
 
         setAutoRequestFocus(false);
-        setContentPane(infosSettings);
+        setContentPane(infosSettingsWindow);
         setTitle("Infos and Settings");
         setSize(1280, 720);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
