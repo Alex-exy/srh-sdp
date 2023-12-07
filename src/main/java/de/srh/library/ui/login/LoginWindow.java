@@ -6,6 +6,10 @@ import java.util.Arrays;
 import java.util.Objects;
 import javax.swing.*;
 
+import de.srh.library.dto.ApiResponse;
+import de.srh.library.dto.ApiResponseCode;
+import de.srh.library.service.login.Login;
+import de.srh.library.service.login.LoginImpl;
 import de.srh.library.ui.mainmenu.MainMenu;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +27,8 @@ public class LoginWindow extends JFrame {
     private JButton resetPasswordButton;
     private JButton faqButton;
 
+    private Login loginService;
+
     public LoginWindow() throws HeadlessException {
 
         //Create login window
@@ -34,9 +40,7 @@ public class LoginWindow extends JFrame {
         setVisible(true);
         logger.info("Opening login window ...");
 
-        //Example user data for testing
-        String testID = "asdf";
-        String testPassword = "asdf";
+        loginService = LoginImpl.createInstance();
 
         //Clear field description of focus
         usernameField.addFocusListener(new FocusAdapter() {
@@ -52,7 +56,7 @@ public class LoginWindow extends JFrame {
         passwordField.addFocusListener(new FocusAdapter() {
             @Override
             public void focusGained(FocusEvent e) {
-                if (Objects.equals(Arrays.toString(passwordField.getPassword()), "password")) {
+                if (Objects.equals(String.valueOf(passwordField.getPassword()), "password")) {
                     passwordField.setText("");
                 }
                 else {
@@ -69,20 +73,21 @@ public class LoginWindow extends JFrame {
                 String username = usernameField.getText();
                 System.out.println(username);
                 char[] password = passwordField.getPassword();
-                System.out.println(password);
 
-                // ! Missing: Check for valid user data (Database?)
-                if (username.equals(testID) && Arrays.equals(password, testPassword.toCharArray())) {
-                    JOptionPane.showMessageDialog(null, "Welcome user " + username);
+                ApiResponse loginResponse = loginService.checkPassword(username, String.valueOf(password));
+                switch (ApiResponseCode.getByCode(loginResponse.getCode())){
+                    case SUCCESS:
+                        JOptionPane.showMessageDialog(null, "Welcome user " + username);
 
-                    //Close login window create new main menu
-                    dispose();
-                    MainMenu mainMenu = new MainMenu();
-                    mainMenu.setVisible(true);
-                    // ! Save user login information (Temporary save logged-in user until log out in main menu window)
-
-                } else {
-                    JOptionPane.showMessageDialog(null, "Wrong password or username. \nPlease try again!");
+                        //Close login window create new main menu
+                        dispose();
+                        MainMenu mainMenu = new MainMenu();
+                        mainMenu.setVisible(true);
+                        // ! Save user login information (Temporary save logged-in user until log out in main menu window)
+                        break;
+                    default:
+                        JOptionPane.showMessageDialog(null, loginResponse.getCode() + ": " + loginResponse.getMessage());
+                        break;
                 }
             }
         });
@@ -114,7 +119,7 @@ public class LoginWindow extends JFrame {
         return false;
     }
     public static void main(String[] args) {
-        LoginWindow loginWindow = new LoginWindow();
+        new LoginWindow();
     }
 }
 
