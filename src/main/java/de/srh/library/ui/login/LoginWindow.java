@@ -2,14 +2,13 @@ package de.srh.library.ui.login;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.util.Arrays;
 import java.util.Objects;
 import javax.swing.*;
 
-import de.srh.library.dto.ApiResponse;
-import de.srh.library.dto.ApiResponseCode;
-import de.srh.library.service.login.Login;
-import de.srh.library.service.login.LoginImpl;
+import de.srh.library.entity.dto.ApiResponse;
+import de.srh.library.entity.dto.ApiResponseCode;
+import de.srh.library.service.user.UserService;
+import de.srh.library.service.user.UserServiceImpl;
 import de.srh.library.ui.createnewuser.CreateNewUser;
 import de.srh.library.ui.mainmenu.MainMenu;
 import de.srh.library.ui.resetpassword.ResetPassword;
@@ -29,7 +28,7 @@ public class LoginWindow extends JFrame {
     private JButton resetPasswordButton;
     private JButton faqButton;
 
-    private Login loginService;
+    private UserService userService;
 
     public LoginWindow() throws HeadlessException {
 
@@ -41,7 +40,7 @@ public class LoginWindow extends JFrame {
         setVisible(true);
         logger.info("Opening login window ...");
 
-        loginService = LoginImpl.createInstance();
+        userService = UserServiceImpl.createInstance();
 
         //Clear field description of focus
         usernameField.addFocusListener(new FocusAdapter() {
@@ -72,7 +71,7 @@ public class LoginWindow extends JFrame {
                 System.out.println(username);
                 char[] password = passwordField.getPassword();
 
-                ApiResponse loginResponse = loginService.checkPassword(username, String.valueOf(password));
+                ApiResponse loginResponse = userService.checkPassword(username, String.valueOf(password));
                 switch (ApiResponseCode.getByCode(loginResponse.getCode())) {
                     case SUCCESS:
                         JOptionPane.showMessageDialog(null, "Welcome user " + username);
@@ -111,12 +110,6 @@ public class LoginWindow extends JFrame {
                 System.out.println("faqButton Pressed");
             }
         });
-    }
-
-    //Testing only
-    public static boolean checkLoginData() {
-        //Check entered user data with database
-        return false;
     }
 
     public static void main(String[] args) {

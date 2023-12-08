@@ -69,7 +69,7 @@
             </properties>
             <border type="line"/>
             <children>
-              <component id="2ceb9" class="javax.swing.JTextField" binding="enterSchoolID">
+              <component id="5317f" class="javax.swing.JComboBox" binding="selectSchool">
                 <constraints>
                   <grid row="9" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                     <preferred-size width="150" height="-1"/>
@@ -78,7 +78,6 @@
                 </constraints>
                 <properties>
                   <font name="Roboto" size="14" style="0"/>
-                  <text value="- School ID -"/>
                 </properties>
               </component>
               <component id="81e7a" class="javax.swing.JTextField" binding="enterAddress">
@@ -181,7 +180,7 @@
                 </constraints>
                 <properties>
                   <font name="Roboto" size="16" style="0"/>
-                  <text value="Enter School ID"/>
+                  <text value="Select School"/>
                 </properties>
               </component>
               <component id="d6bce" class="javax.swing.JLabel" binding="labelRole">

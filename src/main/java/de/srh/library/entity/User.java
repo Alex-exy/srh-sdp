@@ -13,6 +13,7 @@ public class User {
   private String passwordHash;
   private Date registrationDate;
   private Date updateTime;
+  private Integer schoolId;
 
   public Long getUserId() {
     return userId;
@@ -94,32 +95,28 @@ public class User {
     this.updateTime = updateTime;
   }
 
+  public Integer getSchoolId() {
+    return schoolId;
+  }
+
+  public void setSchoolId(Integer schoolId) {
+    this.schoolId = schoolId;
+  }
+
   @Override
   public String toString() {
-    return getClass().getSimpleName()
-        + " ["
-        + "Hash = "
-        + hashCode()
-        + ", userId="
-        + userId
-        + ", email="
-        + email
-        + ", userRole="
-        + userRole
-        + ", firstName="
-        + firstName
-        + ", familyName="
-        + familyName
-        + ", address="
-        + address
-        + ", userStatus="
-        + userStatus
-        + ", passwordHash="
-        + passwordHash
-        + ", registrationDate="
-        + registrationDate
-        + ", updateTime="
-        + updateTime
-        + "]";
+    return "User{" +
+            "userId=" + userId +
+            ", email='" + email + '\'' +
+            ", userRole='" + userRole + '\'' +
+            ", firstName='" + firstName + '\'' +
+            ", familyName='" + familyName + '\'' +
+            ", address='" + address + '\'' +
+            ", userStatus='" + userStatus + '\'' +
+            ", passwordHash='" + passwordHash + '\'' +
+            ", registrationDate=" + registrationDate +
+            ", updateTime=" + updateTime +
+            ", schoolId=" + schoolId +
+            '}';
   }
 }
