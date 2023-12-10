@@ -10,6 +10,7 @@ import de.srh.library.entity.dto.ApiResponseCode;
 import de.srh.library.service.user.UserService;
 import de.srh.library.service.user.UserServiceImpl;
 import de.srh.library.ui.createnewuser.CreateNewUser;
+import de.srh.library.ui.faq.FAQ;
 import de.srh.library.ui.mainmenu.MainMenu;
 import de.srh.library.ui.resetpassword.ResetPassword;
 import org.slf4j.Logger;
@@ -107,7 +108,8 @@ public class LoginWindow extends JFrame {
         faqButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("faqButton Pressed");
+                FAQ faq = new FAQ();
+                faq.setVisible(true);
             }
         });
     }

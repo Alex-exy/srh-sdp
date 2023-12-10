@@ -24,6 +24,7 @@
             </constraints>
             <properties>
               <font name="Roboto" size="24" style="1"/>
+              <labelFor value="3809f"/>
               <text value="- - - Borrow and Return - - -"/>
             </properties>
           </component>
