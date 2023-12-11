@@ -10,9 +10,9 @@ import de.srh.library.entity.dto.ApiResponseCode;
 import de.srh.library.service.user.UserService;
 import de.srh.library.service.user.UserServiceImpl;
 import de.srh.library.ui.createnewuser.CreateNewUser;
+import de.srh.library.ui.enteremail.EnterEmail;
 import de.srh.library.ui.faq.FAQ;
 import de.srh.library.ui.mainmenu.MainMenu;
-import de.srh.library.ui.resetpassword.ResetPassword;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,8 +26,9 @@ public class LoginWindow extends JFrame {
     private JLabel loginTitle;
     private JButton loginButton;
     private JButton createNewAccountButton;
-    private JButton resetPasswordButton;
+    private JButton forgotPasswordButton;
     private JButton faqButton;
+    private JButton loginAdminButton;
 
     private UserService userService;
 
@@ -98,11 +99,11 @@ public class LoginWindow extends JFrame {
                 createNewUser.setVisible(true);
             }
         });
-        resetPasswordButton.addActionListener(new ActionListener() {
+        forgotPasswordButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ResetPassword resetPassword = new ResetPassword();
-                resetPassword.setVisible(true);
+                EnterEmail  enterEmail = new EnterEmail();
+                enterEmail.setVisible(true);
             }
         });
         faqButton.addActionListener(new ActionListener() {
