@@ -36,6 +36,10 @@ public class CreateNewUser extends JFrame {
     private JLabel labelRole;
     private JButton buttonContinue;
     private JComboBox selectSchool;
+    private JTextField enterPassword;
+    private JLabel lableEnterPassword;
+    private JLabel lableReenterPassword;
+    private JTextField reenterPassword;
 
     private UserService userService;
     private Map<String, Integer> schoolsMap;
