@@ -5,8 +5,8 @@ import java.awt.event.*;
 import java.util.Objects;
 import javax.swing.*;
 
-import de.srh.library.entity.dto.ApiResponse;
-import de.srh.library.entity.dto.ApiResponseCode;
+import de.srh.library.dto.ApiResponse;
+import de.srh.library.dto.ApiResponseCode;
 import de.srh.library.service.user.UserService;
 import de.srh.library.service.user.UserServiceImpl;
 import de.srh.library.ui.createnewuser.CreateNewUser;

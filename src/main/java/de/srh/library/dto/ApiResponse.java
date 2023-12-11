@@ -1,4 +1,4 @@
-package de.srh.library.entity.dto;
+package de.srh.library.dto;
 
 public class ApiResponse<T> {
     private int code;

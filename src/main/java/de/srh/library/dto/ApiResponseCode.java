@@ -1,4 +1,4 @@
-package de.srh.library.entity.dto;
+package de.srh.library.dto;
 
 public enum ApiResponseCode {
   SUCCESS(0, "Success"),
