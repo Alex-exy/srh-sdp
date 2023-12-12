@@ -2,26 +2,25 @@ package de.srh.library.ui.infossettings;
 
 import de.srh.library.ui.login.LoginWindow;
 import de.srh.library.ui.mainmenu.MainMenu;
+import de.srh.library.ui.resetpassword.ResetPassword;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 
 public class InfosSettings extends JFrame {
 
     private static final Logger logger = LoggerFactory.getLogger(LoginWindow.class);
-    private JPanel infosSettings;
+    private JPanel infosSettingsWindow;
     private JLabel pageTitle;
     private JTextField userEmail;
     private JTextField userAddress;
     private JTextField userID;
     private JTextField userRole;
     private JButton changeInformationButton;
-    private JButton resetPasswordButton;
+    private JButton changePasswordButton;
     private JLabel emailLabel;
     private JLabel addressLabel;
     private JLabel userIDLabel;
@@ -38,7 +37,7 @@ public class InfosSettings extends JFrame {
     public InfosSettings() {
 
         setAutoRequestFocus(false);
-        setContentPane(infosSettings);
+        setContentPane(infosSettingsWindow);
         setTitle("Infos and Settings");
         setSize(1280, 720);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -54,8 +53,6 @@ public class InfosSettings extends JFrame {
                 safeButton.setEnabled(true);
                 userEmail.setEditable(true);
                 userAddress.setEditable(true);
-                userID.setEditable(true);
-                userRole.setEditable(true);
             }
         });
         safeButton.addActionListener(new ActionListener() {
@@ -63,19 +60,17 @@ public class InfosSettings extends JFrame {
             public void actionPerformed(ActionEvent safe) {
                 userEmail.setEditable(false);
                 userAddress.setEditable(false);
-                userID.setEditable(false);
-                userRole.setEditable(false);
                 safeButton.setEnabled(false);
-
                 //Save new user data, overwrite old user data from database
                 // ! Check for valid data input !
                 updateUserInformation(userEmail.getText(), userAddress.getText(), Long.parseLong(userID.getText()), userRole.getText());
             }
         });
-        resetPasswordButton.addActionListener(new ActionListener() {
+        changePasswordButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //Open change password window POPUP, able to close without closing the programm
+                ResetPassword resetPassword = new ResetPassword();
+                resetPassword.setVisible(true);
             }
         });
         returnButton.addActionListener(new ActionListener() {
@@ -93,14 +88,18 @@ public class InfosSettings extends JFrame {
         userAddress.setText(currentUserAddress);
         userID.setText(String.valueOf(currentUserNumber));
         userRole.setText(currentUserRole);
-    };
+    }
+
+    ;
 
     public void updateUserInformation(String newUserEmail, String newUserAddress, long newUserNumber, String newUserRole) {
         userEmail.setText(newUserEmail);
         userAddress.setText(newUserAddress);
         userID.setText(String.valueOf(newUserNumber));
         userRole.setText(newUserRole);
-    };
+    }
+
+    ;
 
     //Testing Only
     public static void main(String[] args) {

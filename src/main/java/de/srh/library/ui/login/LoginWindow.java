@@ -2,15 +2,19 @@ package de.srh.library.ui.login;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.util.Arrays;
 import java.util.Objects;
 import javax.swing.*;
 
 import de.srh.library.dto.ApiResponse;
 import de.srh.library.dto.ApiResponseCode;
-import de.srh.library.service.login.Login;
-import de.srh.library.service.login.LoginImpl;
+import de.srh.library.dto.Global;
+import de.srh.library.service.user.UserService;
+import de.srh.library.service.user.UserServiceImpl;
+import de.srh.library.ui.createnewuser.CreateNewUser;
+import de.srh.library.ui.enteremail.EnterEmail;
+import de.srh.library.ui.faq.FAQ;
 import de.srh.library.ui.mainmenu.MainMenu;
+import de.srh.library.ui.managementmenu.ManagementMenu;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,14 +28,14 @@ public class LoginWindow extends JFrame {
     private JLabel loginTitle;
     private JButton loginButton;
     private JButton createNewAccountButton;
-    private JButton resetPasswordButton;
+    private JButton forgotPasswordButton;
     private JButton faqButton;
+    private JButton loginAdminButton;
 
-    private Login loginService;
+    private UserService userService;
 
     public LoginWindow() throws HeadlessException {
 
-        //Create login window
         setAutoRequestFocus(false);
         setContentPane(loginWindow);
         setTitle("Login Page");
@@ -40,7 +44,7 @@ public class LoginWindow extends JFrame {
         setVisible(true);
         logger.info("Opening login window ...");
 
-        loginService = LoginImpl.createInstance();
+        userService = UserServiceImpl.createInstance();
 
         //Clear field description of focus
         usernameField.addFocusListener(new FocusAdapter() {
@@ -48,8 +52,7 @@ public class LoginWindow extends JFrame {
             public void focusGained(FocusEvent e) {
                 if (usernameField.getText().equals("username")) {
                     usernameField.setText("");
-                }
-                else {
+                } else {
                 }
             }
         });
@@ -58,24 +61,25 @@ public class LoginWindow extends JFrame {
             public void focusGained(FocusEvent e) {
                 if (Objects.equals(String.valueOf(passwordField.getPassword()), "password")) {
                     passwordField.setText("");
-                }
-                else {
+                } else {
                 }
             }
         });
-
 
         //Login button action
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                Global.isAdmin = false;
+                logger.info("LOGGED IN AS: USER");
+                System.out.println("IS: " + Global.isAdmin);
 
                 String username = usernameField.getText();
                 System.out.println(username);
                 char[] password = passwordField.getPassword();
 
-                ApiResponse loginResponse = loginService.checkPassword(username, String.valueOf(password));
-                switch (ApiResponseCode.getByCode(loginResponse.getCode())){
+                ApiResponse loginResponse = userService.checkPassword(username, String.valueOf(password));
+                switch (ApiResponseCode.getByCode(loginResponse.getCode())) {
                     case SUCCESS:
                         JOptionPane.showMessageDialog(null, "Welcome user " + username);
 
@@ -91,32 +95,41 @@ public class LoginWindow extends JFrame {
                 }
             }
         });
+        loginAdminButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Global.isAdmin = true;
+                logger.info("LOGGED IN AS: ADMINISTRATOR");
+                System.out.println("IS: " + Global.isAdmin);
 
-        //Change to associated new menus
+                //Check database for admin login data
+                dispose();
+                ManagementMenu managementMenu = new ManagementMenu();
+                managementMenu.setVisible(true);
+            }
+        });
         createNewAccountButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("CreateNewAccount Pressed");
+                dispose();
+                CreateNewUser createNewUser = new CreateNewUser();
+                createNewUser.setVisible(true);
             }
         });
-        resetPasswordButton.addActionListener(new ActionListener() {
+        forgotPasswordButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("ResetPassword Pressed");
+                EnterEmail enterEmail = new EnterEmail();
+                enterEmail.setVisible(true);
             }
         });
         faqButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("faqButton Pressed");
+                FAQ faq = new FAQ();
+                faq.setVisible(true);
             }
         });
-    }
-
-    //Testing only:
-    public static boolean checkLoginData() {
-        //Check entered user data with database
-        return false;
     }
     public static void main(String[] args) {
         new LoginWindow();

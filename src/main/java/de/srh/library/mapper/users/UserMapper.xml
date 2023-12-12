@@ -17,11 +17,11 @@
 
         insert INTO users (
         email, user_role, first_name, family_name, address,
-        user_status, password_hash
+        user_status, password_hash, school_id
         )
         VALUES (
         #{email}, #{userRole}, #{firstName}, #{familyName}, #{address},
-        #{userStatus}, #{passwordHash}
+        #{userStatus}, #{passwordHash}, #{schoolId}
         )
     </insert>
 </mapper>
