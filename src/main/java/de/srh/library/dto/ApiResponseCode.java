@@ -1,10 +1,10 @@
 package de.srh.library.dto;
 
 public enum ApiResponseCode {
-  SUCCESS(0, "Success"),
-  ERROR_USER_NOT_EXIT(1, "Email has not been registered"),
-  ERROR_USER_PASSWORD_WRONG(2, "Password is wrong"),
-  ERROR_EMAIL_ALREADY_USED(3, "Email already used"),
+  SUCCESS(1000, "Success"),
+  ERROR_USER_NOT_EXIT(1001, "Email has not been registered"),
+  ERROR_USER_PASSWORD_WRONG(1002, "Password is wrong"),
+  ERROR_EMAIL_ALREADY_USED(1003, "Email already in use"),
 
   ERROR_DATABASE(9998, "Database operation exception"),
 
