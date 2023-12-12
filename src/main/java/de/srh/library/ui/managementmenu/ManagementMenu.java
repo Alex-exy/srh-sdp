@@ -1,7 +1,5 @@
-package de.srh.library.ui.mainmenu;
+package de.srh.library.ui.managementmenu;
 
-import de.srh.library.ui.borrowreturn.BorrowReturn;
-import de.srh.library.ui.infossettings.InfosSettings;
 import de.srh.library.ui.login.LoginWindow;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,45 +8,40 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-
-public class MainMenu extends JFrame {
+public class ManagementMenu extends JFrame {
     private static final Logger logger = LoggerFactory.getLogger(LoginWindow.class);
+    private JPanel managementWindow;
     private JLabel pageTitle;
-    private JButton infosSettings;
-    private JButton borrowReturn;
-    private JButton browseLibraries;
-    private JPanel mainMenuWindow;
     private JButton logOut;
+    private JButton userManagementButton;
+    private JButton bookManagementButton;
+    private JButton borrowAndReturnManagementButton;
 
-    public MainMenu() {
+    public ManagementMenu() {
 
         setAutoRequestFocus(false);
-        setContentPane(mainMenuWindow);
-        setTitle("Main Menu");
+        setContentPane(managementWindow);
+        setTitle("Management Menu");
         setSize(1280, 720);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setVisible(true);
-        logger.info("Opening main menu window ...");
-        browseLibraries.addActionListener(new ActionListener() {
+        logger.info("Opening manage menu window ...");
+        userManagementButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
             }
         });
-        borrowReturn.addActionListener(new ActionListener() {
+        bookManagementButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                dispose();
-                BorrowReturn borrowReturn = new BorrowReturn();
-                borrowReturn.setVisible(true);
+
             }
         });
-        infosSettings.addActionListener(new ActionListener() {
+        borrowAndReturnManagementButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                dispose();
-                InfosSettings infosSettings = new InfosSettings();
-                infosSettings.setVisible(true);
+
             }
         });
         logOut.addActionListener(new ActionListener() {
@@ -61,8 +54,7 @@ public class MainMenu extends JFrame {
         });
     }
 
-    //Testing only
     public static void main(String[] args) {
-        MainMenu mainMenu = new MainMenu();
+        ManagementMenu managementMenu = new ManagementMenu();
     }
 }

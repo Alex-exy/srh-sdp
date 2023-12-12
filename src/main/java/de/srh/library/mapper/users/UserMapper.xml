@@ -2,6 +2,10 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="de.srh.library.mapper.users.UserMapper">
+
+    <select id="getUserById" resultType="de.srh.library.entity.User">
+        select * from users where user_id = #{userId}
+    </select>
     <select id="getUserByEmail" resultType="de.srh.library.entity.User">
         select * from users where email = #{email}
     </select>

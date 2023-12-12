@@ -20,7 +20,7 @@ public class InfosSettings extends JFrame {
     private JTextField userID;
     private JTextField userRole;
     private JButton changeInformationButton;
-    private JButton resetPasswordButton;
+    private JButton changePasswordButton;
     private JLabel emailLabel;
     private JLabel addressLabel;
     private JLabel userIDLabel;
@@ -53,8 +53,6 @@ public class InfosSettings extends JFrame {
                 safeButton.setEnabled(true);
                 userEmail.setEditable(true);
                 userAddress.setEditable(true);
-                userID.setEditable(true);
-                userRole.setEditable(true);
             }
         });
         safeButton.addActionListener(new ActionListener() {
@@ -62,19 +60,16 @@ public class InfosSettings extends JFrame {
             public void actionPerformed(ActionEvent safe) {
                 userEmail.setEditable(false);
                 userAddress.setEditable(false);
-                userID.setEditable(false);
-                userRole.setEditable(false);
                 safeButton.setEnabled(false);
-
                 //Save new user data, overwrite old user data from database
                 // ! Check for valid data input !
                 updateUserInformation(userEmail.getText(), userAddress.getText(), Long.parseLong(userID.getText()), userRole.getText());
             }
         });
-        resetPasswordButton.addActionListener(new ActionListener() {
+        changePasswordButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ResetPassword resetPassword= new ResetPassword();
+                ResetPassword resetPassword = new ResetPassword();
                 resetPassword.setVisible(true);
             }
         });
@@ -93,14 +88,18 @@ public class InfosSettings extends JFrame {
         userAddress.setText(currentUserAddress);
         userID.setText(String.valueOf(currentUserNumber));
         userRole.setText(currentUserRole);
-    };
+    }
+
+    ;
 
     public void updateUserInformation(String newUserEmail, String newUserAddress, long newUserNumber, String newUserRole) {
         userEmail.setText(newUserEmail);
         userAddress.setText(newUserAddress);
         userID.setText(String.valueOf(newUserNumber));
         userRole.setText(newUserRole);
-    };
+    }
+
+    ;
 
     //Testing Only
     public static void main(String[] args) {

@@ -1,11 +1,20 @@
 package de.srh.library.dao;
 
+import de.srh.library.entity.Book;
 import de.srh.library.entity.User;
 import de.srh.library.mapper.MyBatisSqlSessionFactory;
 import de.srh.library.mapper.users.UserMapper;
 import org.apache.ibatis.session.SqlSession;
 
 public class UserDao {
+
+    public User getUserById(Long userId) {
+        try (SqlSession session = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession()) {
+            UserMapper mapper = session.getMapper(UserMapper.class);
+            return mapper.getUserById(userId);
+
+        }
+    }
   public User getUserByEmail(String email){
       try (SqlSession session = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession()) {
         UserMapper mapper = session.getMapper(UserMapper.class);

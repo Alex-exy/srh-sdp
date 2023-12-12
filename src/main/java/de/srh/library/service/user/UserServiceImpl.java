@@ -2,8 +2,8 @@ package de.srh.library.service.user;
 
 import de.srh.library.dao.SchoolDao;
 import de.srh.library.dao.UserDao;
-import de.srh.library.entity.dto.ApiResponse;
-import de.srh.library.entity.dto.ApiResponseCode;
+import de.srh.library.dto.ApiResponse;
+import de.srh.library.dto.ApiResponseCode;
 import de.srh.library.entity.User;
 import de.srh.library.util.PasswordUtils;
 import org.slf4j.Logger;

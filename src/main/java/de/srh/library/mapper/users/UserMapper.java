@@ -6,4 +6,6 @@ public interface UserMapper {
     User getUserByEmail(String email);
 
     int insertUser(User user);
+
+    User getUserById(Long userId);
 }

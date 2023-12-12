@@ -55,7 +55,7 @@
                   <text value="Change information"/>
                 </properties>
               </component>
-              <component id="e432d" class="javax.swing.JButton" binding="resetPasswordButton">
+              <component id="e432d" class="javax.swing.JButton" binding="changePasswordButton">
                 <constraints>
                   <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false">
                     <minimum-size width="200" height="-1"/>
@@ -64,7 +64,7 @@
                 <properties>
                   <font name="Roboto" size="16" style="0"/>
                   <horizontalTextPosition value="0"/>
-                  <text value="Reset Password"/>
+                  <text value="Change Password"/>
                 </properties>
               </component>
               <component id="8a0b8" class="javax.swing.JButton" binding="safeButton">
