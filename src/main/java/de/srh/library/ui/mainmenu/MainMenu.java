@@ -1,5 +1,6 @@
 package de.srh.library.ui.mainmenu;
 
+import de.srh.library.dto.Global;
 import de.srh.library.ui.borrowreturn.BorrowReturn;
 import de.srh.library.ui.infossettings.InfosSettings;
 import de.srh.library.ui.login.LoginWindow;
@@ -54,6 +55,7 @@ public class MainMenu extends JFrame {
         logOut.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                Global.userLogOut();
                 dispose();
                 LoginWindow loginWindow = new LoginWindow();
                 loginWindow.setVisible(true);

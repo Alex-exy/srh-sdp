@@ -70,17 +70,14 @@ public class LoginWindow extends JFrame {
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Global.isAdmin = false;
-                logger.info("LOGGED IN AS: USER");
-                System.out.println("IS: " + Global.isAdmin);
-
                 String username = usernameField.getText();
                 System.out.println(username);
                 char[] password = passwordField.getPassword();
 
-                ApiResponse loginResponse = userService.checkPassword(username, String.valueOf(password));
+                ApiResponse<Long> loginResponse = userService.checkPassword(username, String.valueOf(password));
                 switch (ApiResponseCode.getByCode(loginResponse.getCode())) {
                     case SUCCESS:
+                        Global.userLogin(false, loginResponse.getData());
                         JOptionPane.showMessageDialog(null, "Welcome user " + username);
 
                         //Close login window create new main menu
