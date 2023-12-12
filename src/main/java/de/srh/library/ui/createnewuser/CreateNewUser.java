@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.HashMap;
 import java.util.Map;
 
 public class CreateNewUser extends JFrame {
@@ -51,7 +50,7 @@ public class CreateNewUser extends JFrame {
         }
 
         userService = UserServiceImpl.createInstance();
-        ApiResponse<HashMap<String, Integer>> apiResponse = userService.getAllSchools();
+        ApiResponse<Map<String, Integer>> apiResponse = userService.getAllSchools();
         if (ApiResponseCode.SUCCESS.getCode() == apiResponse.getCode()){
             schoolsMap = apiResponse.getData();
             schoolsMap.forEach((s, i) -> selectSchool.addItem(s));

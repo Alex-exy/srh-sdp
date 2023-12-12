@@ -77,7 +77,7 @@
                   <enabled value="false"/>
                   <font name="Roboto" size="16" style="0"/>
                   <horizontalTextPosition value="0"/>
-                  <text value="Safe Changes"/>
+                  <text value="Save Changes"/>
                 </properties>
               </component>
             </children>
