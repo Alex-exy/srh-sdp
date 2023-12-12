@@ -21,6 +21,8 @@
     </environments>
     <mappers>
         <mapper class="de.srh.library.mapper.users.UserMapper"/>
+        <mapper class="de.srh.library.mapper.books.BookMapper"/>
+        <mapper class="de.srh.library.mapper.genre.GenreMapper"/>
         <mapper class="de.srh.library.mapper.schools.SchoolMapper"/>
     </mappers>
 </configuration>

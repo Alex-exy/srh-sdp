@@ -32,14 +32,20 @@ class UsersDaoTest {
   @Test
   @Order(1)
   void insertUser(){
-    assertTrue(initUser.getUserId() == null);
+      assertNull(initUser.getUserId());
     assertEquals(1, usersDao.insertUser(initUser));
-    assertTrue(initUser.getUserId() != null);
+      assertNotNull(initUser.getUserId());
   }
   @Test
   @Order(2)
   void getUserByEmail() {
-    assertTrue(usersDao.getUserByEmail(initUser.getEmail()).getAddress().equals("Heidelberg"));
+      assertEquals("Heidelberg", usersDao.getUserByEmail(initUser.getEmail()).getAddress());
+  }
+
+  @Test
+  @Order(3)
+  void getUserById(){
+    System.out.println(usersDao.getUserById(1000L));
   }
 
 }
