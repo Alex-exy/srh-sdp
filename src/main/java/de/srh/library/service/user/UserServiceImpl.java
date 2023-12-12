@@ -30,14 +30,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ApiResponse checkPassword(String username, String password) {
+    public ApiResponse<Long> checkPassword(String username, String password) {
         try{
             User user = userDao.getUserByEmail(username);
             if (user == null){
                 return ApiResponse.error(ApiResponseCode.ERROR_USER_NOT_EXIT);
             }
             if (PasswordUtils.checkPw(password, user.getPasswordHash())){
-                return ApiResponse.success();
+                return ApiResponse.success(user.getUserId());
             }else {
                 return ApiResponse.error(ApiResponseCode.ERROR_USER_PASSWORD_WRONG);
             }
@@ -87,5 +87,20 @@ public class UserServiceImpl implements UserService {
             logger.error("Password update failed.", e);
             return ApiResponse.error(ApiResponseCode.ERROR_DATABASE);
         }
+    }
+
+    @Override
+    public ApiResponse<Integer> updateUserName(String name, Long userId) {
+        return null;
+    }
+
+    @Override
+    public ApiResponse<Integer> updateUserEmail(String email, Long userId) {
+        return null;
+    }
+
+    @Override
+    public ApiResponse<Integer> updateUserAddress(String address, Long userId) {
+        return null;
     }
 }
