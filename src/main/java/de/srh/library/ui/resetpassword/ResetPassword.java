@@ -1,6 +1,11 @@
 package de.srh.library.ui.resetpassword;
 
-import de.srh.library.ui.login.LoginWindow;
+import de.srh.library.dto.ApiResponse;
+import de.srh.library.dto.ApiResponseCode;
+import de.srh.library.entity.User;
+import de.srh.library.service.user.UserService;
+import de.srh.library.service.user.UserServiceImpl;
+import de.srh.library.util.PasswordUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,7 +18,7 @@ import java.util.Arrays;
 
 public class ResetPassword extends JFrame {
 
-    private static final Logger logger = LoggerFactory.getLogger(LoginWindow.class);
+    private static final Logger logger = LoggerFactory.getLogger(ResetPassword.class);
     private JPanel resetPasswordWindow;
     private JLabel pageTitle;
     private JPasswordField newPassword1;
@@ -23,8 +28,7 @@ public class ResetPassword extends JFrame {
     private JLabel description;
     private JButton cancelButton;
 
-    //Testing only
-    private String email = "Valid Email";
+    private UserService userService;
 
     public ResetPassword() {
 
@@ -35,6 +39,7 @@ public class ResetPassword extends JFrame {
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setVisible(true);
         logger.info("Requesting password reset ...");
+        userService = UserServiceImpl.createInstance();
 
         saveButton.addActionListener(new ActionListener() {
             @Override
@@ -48,6 +53,7 @@ public class ResetPassword extends JFrame {
             @Override
             public void focusGained(FocusEvent e) {
                 saveButton.setEnabled(true);
+                emailCheck.setText("");
             }
         });
         cancelButton.addActionListener(new ActionListener() {
@@ -59,20 +65,28 @@ public class ResetPassword extends JFrame {
     }
 
     public boolean checkValidEmail(String email) {
-        //Check for valid Email with database credentials
-        return true;
+        ApiResponse<User> apiResponse = userService.getUserByEmail(email);
+        return apiResponse.getCode() == ApiResponseCode.SUCCESS.getCode()
+                && apiResponse.getData() != null;
     }
 
     public void checkEnteredCredentials() {
-        System.out.println(newPassword1.getPassword());
-        System.out.println(newPassword2.getPassword());
-
-        if (Arrays.equals(newPassword1.getPassword(), newPassword2.getPassword()) && checkValidEmail(email)) {
-            JOptionPane.showMessageDialog(null, "Password successfully reset!");
+        String email = emailCheck.getText();
+        String newPasswordStr1 = String.valueOf(newPassword1.getPassword());
+        String newPasswordStr2 = String.valueOf(newPassword2.getPassword());
+        if (newPasswordStr1.equals(newPasswordStr2) && checkValidEmail(email) ) {
+            updatePassword(PasswordUtils.hashPw(newPasswordStr1),email);
+            JOptionPane.showMessageDialog(null, "Password has been successfully reset!");
             saveButton.setEnabled(false);
         } else {
-            JOptionPane.showMessageDialog(null, "Passwords do not match or Email not registered!");
+            JOptionPane.showMessageDialog(null, "Passwords do not match or Email has not been registered!");
         }
+    }
+
+    public boolean updatePassword(String password, String email){
+     ApiResponse<Integer> apiResponse = userService.updateUserPassword(password,email);
+        return apiResponse.getCode() == ApiResponseCode.SUCCESS.getCode();
+
     }
 
     // Testing only

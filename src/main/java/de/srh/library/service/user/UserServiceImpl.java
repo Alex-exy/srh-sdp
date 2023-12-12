@@ -9,6 +9,8 @@ import de.srh.library.util.PasswordUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Map;
+
 public class UserServiceImpl implements UserService {
 
     Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
@@ -46,7 +48,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ApiResponse getAllSchools() {
+    public ApiResponse<Map<String, Integer>> getAllSchools() {
         try{
             return ApiResponse.success(schoolDao.getAllSchools());
         }catch (Exception e){
@@ -65,4 +67,25 @@ public class UserServiceImpl implements UserService {
       return ApiResponse.error(ApiResponseCode.ERROR_DATABASE);
     }
   }
+
+    @Override
+    public ApiResponse<User> getUserByEmail(String email) {
+        try{
+            return ApiResponse.success(userDao.getUserByEmail(email));
+        }catch (Exception e){
+            logger.error("Query user by email failed.", e);
+            return ApiResponse.error(ApiResponseCode.ERROR_DATABASE);
+        }
+    }
+
+    @Override
+    public ApiResponse<Integer> updateUserPassword(String password,String email) {
+        try{
+            userDao.updateUserPassword(password,email);
+            return ApiResponse.success();
+        }catch (Exception e){
+            logger.error("Password update failed.", e);
+            return ApiResponse.error(ApiResponseCode.ERROR_DATABASE);
+        }
+    }
 }
