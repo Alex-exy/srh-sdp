@@ -1,0 +1,9 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="de.srh.library.mapper.admins.AdminMapper">
+
+    <select id="getAdminPasswordHash" resultType="String">
+        select admin_password_hash from admins where admin_user_name = #{adminUserName}
+    </select>
+</mapper>

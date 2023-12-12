@@ -6,9 +6,12 @@ public final class Global {
 
     public static Long loggedInUserId = 0L;
 
-    public static void userLogin(Boolean isAdmin, Long loggedInUserId){
-        isAdmin = isAdmin;
+    public static void userLogin(Long loggedInUserId){
+        isAdmin = false;
         loggedInUserId = loggedInUserId;
+    }
+    public static void adminLogin(Boolean isAdmin){
+        isAdmin = true;
     }
 
     public static void userLogOut(){

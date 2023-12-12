@@ -88,19 +88,4 @@ public class UserServiceImpl implements UserService {
             return ApiResponse.error(ApiResponseCode.ERROR_DATABASE);
         }
     }
-
-    @Override
-    public ApiResponse<Integer> updateUserName(String name, Long userId) {
-        return null;
-    }
-
-    @Override
-    public ApiResponse<Integer> updateUserEmail(String email, Long userId) {
-        return null;
-    }
-
-    @Override
-    public ApiResponse<Integer> updateUserAddress(String address, Long userId) {
-        return null;
-    }
 }

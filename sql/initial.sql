@@ -41,6 +41,17 @@ values(1000, 'SRH University Heidelberg'),(1001, 'Heidelberg University');
 
 ALTER TABLE users ADD FOREIGN KEY (school_id) REFERENCES schools (school_id) ON UPDATE CASCADE ON DELETE RESTRICT;
 
+CREATE TABLE admins
+(
+    admin_user_name      VARCHAR(64) UNIQUE NOT NULL,
+    admin_password_hash  VARCHAR(64) NOT NULL,
+    create_time          TIMESTAMP   DEFAULT CURRENT_TIMESTAMP,
+    update_time          TIMESTAMP   DEFAULT CURRENT_TIMESTAMP
+);
+
+-- default administrator: admin 123456
+insert into admins(admin_user_name, admin_password_hash)
+values ('admin','$2a$10$EZAvbMiNBodibBxH3i2BRuHcehAngMJ6pbLhP6b5SFAEpIdU/qIZS');
 
 DROP TABLE IF EXISTS borrows;
 
