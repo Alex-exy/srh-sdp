@@ -4,12 +4,15 @@ import static org.junit.jupiter.api.Assertions.*;
 import de.srh.library.entity.Book;
 import org.junit.jupiter.api.*;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.UUID;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class BookDaoTest {
 
     private static BookDao bookDao;
+    private static BorrowsDao borrowsDao;
     private static Book initBook;
 
     private static long bookId;
@@ -17,6 +20,7 @@ class BookDaoTest {
     @BeforeAll
     static void setup() {
         bookDao = new BookDao();
+        borrowsDao = new BorrowsDao();
 
         initBook = new Book();
         initBook.setBookName("Test Book");
@@ -25,7 +29,6 @@ class BookDaoTest {
         initBook.setIsbn("2412415");
         initBook.setPublishDate("22/02/22");
         initBook.setBookAuthor( UUID.randomUUID()+"");
-        initBook.setGenre("Comedy");
         initBook.setPrice("25");
         initBook.setBookDescription("Fun");
         initBook.setLibraryId("2");
@@ -47,7 +50,14 @@ class BookDaoTest {
     }
 
     @Test
+    @Order(3)
     void getBookById() {
-        System.out.println(bookDao.getBookById(42L));
+        System.out.println(bookDao.getBookById(1L));
+
+    }
+    @Test
+    @Order(4)
+    void listOfBorrowedBooks(){
+        System.out.println(borrowsDao.listOfBorrowedBooks('B'));
     }
 }

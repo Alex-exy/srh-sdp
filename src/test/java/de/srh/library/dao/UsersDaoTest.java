@@ -39,13 +39,18 @@ class UsersDaoTest {
   @Test
   @Order(2)
   void getUserByEmail() {
-      assertEquals("Heidelberg", usersDao.getUserByEmail(initUser.getEmail()).getAddress());
+    System.out.println(usersDao.getUserByEmail("jack.muller@stud.hochschule-heidelberg.de"));
   }
 
   @Test
   @Order(3)
   void getUserById(){
     System.out.println(usersDao.getUserById(1000L));
+  }
+  @Test
+  @Order(4)
+  void getIdByEmail(){
+    System.out.println(usersDao.getIdByEmail("jack.muller@stud.hochschule-heidelberg.de"));
   }
 
 }

@@ -74,12 +74,11 @@ CREATE TABLE books
 (
     book_id           BIGSERIAL       PRIMARY KEY,
     book_name          VARCHAR(100)       NOT NULL,
-    subtitles          VARCHAR(50)        NOT NULL,
+    subtitles          VARCHAR(100)        NOT NULL,
     language           VARCHAR(20)        NOT NULL,
     isbn               VARCHAR(20)        NOT NULL,
     publish_date       VARCHAR(20)        NOT NULL,
     book_author        VARCHAR(100)       NOT NULL,
-    genre              VARCHAR(50)        NOT NULL,
     price              VARCHAR(10)        NOT NULL,
     book_description   VARCHAR(200)       NOT NULL,
     addition_date      TIMESTAMP          DEFAULT CURRENT_TIMESTAMP,
@@ -156,3 +155,13 @@ insert into genre(genre_name)values
  ('Travel'),
  ('Young adult'),
  ('True crime');
+
+ALTER SEQUENCE public.genre_genre_id_seq RESTART WITH 100;
+
+DROP TABLE IF EXISTS libraries
+
+CREATE TABLE libraries
+(
+    library_id             SERIAL           PRIMARY KEY,
+    library_name           VARCHAR(64)      UNIQUE NOT NULL
+);

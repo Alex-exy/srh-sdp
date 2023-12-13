@@ -9,5 +9,7 @@ public interface UserMapper {
     int insertUser(User user);
 
     User getUserById(Long userId);
+    Long getIdByEmail(String email);
     void updateUserPassword(@Param("password") String password, @Param("email") String email);
+    int updateUserInfo(@Param("email") String email,@Param("address")  String address, @Param("userId") long userId);
 }
