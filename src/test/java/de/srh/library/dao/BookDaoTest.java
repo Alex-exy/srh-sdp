@@ -31,7 +31,7 @@ class BookDaoTest {
         initBook.setBookAuthor( UUID.randomUUID()+"");
         initBook.setPrice("25");
         initBook.setBookDescription("Fun");
-        initBook.setLibraryId("2");
+        initBook.setLibraryId(2);
         initBook.setDoi("2515AA");
 
     }

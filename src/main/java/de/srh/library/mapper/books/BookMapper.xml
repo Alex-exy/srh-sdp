@@ -9,7 +9,10 @@
     <select id="getBookByAuthor" resultType="de.srh.library.entity.Book">
         select * from books where book_author = #{author}
     </select>
-
+<delete id="removeBook" parameterType="de.srh.library.entity.Book">
+    delete from books
+    where book_id = #{bookId}
+</delete>
 
     <insert id="insertBook" parameterType="de.srh.library.entity.Book">
         <selectKey keyProperty="bookId" resultType="java.lang.Long" order="AFTER">

@@ -12,7 +12,7 @@ public class Book {
     private String bookAuthor;
     private String price;
     private String bookDescription;
-    private String libraryId;
+    private int libraryId;
     private String doi;
     private Date additionDate;
     private Date updateDate;
@@ -108,11 +108,11 @@ public class Book {
         this.updateDate = updateDate;
     }
 
-    public String getLibraryId() {
+    public int getLibraryId() {
         return libraryId;
     }
 
-    public void setLibraryId(String libraryId) {
+    public void setLibraryId(int libraryId) {
         this.libraryId = libraryId;
     }
 

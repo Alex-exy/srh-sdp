@@ -1,5 +1,7 @@
 package de.srh.library.ui.infossettings;
 
+import de.srh.library.dao.UserDao;
+import de.srh.library.dto.Global;
 import de.srh.library.ui.login.LoginWindow;
 import de.srh.library.ui.mainmenu.MainMenu;
 import de.srh.library.ui.resetpassword.ResetPassword;
@@ -25,11 +27,12 @@ public class InfosSettings extends JFrame {
     private JLabel addressLabel;
     private JLabel userIDLabel;
     private JLabel roleLabel;
-    private JButton safeButton;
+    private JButton saveButton;
     private JButton returnButton;
     private JTextField userLastName;
     private JTextField userFirstName;
     private JComboBox userSelectSchool;
+    private long userId = Global.loggedInUserId;
 
     //Testing only
     private String testfirstname = "shiti";
@@ -62,7 +65,7 @@ public class InfosSettings extends JFrame {
         changeInformationButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                safeButton.setEnabled(true);
+                saveButton.setEnabled(true);
                 userFirstName.setEditable(true);
                 userLastName.setEditable(true);
                 userEmail.setEditable(true);
@@ -70,10 +73,10 @@ public class InfosSettings extends JFrame {
                 userSelectSchool.setEnabled(true);
             }
         });
-        safeButton.addActionListener(new ActionListener() {
+        saveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent safe) {
-                safeButton.setEnabled(false);
+                saveButton.setEnabled(false);
                 userFirstName.setEditable(false);
                 userLastName.setEditable(false);
                 userEmail.setEditable(false);
@@ -82,6 +85,7 @@ public class InfosSettings extends JFrame {
                 //Save new user data, overwrite old user data from database
                 // ! Check for valid data input !
                 updateUserInformation(userFirstName.getText(), userLastName.getText(), userEmail.getText(), userAddress.getText(), Long.parseLong(userID.getText()), userRole.getText());
+                updateUserInfo(userFirstName.getText(),userLastName.getText(),userEmail.getText(), userAddress.getText(),userId);
             }
         });
         changePasswordButton.addActionListener(new ActionListener() {
@@ -125,6 +129,14 @@ public class InfosSettings extends JFrame {
         userAddress.setText(newUserAddress);
         userID.setText(String.valueOf(newUserNumber));
         userRole.setText(newUserRole);
+    }
+    public void updateUserInfo(String firstName,String lastName,String email, String address, long userId) {
+        email = userEmail.getText();
+        address = userAddress.getText();
+
+        UserDao userDao = new UserDao();
+        userDao.updateUserInfo(firstName,lastName,email, address, userId);
+
     }
 
     ;

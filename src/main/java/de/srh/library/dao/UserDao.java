@@ -39,10 +39,10 @@ public class UserDao {
         }
     }
 
-    public void updateUserInfo(String email, String address, long userId){
+    public void updateUserInfo(String firstName, String familyName,String email, String address, long userId){
         try (SqlSession session = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession(true)) {
             UserMapper mapper = session.getMapper(UserMapper.class);
-             mapper.updateUserInfo(email,address,userId);
+             mapper.updateUserInfo(firstName,familyName,email,address,userId);
         }
     }
 }

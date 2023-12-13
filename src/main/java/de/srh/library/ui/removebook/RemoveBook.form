@@ -79,7 +79,7 @@
                   <text value="Enter the Book ID from the Book you want to remove:"/>
                 </properties>
               </component>
-              <component id="15c77" class="javax.swing.JTextField" binding="emailCheck">
+              <component id="15c77" class="javax.swing.JTextField" binding="bookId">
                 <constraints>
                   <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="0" fill="0" indent="0" use-parent-layout="false">
                     <minimum-size width="400" height="-1"/>

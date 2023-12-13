@@ -21,7 +21,7 @@
 
     <update id="updateUserInfo" parameterType="de.srh.library.entity.User">
         update users
-        set email = #{email}, address = #{address}
+        set first_name = #{firstName},family_name = #{familyName}, email = #{email}, address = #{address}
         where user_id = #{userId}
     </update>
 
