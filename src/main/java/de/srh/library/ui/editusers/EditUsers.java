@@ -12,7 +12,7 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 
 public class EditUsers extends JFrame {
-    private static final Logger logger = LoggerFactory.getLogger(LoginWindow.class);
+    private static final Logger logger = LoggerFactory.getLogger(EditUsers.class);
     private JPanel editUsersWindow;
     private JLabel pageTitle;
     private JButton goBack;

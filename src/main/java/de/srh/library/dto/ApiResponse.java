@@ -32,4 +32,7 @@ public class ApiResponse<T> {
     public static <T> ApiResponse<T> error(ApiResponseCode code) {
         return new ApiResponse<>(code);
     }
+    public boolean isSuccess() {
+        return ApiResponseCode.SUCCESS.getCode() == code;
+    }
 }
