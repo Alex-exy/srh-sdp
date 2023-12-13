@@ -27,8 +27,14 @@ public class InfosSettings extends JFrame {
     private JLabel roleLabel;
     private JButton safeButton;
     private JButton returnButton;
+    private JTextField userLastName;
+    private JTextField userFirstName;
+    private JTextField userSchoolName;
 
     //Testing only
+    private String testfirstname = "shiti";
+    private String testlastname = "deshi";
+    private String testschoolname = "srh";
     private String testemail = "test.test@gmail.com";
     private String testaddress = "hauptstraße 3";
     private long testid = 110110110;
@@ -45,12 +51,15 @@ public class InfosSettings extends JFrame {
         logger.info("Opening infos and settings window ...");
 
         // ! Fill with correct user data from saved users in database
-        initUserInformation(testemail, testaddress, testid, testrole);
+        initUserInformation(testfirstname, testlastname, testschoolname, testemail, testaddress, testid, testrole);
 
         changeInformationButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 safeButton.setEnabled(true);
+                userFirstName.setEditable(true);
+                userLastName.setEditable(true);
+                userSchoolName.setEditable(true);
                 userEmail.setEditable(true);
                 userAddress.setEditable(true);
             }
@@ -58,12 +67,15 @@ public class InfosSettings extends JFrame {
         safeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent safe) {
+                safeButton.setEnabled(false);
+                userFirstName.setEditable(false);
+                userLastName.setEditable(false);
+                userSchoolName.setEditable(false);
                 userEmail.setEditable(false);
                 userAddress.setEditable(false);
-                safeButton.setEnabled(false);
                 //Save new user data, overwrite old user data from database
                 // ! Check for valid data input !
-                updateUserInformation(userEmail.getText(), userAddress.getText(), Long.parseLong(userID.getText()), userRole.getText());
+                updateUserInformation(userFirstName.getText(), userLastName.getText(), userSchoolName.getText(), userEmail.getText(), userAddress.getText(), Long.parseLong(userID.getText()), userRole.getText());
             }
         });
         changePasswordButton.addActionListener(new ActionListener() {
@@ -83,7 +95,11 @@ public class InfosSettings extends JFrame {
         });
     }
 
-    public void initUserInformation(String currentUserEmail, String currentUserAddress, long currentUserNumber, String currentUserRole) {
+    public void initUserInformation(String currentFirstName, String currentLastName, String currentSchoolName, String currentUserEmail, String currentUserAddress, long currentUserNumber, String currentUserRole) {
+
+        userFirstName.setText(currentFirstName);
+        userLastName.setText(currentLastName);
+        userSchoolName.setText(currentSchoolName);
         userEmail.setText(currentUserEmail);
         userAddress.setText(currentUserAddress);
         userID.setText(String.valueOf(currentUserNumber));
@@ -92,7 +108,10 @@ public class InfosSettings extends JFrame {
 
     ;
 
-    public void updateUserInformation(String newUserEmail, String newUserAddress, long newUserNumber, String newUserRole) {
+    public void updateUserInformation(String newFirstName, String newLastName, String newSchoolName,String newUserEmail, String newUserAddress, long newUserNumber, String newUserRole) {
+        userFirstName.setText(newFirstName);
+        userLastName.setText(newLastName);
+        userSchoolName.setText(newSchoolName);
         userEmail.setText(newUserEmail);
         userAddress.setText(newUserAddress);
         userID.setText(String.valueOf(newUserNumber));
