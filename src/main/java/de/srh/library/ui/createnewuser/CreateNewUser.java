@@ -86,7 +86,7 @@ public class CreateNewUser extends JFrame {
                     buttonContinue.setEnabled(true);
                 }
                 else {
-
+                    buttonContinue.setEnabled(false);
                 }
             }
         });
