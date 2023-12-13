@@ -56,7 +56,6 @@ public class LoginWindow extends JFrame {
             public void focusGained(FocusEvent e) {
                 if (usernameField.getText().equals("username")) {
                     usernameField.setText("");
-                } else {
                 }
             }
         });
@@ -65,7 +64,6 @@ public class LoginWindow extends JFrame {
             public void focusGained(FocusEvent e) {
                 if (Objects.equals(String.valueOf(passwordField.getPassword()), "password")) {
                     passwordField.setText("");
-                } else {
                 }
             }
         });
@@ -84,13 +82,13 @@ public class LoginWindow extends JFrame {
                         Global.userLogin(loginResponse.getData());
                         JOptionPane.showMessageDialog(null, "Welcome user " + username);
 
-                        //Close login window create new main menu
                         dispose();
                         MainMenu mainMenu = new MainMenu();
                         mainMenu.setVisible(true);
                         break;
                     default:
-                        JOptionPane.showMessageDialog(null, loginResponse.getCode() + ": " + loginResponse.getMessage());
+                        JOptionPane.showMessageDialog(null,
+                                loginResponse.getCode() + ": " + loginResponse.getMessage());
                         break;
                 }
             }
@@ -99,20 +97,20 @@ public class LoginWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String adminUserName = usernameField.getText();
-                logger.debug("adminUserName: " + adminUserName);
                 String adminPassword = String.valueOf(passwordField.getPassword());
                 ApiResponse loginResponse = adminService.checkPassword(adminUserName,adminPassword);
 
                 switch (ApiResponseCode.getByCode(loginResponse.getCode())) {
                     case SUCCESS:
-                        Global.adminLogin(true);
+                        Global.adminLogin();
                         JOptionPane.showMessageDialog(null, "Welcome user " + adminUserName);
                         dispose();
                         ManagementMenu managementMenu = new ManagementMenu();
                         managementMenu.setVisible(true);
                         break;
                     default:
-                        JOptionPane.showMessageDialog(null, loginResponse.getCode() + ": " + loginResponse.getMessage());
+                        JOptionPane.showMessageDialog(null,
+                                loginResponse.getCode() + ": " + loginResponse.getMessage());
                         break;
                 }
             }
