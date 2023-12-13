@@ -267,14 +267,9 @@
                                 <properties/>
                                 <border type="none"/>
                                 <children>
-                                  <component id="38ad" class="javax.swing.JList" binding="resultsList">
+                                  <component id="c728b" class="javax.swing.JTable" binding="resultsTableDisplay">
                                     <constraints/>
-                                    <properties>
-                                      <background color="-3353375"/>
-                                      <font name="Roboto" size="14" style="0"/>
-                                      <foreground color="-16777216"/>
-                                      <selectionBackground color="-5524801"/>
-                                    </properties>
+                                    <properties/>
                                   </component>
                                 </children>
                               </scrollpane>
