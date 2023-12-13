@@ -88,4 +88,28 @@ public class UserServiceImpl implements UserService {
             return ApiResponse.error(ApiResponseCode.ERROR_DATABASE);
         }
     }
+
+    @Override
+    public ApiResponse updateUserInfo(String email, String address, long userId) {
+        try{
+
+            userDao.updateUserInfo(email,address,userId);
+            return ApiResponse.success();
+        }catch (Exception e){
+            logger.error("User information update failed!", e);
+            return ApiResponse.error(ApiResponseCode.ERROR_DATABASE);
+        }
+    }
+
+    @Override
+    public Long getIdByEmail(String email) {
+        try{
+            return ApiResponse.success(userDao.getIdByEmail(email)).getData();
+        }catch (Exception e){
+            logger.error("Error getting Id.", e);
+            return 0L;
+        }
+    }
+
+
 }

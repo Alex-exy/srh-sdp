@@ -12,7 +12,12 @@ public class UserDao {
         try (SqlSession session = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession()) {
             UserMapper mapper = session.getMapper(UserMapper.class);
             return mapper.getUserById(userId);
-
+        }
+    }
+    public Long getIdByEmail(String email){
+        try (SqlSession session = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession()) {
+            UserMapper mapper = session.getMapper(UserMapper.class);
+            return mapper.getIdByEmail(email);
         }
     }
   public User getUserByEmail(String email){
@@ -31,6 +36,13 @@ public class UserDao {
         try (SqlSession session = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession(true)) {
             UserMapper mapper = session.getMapper(UserMapper.class);
             return mapper.insertUser(user);
+        }
+    }
+
+    public void updateUserInfo(String email, String address, long userId){
+        try (SqlSession session = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession(true)) {
+            UserMapper mapper = session.getMapper(UserMapper.class);
+             mapper.updateUserInfo(email,address,userId);
         }
     }
 }

@@ -6,9 +6,12 @@ import de.srh.library.dto.ApiResponse;
 import java.util.Map;
 
 public interface UserService {
-    ApiResponse checkPassword(String inputUserName, String inputPassword);
+    ApiResponse<Long> checkPassword(String inputUserName, String inputPassword);
     ApiResponse<Map<String, Integer>> getAllSchools();
     ApiResponse createUser(User user);
     ApiResponse<User> getUserByEmail(String email);
     ApiResponse<Integer> updateUserPassword(String password,String email);
+    ApiResponse<Integer> updateUserInfo(String email,String address, long userId);
+    Long getIdByEmail(String email);
+
 }

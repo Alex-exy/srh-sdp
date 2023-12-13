@@ -29,7 +29,7 @@ public class InfosSettings extends JFrame {
     private JButton returnButton;
     private JTextField userLastName;
     private JTextField userFirstName;
-    private JTextField userSchoolName;
+    private JComboBox userSelectSchool;
 
     //Testing only
     private String testfirstname = "shiti";
@@ -39,6 +39,10 @@ public class InfosSettings extends JFrame {
     private String testaddress = "hauptstraße 3";
     private long testid = 110110110;
     private String testrole = "gigachad";
+
+    // Testing schools
+    private String schule1 = "SRH University TEST";
+    private String schule2 = "Heidelberg University TEST";
 
     public InfosSettings() {
 
@@ -51,7 +55,9 @@ public class InfosSettings extends JFrame {
         logger.info("Opening infos and settings window ...");
 
         // ! Fill with correct user data from saved users in database
-        initUserInformation(testfirstname, testlastname, testschoolname, testemail, testaddress, testid, testrole);
+        initUserInformation(testfirstname, testlastname, testemail, testaddress, testid, testrole);
+        // ! Fill with school data string from database
+        initSchools(schule1, schule2);
 
         changeInformationButton.addActionListener(new ActionListener() {
             @Override
@@ -59,9 +65,9 @@ public class InfosSettings extends JFrame {
                 safeButton.setEnabled(true);
                 userFirstName.setEditable(true);
                 userLastName.setEditable(true);
-                userSchoolName.setEditable(true);
                 userEmail.setEditable(true);
                 userAddress.setEditable(true);
+                userSelectSchool.setEnabled(true);
             }
         });
         safeButton.addActionListener(new ActionListener() {
@@ -70,12 +76,12 @@ public class InfosSettings extends JFrame {
                 safeButton.setEnabled(false);
                 userFirstName.setEditable(false);
                 userLastName.setEditable(false);
-                userSchoolName.setEditable(false);
                 userEmail.setEditable(false);
                 userAddress.setEditable(false);
+                userSelectSchool.setEnabled(false);
                 //Save new user data, overwrite old user data from database
                 // ! Check for valid data input !
-                updateUserInformation(userFirstName.getText(), userLastName.getText(), userSchoolName.getText(), userEmail.getText(), userAddress.getText(), Long.parseLong(userID.getText()), userRole.getText());
+                updateUserInformation(userFirstName.getText(), userLastName.getText(), userEmail.getText(), userAddress.getText(), Long.parseLong(userID.getText()), userRole.getText());
             }
         });
         changePasswordButton.addActionListener(new ActionListener() {
@@ -94,12 +100,16 @@ public class InfosSettings extends JFrame {
             }
         });
     }
+    public void initSchools(String...school) {
+        for (Object s : school) {
+            userSelectSchool.addItem(s);
+        }
+    }
 
-    public void initUserInformation(String currentFirstName, String currentLastName, String currentSchoolName, String currentUserEmail, String currentUserAddress, long currentUserNumber, String currentUserRole) {
+    public void initUserInformation(String currentFirstName, String currentLastName, String currentUserEmail, String currentUserAddress, long currentUserNumber, String currentUserRole) {
 
         userFirstName.setText(currentFirstName);
         userLastName.setText(currentLastName);
-        userSchoolName.setText(currentSchoolName);
         userEmail.setText(currentUserEmail);
         userAddress.setText(currentUserAddress);
         userID.setText(String.valueOf(currentUserNumber));
@@ -108,10 +118,9 @@ public class InfosSettings extends JFrame {
 
     ;
 
-    public void updateUserInformation(String newFirstName, String newLastName, String newSchoolName,String newUserEmail, String newUserAddress, long newUserNumber, String newUserRole) {
+    public void updateUserInformation(String newFirstName, String newLastName, String newUserEmail, String newUserAddress, long newUserNumber, String newUserRole) {
         userFirstName.setText(newFirstName);
         userLastName.setText(newLastName);
-        userSchoolName.setText(newSchoolName);
         userEmail.setText(newUserEmail);
         userAddress.setText(newUserAddress);
         userID.setText(String.valueOf(newUserNumber));

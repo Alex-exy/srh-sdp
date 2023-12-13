@@ -10,7 +10,6 @@ public class Book {
     private String isbn;
     private String publishDate;
     private String bookAuthor;
-    private String genre;
     private String price;
     private String bookDescription;
     private String libraryId;
@@ -76,13 +75,6 @@ public class Book {
         this.bookAuthor = bookAuthor;
     }
 
-    public String getGenre() {
-        return genre;
-    }
-
-    public void setGenre(String genre) {
-        this.genre = genre;
-    }
 
     public String getPrice() {
         return price;
@@ -142,7 +134,6 @@ public class Book {
                 ", isbn=" + isbn +
                 ", publish_date='" + publishDate + '\'' +
                 ", book_author='" + bookAuthor + '\'' +
-                ", genre='" + genre + '\'' +
                 ", book_description='" + bookDescription + '\'' +
                 ", addition_date= " + additionDate +
                 ", update_date= " + updateDate +
