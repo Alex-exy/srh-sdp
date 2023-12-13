@@ -1,5 +1,7 @@
 package de.srh.library.ui.managementmenu;
 
+import de.srh.library.ui.editbooks.EditBooks;
+import de.srh.library.ui.editusers.EditUsers;
 import de.srh.library.ui.login.LoginWindow;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,19 +31,17 @@ public class ManagementMenu extends JFrame {
         userManagementButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                dispose();
+                EditUsers editUsers = new EditUsers();
+                editUsers.setVisible(true);
             }
         });
         bookManagementButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-            }
-        });
-        borrowAndReturnManagementButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
+                dispose();
+                EditBooks editBooks = new EditBooks();
+                editBooks.setVisible(true);
             }
         });
         logOut.addActionListener(new ActionListener() {
@@ -53,7 +53,6 @@ public class ManagementMenu extends JFrame {
             }
         });
     }
-
     public static void main(String[] args) {
         ManagementMenu managementMenu = new ManagementMenu();
     }

@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="de.srh.library.ui.editbookdata.EditBookData">
+  <grid id="27dc6" binding="editBookDataWindow" layout-manager="GridLayoutManager" row-count="4" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="0" left="0" bottom="0" right="0"/>
+    <constraints>
+      <xy x="20" y="20" width="648" height="1041"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <grid id="ee7e6" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="0" left="0" bottom="0" right="40"/>
+        <constraints>
+          <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="dc684" class="javax.swing.JButton" binding="cancelButton">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="4" fill="0" indent="0" use-parent-layout="false">
+                <minimum-size width="100" height="-1"/>
+              </grid>
+            </constraints>
+            <properties>
+              <font name="Roboto" size="12" style="0"/>
+              <text value="Cancel"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <grid id="4b210" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="20" left="20" bottom="20" right="20"/>
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="fae1" class="javax.swing.JLabel" binding="pageTitle">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <enabled value="true"/>
+              <font name="Roboto" size="24" style="1"/>
+              <text value="- - - Edit Book Data - - -"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <grid id="c418c" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="20" left="20" bottom="20" right="20"/>
+        <constraints>
+          <grid row="1" column="0" row-span="2" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <grid id="5d9d4" layout-manager="GridLayoutManager" row-count="28" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="20" left="20" bottom="20" right="20"/>
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false">
+                <minimum-size width="600" height="-1"/>
+              </grid>
+            </constraints>
+            <properties>
+              <background color="-6562817"/>
+              <foreground color="-6562817"/>
+            </properties>
+            <border type="line">
+              <color color="-16777216"/>
+            </border>
+            <children>
+              <component id="aaf61" class="javax.swing.JButton" binding="saveChangesButton" default-binding="true">
+                <constraints>
+                  <grid row="27" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <font name="Roboto" size="14" style="0"/>
+                  <text value="Save Changes"/>
+                </properties>
+              </component>
+              <component id="72c78" class="javax.swing.JTextField" binding="doiField">
+                <constraints>
+                  <grid row="25" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                    <maximum-size width="500" height="-1"/>
+                  </grid>
+                </constraints>
+                <properties>
+                  <font name="Roboto" size="14" style="0"/>
+                </properties>
+              </component>
+              <component id="82adc" class="javax.swing.JTextField" binding="libraryIDField">
+                <constraints>
+                  <grid row="23" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                    <maximum-size width="500" height="-1"/>
+                  </grid>
+                </constraints>
+                <properties>
+                  <font name="Roboto" size="14" style="0"/>
+                </properties>
+              </component>
+              <component id="1d572" class="javax.swing.JTextField" binding="updateDateField">
+                <constraints>
+                  <grid row="21" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                    <maximum-size width="500" height="-1"/>
+                  </grid>
+                </constraints>
+                <properties>
+                  <font name="Roboto" size="14" style="0"/>
+                  <text value=""/>
+                </properties>
+              </component>
+              <component id="a1235" class="javax.swing.JLabel">
+                <constraints>
+                  <grid row="24" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <font name="Roboto" size="14" style="0"/>
+                  <text value="DOI"/>
+                </properties>
+              </component>
+              <component id="ddc61" class="javax.swing.JLabel">
+                <constraints>
+                  <grid row="22" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <font name="Roboto" size="14" style="0"/>
+                  <text value="Library ID"/>
+                </properties>
+              </component>
+              <component id="fcfb1" class="javax.swing.JLabel">
+                <constraints>
+                  <grid row="20" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <font name="Roboto" size="14" style="0"/>
+                  <text value="Update Date"/>
+                </properties>
+              </component>
+              <component id="dd76" class="javax.swing.JTextField" binding="addDateField">
+                <constraints>
+                  <grid row="19" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                    <maximum-size width="500" height="-1"/>
+                  </grid>
+                </constraints>
+                <properties>
+                  <font name="Roboto" size="14" style="0"/>
+                </properties>
+              </component>
+              <component id="531b7" class="javax.swing.JLabel">
+                <constraints>
+                  <grid row="18" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <font name="Roboto" size="14" style="0"/>
+                  <text value="Addition Date"/>
+                </properties>
+              </component>
+              <component id="f3839" class="javax.swing.JTextField" binding="descriptionField">
+                <constraints>
+                  <grid row="17" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                    <maximum-size width="500" height="-1"/>
+                  </grid>
+                </constraints>
+                <properties>
+                  <font name="Roboto" size="14" style="0"/>
+                  <text value=""/>
+                </properties>
+              </component>
+              <component id="5c410" class="javax.swing.JTextField" binding="priceField">
+                <constraints>
+                  <grid row="15" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                    <maximum-size width="500" height="-1"/>
+                  </grid>
+                </constraints>
+                <properties>
+                  <font name="Roboto" size="14" style="0"/>
+                </properties>
+              </component>
+              <component id="bbffd" class="javax.swing.JTextField" binding="genreField">
+                <constraints>
+                  <grid row="13" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                    <maximum-size width="500" height="-1"/>
+                  </grid>
+                </constraints>
+                <properties>
+                  <font name="Roboto" size="14" style="0"/>
+                </properties>
+              </component>
+              <component id="a7f02" class="javax.swing.JTextField" binding="authorField">
+                <constraints>
+                  <grid row="11" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                    <maximum-size width="500" height="-1"/>
+                  </grid>
+                </constraints>
+                <properties>
+                  <font name="Roboto" size="14" style="0"/>
+                </properties>
+              </component>
+              <component id="8cf7" class="javax.swing.JTextField" binding="publishDateField">
+                <constraints>
+                  <grid row="9" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                    <maximum-size width="500" height="-1"/>
+                  </grid>
+                </constraints>
+                <properties>
+                  <font name="Roboto" size="14" style="0"/>
+                  <text value=""/>
+                </properties>
+              </component>
+              <component id="8d3ac" class="javax.swing.JTextField" binding="isbnField">
+                <constraints>
+                  <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                    <maximum-size width="500" height="-1"/>
+                  </grid>
+                </constraints>
+                <properties>
+                  <font name="Roboto" size="14" style="0"/>
+                </properties>
+              </component>
+              <component id="586fb" class="javax.swing.JTextField" binding="languageField">
+                <constraints>
+                  <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                    <maximum-size width="500" height="-1"/>
+                  </grid>
+                </constraints>
+                <properties>
+                  <font name="Roboto" size="14" style="0"/>
+                  <text value=""/>
+                </properties>
+              </component>
+              <component id="9b835" class="javax.swing.JTextField" binding="subtitleField">
+                <constraints>
+                  <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                    <maximum-size width="500" height="-1"/>
+                  </grid>
+                </constraints>
+                <properties>
+                  <font name="Roboto" size="14" style="0"/>
+                </properties>
+              </component>
+              <component id="dffd9" class="javax.swing.JTextField" binding="titleField">
+                <constraints>
+                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                    <maximum-size width="500" height="-1"/>
+                  </grid>
+                </constraints>
+                <properties>
+                  <font name="Roboto" size="14" style="0"/>
+                </properties>
+              </component>
+              <component id="f1d6e" class="javax.swing.JLabel">
+                <constraints>
+                  <grid row="16" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <font name="Roboto" size="14" style="0"/>
+                  <text value="Book Description"/>
+                </properties>
+              </component>
+              <component id="815f1" class="javax.swing.JLabel">
+                <constraints>
+                  <grid row="14" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <font name="Roboto" size="14" style="0"/>
+                  <text value="Price"/>
+                </properties>
+              </component>
+              <component id="caf3a" class="javax.swing.JLabel">
+                <constraints>
+                  <grid row="12" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <font name="Roboto" size="14" style="0"/>
+                  <text value="Genre"/>
+                </properties>
+              </component>
+              <component id="2c4eb" class="javax.swing.JLabel">
+                <constraints>
+                  <grid row="10" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <font name="Roboto" size="14" style="0"/>
+                  <text value="Author"/>
+                </properties>
+              </component>
+              <component id="8acbe" class="javax.swing.JLabel">
+                <constraints>
+                  <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <font name="Roboto" size="14" style="0"/>
+                  <text value="Publish Date"/>
+                </properties>
+              </component>
+              <component id="ce5cb" class="javax.swing.JLabel">
+                <constraints>
+                  <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <font name="Roboto" size="14" style="0"/>
+                  <text value="ISBN"/>
+                </properties>
+              </component>
+              <component id="60957" class="javax.swing.JLabel">
+                <constraints>
+                  <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <font name="Roboto" size="14" style="0"/>
+                  <text value="Language"/>
+                </properties>
+              </component>
+              <component id="c8d43" class="javax.swing.JLabel">
+                <constraints>
+                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <font name="Roboto" size="14" style="0"/>
+                  <text value="Subtitle"/>
+                </properties>
+              </component>
+              <component id="927af" class="javax.swing.JLabel">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <font name="Roboto" size="14" style="0"/>
+                  <text value="Title"/>
+                </properties>
+              </component>
+              <vspacer id="e1b09">
+                <constraints>
+                  <grid row="26" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false">
+                    <minimum-size width="-1" height="10"/>
+                  </grid>
+                </constraints>
+              </vspacer>
+            </children>
+          </grid>
+        </children>
+      </grid>
+    </children>
+  </grid>
+</form>
