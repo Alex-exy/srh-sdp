@@ -13,6 +13,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Map;
@@ -39,6 +41,7 @@ public class CreateNewUser extends JFrame {
     private JLabel lableEnterPassword;
     private JLabel lableReenterPassword;
     private JTextField reenterPassword;
+    private JCheckBox agreementCheckBox;
 
     private UserService userService;
     private Map<String, Integer> schoolsMap;
@@ -74,6 +77,17 @@ public class CreateNewUser extends JFrame {
                 dispose();
                 LoginWindow loginWindow = new LoginWindow();
                 loginWindow.setVisible(true);
+            }
+        });
+        agreementCheckBox.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                if (agreementCheckBox.isSelected()) {
+                    buttonContinue.setEnabled(true);
+                }
+                else {
+
+                }
             }
         });
     }
