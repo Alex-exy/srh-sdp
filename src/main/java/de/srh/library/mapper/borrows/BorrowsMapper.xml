@@ -1,0 +1,11 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="de.srh.library.mapper.borrows.BorrowsMapper">
+
+    <select id="listOfBorrowedBooks" resultType="de.srh.library.entity.Book">
+        select * from borrows where borrow_status = #{borrowStatus}
+    </select>
+
+
+</mapper>

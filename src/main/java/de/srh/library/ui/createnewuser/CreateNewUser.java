@@ -1,5 +1,6 @@
 package de.srh.library.ui.createnewuser;
 
+import cn.hutool.core.exceptions.ValidateException;
 import de.srh.library.constant.UserRole;
 import de.srh.library.constant.UserStatus;
 import de.srh.library.dto.ApiResponse;
@@ -9,10 +10,13 @@ import de.srh.library.service.user.UserService;
 import de.srh.library.service.user.UserServiceImpl;
 import de.srh.library.ui.login.LoginWindow;
 import de.srh.library.util.PasswordUtils;
+import de.srh.library.util.ValidatorUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Map;
@@ -35,10 +39,11 @@ public class CreateNewUser extends JFrame {
     private JLabel labelRole;
     private JButton buttonContinue;
     private JComboBox selectSchool;
-    private JTextField enterPassword;
+    private JPasswordField enterPassword;
     private JLabel lableEnterPassword;
     private JLabel lableReenterPassword;
-    private JTextField reenterPassword;
+    private JPasswordField reenterPassword;
+    private JCheckBox agreementCheckBox;
 
     private UserService userService;
     private Map<String, Integer> schoolsMap;
@@ -67,19 +72,34 @@ public class CreateNewUser extends JFrame {
         buttonContinue.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO: input data validation
-
-                createUser();
-                // TODO: add a dialog
-                dispose();
-                LoginWindow loginWindow = new LoginWindow();
-                loginWindow.setVisible(true);
+                try{
+                    inputDataValidation();
+                }catch (ValidateException ve ){
+                    JOptionPane.showMessageDialog(null, ve.getMessage());
+                    return;
+                }
+                ApiResponse response = createUser();
+                if (ApiResponseCode.SUCCESS.getCode() == response.getCode()){
+                    JOptionPane.showMessageDialog(null, "Success!");
+                    dispose();
+                    LoginWindow loginWindow = new LoginWindow();
+                    loginWindow.setVisible(true);
+                }else {
+                    JOptionPane.showMessageDialog(null, response.getCode() + response.getMessage());
+                }
+            }
+        });
+        agreementCheckBox.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                if (agreementCheckBox.isSelected()) {
+                    buttonContinue.setEnabled(true);
+                }
             }
         });
     }
 
-    private void createUser() {
-        //Save a user
+    private ApiResponse createUser() {
         User newUser = new User();
         newUser.setUserRole(UserRole.getByRoleName(selectRole.getSelectedItem().toString()).getRoleCode());
         newUser.setAddress(enterAddress.getText());
@@ -87,10 +107,17 @@ public class CreateNewUser extends JFrame {
         newUser.setFirstName(enterFirstName.getText());
         newUser.setFamilyName(enterLastName.getText());
         newUser.setSchoolId(schoolsMap.get(selectSchool.getSelectedItem().toString()));
-        //TODO: set a default password for test, a password field needs to be added
-        newUser.setPasswordHash(PasswordUtils.hashPw("000000"));
+        newUser.setPasswordHash(PasswordUtils.hashPw(enterPassword.getText()));
         newUser.setUserStatus(UserStatus.ACTIVE.getUserStatusCode());
-        userService.createUser(newUser);
+        return userService.createUser(newUser);
+    }
+
+    private void inputDataValidation(){
+        ValidatorUtils.validateEmail(enterEmail.getText());
+        ValidatorUtils.validatePassword(enterPassword.getText(), reenterPassword.getText());
+        ValidatorUtils.validateName(enterFirstName.getText());
+        ValidatorUtils.validateName(enterLastName.getText());
+        ValidatorUtils.validateAddress(enterAddress.getText());
     }
 
     public static void main(String[] args) {

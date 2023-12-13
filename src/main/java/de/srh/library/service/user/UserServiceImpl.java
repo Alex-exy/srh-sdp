@@ -30,14 +30,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ApiResponse checkPassword(String username, String password) {
+    public ApiResponse<Long> checkPassword(String username, String password) {
         try{
             User user = userDao.getUserByEmail(username);
             if (user == null){
                 return ApiResponse.error(ApiResponseCode.ERROR_USER_NOT_EXIT);
             }
             if (PasswordUtils.checkPw(password, user.getPasswordHash())){
-                return ApiResponse.success();
+                return ApiResponse.success(user.getUserId());
             }else {
                 return ApiResponse.error(ApiResponseCode.ERROR_USER_PASSWORD_WRONG);
             }
@@ -88,4 +88,28 @@ public class UserServiceImpl implements UserService {
             return ApiResponse.error(ApiResponseCode.ERROR_DATABASE);
         }
     }
+
+    @Override
+    public ApiResponse updateUserInfo(String firstName, String familyName,String email, String address, long userId) {
+        try{
+
+            userDao.updateUserInfo(firstName,familyName,email,address,userId);
+            return ApiResponse.success();
+        }catch (Exception e){
+            logger.error("User information update failed!", e);
+            return ApiResponse.error(ApiResponseCode.ERROR_DATABASE);
+        }
+    }
+
+    @Override
+    public Long getIdByEmail(String email) {
+        try{
+            return ApiResponse.success(userDao.getIdByEmail(email)).getData();
+        }catch (Exception e){
+            logger.error("Error getting Id.", e);
+            return 0L;
+        }
+    }
+
+
 }

@@ -9,7 +9,10 @@
     <select id="getBookByAuthor" resultType="de.srh.library.entity.Book">
         select * from books where book_author = #{author}
     </select>
-
+<delete id="removeBook" parameterType="de.srh.library.entity.Book">
+    delete from books
+    where book_id = #{bookId}
+</delete>
 
     <insert id="insertBook" parameterType="de.srh.library.entity.Book">
         <selectKey keyProperty="bookId" resultType="java.lang.Long" order="AFTER">
@@ -17,13 +20,13 @@
         </selectKey>
 
         insert INTO books (
-        book_name, subtitles, language, isbn, publish_date, book_author, genre,
+        book_name, subtitles, language, isbn, publish_date, book_author,
         price, book_description, library_id, doi
         )
 
         VALUES (
-        #{book_name}, #{subtitles}, #{language}, #{isbn}, #{publish_date},
-        #{book_author}, #{genre}, #{price}, #{book_description}, #{library_id}, #{doi}
+        #{bookName}, #{subtitles}, #{language}, #{isbn}, #{publishDate},
+        #{bookAuthor}, #{price}, #{bookDescription}, #{libraryId}, #{doi}
         )
     </insert>
 </mapper>

@@ -25,4 +25,11 @@ public class BookDao {
             return mapper.getBookByAuthor(author);
         }
     }
+
+    public int removeBook(Long bookId) {
+        try (SqlSession session = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession(true)) {
+            BookMapper mapper = session.getMapper(BookMapper.class);
+            return mapper.removeBook(bookId);
+        }
+    }
 }

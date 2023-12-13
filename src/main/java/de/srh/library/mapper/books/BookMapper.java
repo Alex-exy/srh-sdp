@@ -9,4 +9,5 @@ public interface BookMapper {
     Book getBookByAuthor(String author);
 
     int insertBook(Book book);
+    int removeBook(Long bookId);
 }

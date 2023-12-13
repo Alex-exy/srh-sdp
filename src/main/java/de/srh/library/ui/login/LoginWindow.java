@@ -8,6 +8,8 @@ import javax.swing.*;
 import de.srh.library.dto.ApiResponse;
 import de.srh.library.dto.ApiResponseCode;
 import de.srh.library.dto.Global;
+import de.srh.library.service.admin.AdminService;
+import de.srh.library.service.admin.AdminServiceImpl;
 import de.srh.library.service.user.UserService;
 import de.srh.library.service.user.UserServiceImpl;
 import de.srh.library.ui.createnewuser.CreateNewUser;
@@ -33,6 +35,7 @@ public class LoginWindow extends JFrame {
     private JButton loginAdminButton;
 
     private UserService userService;
+    private AdminService adminService;
 
     public LoginWindow() throws HeadlessException {
 
@@ -45,6 +48,7 @@ public class LoginWindow extends JFrame {
         logger.info("Opening login window ...");
 
         userService = UserServiceImpl.createInstance();
+        adminService = AdminServiceImpl.createInstance();
 
         //Clear field description of focus
         usernameField.addFocusListener(new FocusAdapter() {
@@ -52,7 +56,6 @@ public class LoginWindow extends JFrame {
             public void focusGained(FocusEvent e) {
                 if (usernameField.getText().equals("username")) {
                     usernameField.setText("");
-                } else {
                 }
             }
         });
@@ -61,7 +64,6 @@ public class LoginWindow extends JFrame {
             public void focusGained(FocusEvent e) {
                 if (Objects.equals(String.valueOf(passwordField.getPassword()), "password")) {
                     passwordField.setText("");
-                } else {
                 }
             }
         });
@@ -70,27 +72,23 @@ public class LoginWindow extends JFrame {
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Global.isAdmin = false;
-                logger.info("LOGGED IN AS: USER");
-                System.out.println("IS: " + Global.isAdmin);
-
                 String username = usernameField.getText();
-                System.out.println(username);
+                logger.debug("username: " + username);
                 char[] password = passwordField.getPassword();
 
-                ApiResponse loginResponse = userService.checkPassword(username, String.valueOf(password));
+                ApiResponse<Long> loginResponse = userService.checkPassword(username, String.valueOf(password));
                 switch (ApiResponseCode.getByCode(loginResponse.getCode())) {
                     case SUCCESS:
+                        Global.userLogin(loginResponse.getData());
                         JOptionPane.showMessageDialog(null, "Welcome user " + username);
 
-                        //Close login window create new main menu
                         dispose();
                         MainMenu mainMenu = new MainMenu();
                         mainMenu.setVisible(true);
-                        // ! Save user login information (Temporary save logged-in user until log out in main menu window)
                         break;
                     default:
-                        JOptionPane.showMessageDialog(null, loginResponse.getCode() + ": " + loginResponse.getMessage());
+                        JOptionPane.showMessageDialog(null,
+                                loginResponse.getCode() + ": " + loginResponse.getMessage());
                         break;
                 }
             }
@@ -98,14 +96,23 @@ public class LoginWindow extends JFrame {
         loginAdminButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Global.isAdmin = true;
-                logger.info("LOGGED IN AS: ADMINISTRATOR");
-                System.out.println("IS: " + Global.isAdmin);
+                String adminUserName = usernameField.getText();
+                String adminPassword = String.valueOf(passwordField.getPassword());
+                ApiResponse loginResponse = adminService.checkPassword(adminUserName,adminPassword);
 
-                //Check database for admin login data
-                dispose();
-                ManagementMenu managementMenu = new ManagementMenu();
-                managementMenu.setVisible(true);
+                switch (ApiResponseCode.getByCode(loginResponse.getCode())) {
+                    case SUCCESS:
+                        Global.adminLogin();
+                        JOptionPane.showMessageDialog(null, "Welcome user " + adminUserName);
+                        dispose();
+                        ManagementMenu managementMenu = new ManagementMenu();
+                        managementMenu.setVisible(true);
+                        break;
+                    default:
+                        JOptionPane.showMessageDialog(null,
+                                loginResponse.getCode() + ": " + loginResponse.getMessage());
+                        break;
+                }
             }
         });
         createNewAccountButton.addActionListener(new ActionListener() {

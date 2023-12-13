@@ -6,6 +6,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class BrowseLibrary extends JFrame {
 
@@ -23,6 +26,7 @@ public class BrowseLibrary extends JFrame {
     private JList resultsList;
     private JLabel lableResults;
     private JTextField DOITextField;
+    private JTable resultsTableDisplay;
 
     public BrowseLibrary() {
 
@@ -39,7 +43,32 @@ public class BrowseLibrary extends JFrame {
         setVisible(true);
         logger.info("Opening create browse library window ...");
 
+
+        buttonSearch.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            }
+        });
+
+
+        JTable resultsTableDisplay = getjTable();
+
+        JScrollPane scrollPane = new JScrollPane(resultsTableDisplay);
+
+
     }
+
+    private static JTable getjTable() {
+        String[] columnNames = {"Book ID","Title","Subtitle","Language","ISBN","Date Published","Author","Genre","Description","In Library/Library ID","DOI","Version"};
+
+        //test data, delete this!
+        Object[][] data = {};
+
+        DefaultTableModel tableModel = new DefaultTableModel(data, columnNames);
+
+        return new JTable(tableModel);
+    }
+
     public static void main(String[] args) {BrowseLibrary browseLibrary = new BrowseLibrary();}
 
 }

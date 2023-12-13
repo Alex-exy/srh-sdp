@@ -7,11 +7,24 @@
         select * from users where user_id = #{userId}
     </select>
 
-    <select id="updateUserPassword">
+    <select id="getIdByEmail" resultType="long">
+        select user_id from users where email = #{email};
+    </select>
+
+
+    <update id="updateUserPassword">
         update users
         set password_hash = #{password}
         where email = #{email}
-    </select>
+    </update>
+
+
+    <update id="updateUserInfo" parameterType="de.srh.library.entity.User">
+        update users
+        set first_name = #{firstName},family_name = #{familyName}, email = #{email}, address = #{address}
+        where user_id = #{userId}
+    </update>
+
 
     <select id="getUserByEmail" resultType="de.srh.library.entity.User">
         select * from users where email = #{email}

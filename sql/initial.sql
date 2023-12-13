@@ -41,6 +41,17 @@ values(1000, 'SRH University Heidelberg'),(1001, 'Heidelberg University');
 
 ALTER TABLE users ADD FOREIGN KEY (school_id) REFERENCES schools (school_id) ON UPDATE CASCADE ON DELETE RESTRICT;
 
+CREATE TABLE admins
+(
+    admin_user_name      VARCHAR(64) UNIQUE NOT NULL,
+    admin_password_hash  VARCHAR(64) NOT NULL,
+    create_time          TIMESTAMP   DEFAULT CURRENT_TIMESTAMP,
+    update_time          TIMESTAMP   DEFAULT CURRENT_TIMESTAMP
+);
+
+-- default administrator: admin 123456
+insert into admins(admin_user_name, admin_password_hash)
+values ('admin','$2a$10$EZAvbMiNBodibBxH3i2BRuHcehAngMJ6pbLhP6b5SFAEpIdU/qIZS');
 
 DROP TABLE IF EXISTS borrows;
 
@@ -61,22 +72,26 @@ DROP TABLE IF EXISTS books;
 
 CREATE TABLE books
 (
-    book_id           BIGSERIAL       PRIMARY KEY,
-    book_name          VARCHAR(100)       NOT NULL,
-    subtitles          VARCHAR(50)        NOT NULL,
-    language           VARCHAR(20)        NOT NULL,
-    isbn               VARCHAR(20)        NOT NULL,
+    book_id            BIGSERIAL       PRIMARY KEY,
+    book_name          VARCHAR(64)        NOT NULL,
+    subtitles          VARCHAR(128)       NOT NULL,
+    language           VARCHAR(32)        NOT NULL,
+    isbn               VARCHAR(15)        NOT NULL,
     publish_date       VARCHAR(20)        NOT NULL,
-    book_author        VARCHAR(100)       NOT NULL,
-    genre              VARCHAR(50)        NOT NULL,
+    book_author        VARCHAR(255)       NOT NULL,
     price              VARCHAR(10)        NOT NULL,
-    book_description   VARCHAR(200)       NOT NULL,
+    book_description   VARCHAR(1024)      NOT NULL,
     addition_date      TIMESTAMP          DEFAULT CURRENT_TIMESTAMP,
     update_date        TIMESTAMP          DEFAULT CURRENT_TIMESTAMP,
-    library_id         VARCHAR(20)        NOT NULL,
-    doi                VARCHAR(20)        NOT NULL
+    library_id         INT                NOT NULL,
+    doi                VARCHAR(20)        NULL
 
 );
+CREATE INDEX idx_book_name ON books (book_name);
+CREATE INDEX idx_book_author ON books (book_author);
+CREATE INDEX idx_isbn ON books (isbn);
+CREATE INDEX idx_doi ON books (doi);
+
 
 COMMENT ON COLUMN books.doi IS 'DIGITAL OBJECT IDENTIFIERS ARE UNIQUE ALPHANUMERIC CODES ASSIGNED BY PUBLISHERS';
 COMMENT ON COLUMN books.price IS 'PRICE IS IN EUROS';
@@ -145,3 +160,17 @@ insert into genre(genre_name)values
  ('Travel'),
  ('Young adult'),
  ('True crime');
+
+ALTER SEQUENCE public.genre_genre_id_seq RESTART WITH 100;
+
+DROP TABLE IF EXISTS libraries;
+
+CREATE TABLE libraries
+(
+    library_id             SERIAL           PRIMARY KEY,
+    library_name           VARCHAR(64)      UNIQUE NOT NULL
+);
+
+insert into libraries(library_id, library_name)
+values (10, 'SRH University Heidelberg Library'),
+       (11, 'Heidelberg Library');
