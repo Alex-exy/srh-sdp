@@ -30,11 +30,11 @@ public class EnterEmail extends JFrame {
 
         setAutoRequestFocus(false);
         setContentPane(enterEmailWindow);
-        setTitle("Enter Email to reset Password");
+        setTitle("Reset Password");
         setSize(600, 400);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setVisible(true);
-        logger.info("Enter Email for pw reset ...");
+        logger.info("Request password reset via email ...");
         userService = UserServiceImpl.createInstance();
         resetPasswordButton.addActionListener(new ActionListener() {
             @Override
@@ -45,7 +45,7 @@ public class EnterEmail extends JFrame {
                     JOptionPane.showMessageDialog(null, "Email sent!");
                     resetPasswordButton.setEnabled(false);
                 } else {
-                    JOptionPane.showMessageDialog(null, "Email not registered! \n Please try again!");
+                    JOptionPane.showMessageDialog(null, "Email not registered! \nPlease try again!");
                     resetPasswordButton.setEnabled(true);
                 }
             }

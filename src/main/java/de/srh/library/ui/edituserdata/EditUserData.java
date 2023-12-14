@@ -8,30 +8,37 @@ import org.slf4j.LoggerFactory;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.util.Date;
 
 public class EditUserData extends JFrame {
 
     private static final Logger logger = LoggerFactory.getLogger(LoginWindow.class);
     private JPanel editUserDataWindow;
-    private JLabel edituserdataTitle;
+    private JLabel pageTitle;
     private JTextField userRegistrationDate;
     private JTextField userID;
     private JTextField firstName;
     private JTextField userAddress;
     private JTextField lastName;
-    private JButton savedataButton;
+    private JButton saveChangesButton;
     private JTextField userContact;
     private JComboBox userRole;
-    private JLabel firstnameLable;
-    private JLabel lastnameLable;
-    private JLabel contactLable;
-    private JLabel addressLable;
-    private JLabel useridLable;
-    private JLabel userroleLable;
-    private JLabel userstatusLable;
-    private JLabel registrationdateLable;
+    private JLabel firstNameLabel;
+    private JLabel lastNameLabel;
+    private JLabel contactLabel;
+    private JLabel addressLabel;
+    private JLabel userIDLabel;
+    private JLabel userRoleLabel;
+    private JLabel userStatusLabel;
+    private JLabel registrationDateLabel;
     private JComboBox userStatus;
-    private JButton backButton;
+    private JButton goBack;
+    private JComboBox comboBox1;
+    private JLabel userSchool;
+    private JTextField userUpdateDate;
+    private JLabel updateDate;
 
     public EditUserData() {
 
@@ -44,15 +51,15 @@ public class EditUserData extends JFrame {
         logger.info("Opening edit user data window ...");
 
 
-        savedataButton.addActionListener(new ActionListener() {
+        saveChangesButton.addActionListener(new ActionListener() {
+            //Check for changes
             @Override
             public void actionPerformed(ActionEvent e) {
-                savedataButton.setEnabled(false);
-                JOptionPane.showMessageDialog(null, "User Data Saved!");
+                JOptionPane.showMessageDialog(null, "Changes Saved!");
             }
         });
 
-        backButton.addActionListener(new ActionListener() {
+        goBack.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
@@ -60,12 +67,14 @@ public class EditUserData extends JFrame {
                 editUsers.setVisible(true);
             }
         });
-
     }
 
-
+    public void loadCurrentUserData(String firstName, String lastName, String email, String address, String userID, char userRole, String userStatus, Date registrationDate) {
+        //Load user data from database and display in fields
+    }
 
     public static void main(String[] args) {
         EditUserData editUserData = new EditUserData();
     }
+
 }
