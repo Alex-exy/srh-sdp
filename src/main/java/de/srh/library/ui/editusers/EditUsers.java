@@ -1,6 +1,5 @@
 package de.srh.library.ui.editusers;
 
-import de.srh.library.ui.login.LoginWindow;
 import de.srh.library.ui.managementmenu.ManagementMenu;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
