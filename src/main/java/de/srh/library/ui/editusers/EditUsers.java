@@ -74,6 +74,18 @@ public class EditUsers extends JFrame {
                 managementMenu.setVisible(true);
             }
         });
+        searchByUserIDTextField.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                searchByUserIDTextField.setText("");
+            }
+        });
+        searchByUserEmailTextField.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                searchByUserEmailTextField.setText("");
+            }
+        });
     }
 
     public static void main(String[] args) {

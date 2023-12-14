@@ -23,10 +23,11 @@ public class BorrowReturn extends JFrame {
     private JButton borrowButton;
     private JComboBox borrowDurationBox;
     private JTextField returnBookID;
-    private JComboBox selectBorrowedBook;
     private JButton returnButton;
     private JButton extendButton;
     private JButton goBack;
+    private JComboBox extendDurationBox;
+    private JLabel selectedBook;
 
     private String enteredBookID;
 
@@ -54,13 +55,15 @@ public class BorrowReturn extends JFrame {
                 returnBookID.setText(borrowedBookList.getSelectedValue().toString());
                 System.out.println(borrowedBookList.getSelectedValue().toString());
                 returnButton.setEnabled(true);
+                extendButton.setEnabled(true);
+                extendDurationBox.setEnabled(true);
             }
         });
         borrowButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Database logic
-                // Check if valid input
+                // Check if valid input - BOOK IS PRESENT IN THE DATABASE
                 // Check entered duration valid and safe book + duration in database
 
                 if (borrowedBooks.contains(borrowBookID.getText().toString())) {
@@ -78,12 +81,18 @@ public class BorrowReturn extends JFrame {
                 //Database logic + remove from borrowed list
                 removeSelectedBook(returnBookID.getText().toString());
                 updateBorrowedBookList();
+
+                returnBookID.setText("");
+                returnButton.setEnabled(false);
             }
         });
         extendButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //Database Logic + update book borrow data
+                returnBookID.setText("");
+                extendButton.setEnabled(false);
+                extendDurationBox.setEnabled(false);
             }
         });
         goBack.addActionListener(new ActionListener() {
@@ -101,11 +110,14 @@ public class BorrowReturn extends JFrame {
         borrowedBookList.setListData(borrowedBooks.toArray());
         System.out.println(borrowedBooks);
     }
+
     public void setDurationListContent() {
         for (String s : Arrays.asList("One Week", "Two Weeks", "Three Weeks")) {
             borrowDurationBox.addItem(s);
+            extendDurationBox.addItem(s);
         }
     }
+
     public void removeSelectedBook(String selectedBook) {
         System.out.println(selectedBook);
         if (borrowedBooks.contains(selectedBook)) {
@@ -114,14 +126,13 @@ public class BorrowReturn extends JFrame {
             JOptionPane.showMessageDialog(null, "Book not found!");
         }
     }
+
     public void initializeBorrowedUserBooks() {
         //Database logic get books borrowed by user and fill displayed list
         //Print testing borrowed books
         System.out.println(borrowedBooks);
     }
-    public void confirmBorrowRequest() {
-        //Confirmation for borrowing book request
-    }
+
     public static void main(String[] args) {
         BorrowReturn borrowReturn = new BorrowReturn();
     }

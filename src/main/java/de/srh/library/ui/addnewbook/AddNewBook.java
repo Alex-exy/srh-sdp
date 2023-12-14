@@ -22,8 +22,6 @@ public class AddNewBook extends JFrame {
     private JButton saveAndAddBookButton;
     private JTextField doiField;
     private JTextField libraryIDField;
-    private JTextField updateDateField;
-    private JTextField addDateField;
     private JTextField descriptionField;
     private JTextField priceField;
     private JTextField genreField;

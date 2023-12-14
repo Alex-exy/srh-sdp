@@ -69,6 +69,7 @@
                 <properties>
                   <font name="Roboto" size="14" style="0"/>
                   <text value="Search by User ID"/>
+                  <toolTipText value="Enter User ID"/>
                 </properties>
               </component>
               <component id="285fb" class="javax.swing.JTextField" binding="searchByUserEmailTextField" default-binding="true">
@@ -80,6 +81,7 @@
                 <properties>
                   <font name="Roboto" size="14" style="0"/>
                   <text value="Search by User Email"/>
+                  <toolTipText value="Enter User Email"/>
                 </properties>
               </component>
               <component id="6681e" class="javax.swing.JButton" binding="searchUserButton">

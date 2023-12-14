@@ -2,7 +2,6 @@ package de.srh.library.ui.editbookdata;
 
 import de.srh.library.dao.BookDao;
 import de.srh.library.entity.Genre;
-import de.srh.library.ui.editbooks.EditBooks;
 import de.srh.library.ui.login.LoginWindow;
 import de.srh.library.entity.Book;
 import org.slf4j.Logger;
@@ -33,6 +32,8 @@ public class EditBookData extends JFrame {
     private JTextField languageField;
     private JTextField subtitleField;
     private JTextField titleField;
+    private JComboBox genreDropDown;
+    private JComboBox comboBox1;
     private BookDao bookDao = new BookDao();
 
 
@@ -51,6 +52,7 @@ public class EditBookData extends JFrame {
         saveChangesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(null, "Changes Saved!");
                 updateBookData(bookId);
             }
         });
@@ -67,23 +69,23 @@ public class EditBookData extends JFrame {
         Book book = bookDao.getBookById(bookId);
         Genre genre = new Genre();
 
-    titleField.setText(book.getBookName());
-    subtitleField.setText(book.getSubtitles());
-    languageField.setText(book.getLanguage());
-    isbnField.setText(book.getIsbn());
-    publishDateField.setText(book.getPublishDate());
-    authorField.setText(book.getBookAuthor());
-    genreField.setText(Integer.toString(book.getGenreId()));
-    priceField.setText(book.getPrice());
-    descriptionField.setText(book.getBookDescription());
-    addDateField.setText(book.getAdditionDate().toString());
-    updateDateField.setText(book.getUpdateDate().toString());
-    libraryIDField.setText(Integer.toString(book.getLibraryId()));
-    doiField.setText(book.getDoi());
-
+        titleField.setText(book.getBookName());
+        subtitleField.setText(book.getSubtitles());
+        languageField.setText(book.getLanguage());
+        isbnField.setText(book.getIsbn());
+        publishDateField.setText(book.getPublishDate());
+        authorField.setText(book.getBookAuthor());
+        genreField.setText(Integer.toString(book.getGenreId()));
+        priceField.setText(book.getPrice());
+        descriptionField.setText(book.getBookDescription());
+        addDateField.setText(book.getAdditionDate().toString());
+        updateDateField.setText(book.getUpdateDate().toString());
+        libraryIDField.setText(Integer.toString(book.getLibraryId()));
+        doiField.setText(book.getDoi());
 
 
     }
+
     public void updateBookData(Long bookId) {
         Book book = new Book();
         book.setBookId(bookId);

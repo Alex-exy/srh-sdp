@@ -3,7 +3,7 @@
   <grid id="27dc6" binding="faqWindow" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="20" y="20" width="500" height="400"/>
+      <xy x="20" y="20" width="500" height="758"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -73,17 +73,21 @@
             <children>
               <scrollpane id="824b8">
                 <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                    <minimum-size width="-1" height="500"/>
+                  </grid>
                 </constraints>
-                <properties/>
+                <properties>
+                  <horizontalScrollBarPolicy value="32"/>
+                  <verticalScrollBarPolicy value="20"/>
+                </properties>
                 <border type="none"/>
                 <children>
-                  <component id="2a6ce" class="javax.swing.JList" binding="questionList">
+                  <component id="52190" class="javax.swing.JTextArea" binding="faqTextBox">
                     <constraints/>
                     <properties>
-                      <font name="Roboto" size="14" style="0"/>
-                      <foreground color="-16777216"/>
-                      <selectionBackground color="-5524801"/>
+                      <font name="Roboto" size="16" style="0"/>
+                      <text value="&#10;  FAQs: Heidelberg Library System&#10;&#10;  1. How do I access the online library borrow system?&#10;  You can access the online library borrow system by visiting our library's website and logging into your account using your student credentials.&#10;  Navigate to the &quot;Browse Library&quot; section for online catalog access.&#10;&#10;  2. How can I search for books in the online catalog? &#10;  Use the search bar on the library's website to find books by title, author, subject, or keywords.&#10;  The online catalog provides detailed information about each item in our collection.&#10;&#10;  3. How do I borrow books online? &#10;  Once you've found the book you want, click on the &quot;Borrow&quot; button, and the item will be added to your virtual checkout.&#10;  Follow the prompts to confirm your selections. &#10;&#10;  4. What is the loan period for online borrowed items? &#10;  The standard loan period is typically one to three weeks for borrowed items.&#10;  You can check the due dates in your online account.&#10;&#10;  5. Can I renew online borrowed items?&#10;  Yes, you can usually renew online borrowed items if no one else has placed a hold on them.&#10;  Log into your account to manage renewals. &#10;&#10;  6. How do I return online borrowed items?&#10;  Online borrowed items are automatically &quot;returned&quot; on their due date. There's no need to physically return them to the library.&#10;  However, please ensure you have downloaded or accessed the content before the due date.  &#10;&#10;  7. How can I check my borrowing history and due dates online?&#10;  Log into your account on the library website, where you can view your borrowing history, due dates, and manage your account settings. &#10; &#10;  8. What should I do if I forget my password or have trouble logging in?&#10;  Click on the &quot;Forgot Password&quot; link on the login page, and follow the instructions to reset your password.&#10;  If you continue to experience issues, contact the library's IT support for assistance.   "/>
                     </properties>
                   </component>
                 </children>
