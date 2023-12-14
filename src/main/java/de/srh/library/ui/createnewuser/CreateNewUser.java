@@ -113,6 +113,7 @@ public class CreateNewUser extends JFrame {
                     ValidatorUtils.validateEmail(email);
                 }catch (ValidateException ve){
                     JOptionPane.showMessageDialog(null, ve.getMessage());
+                    return;
                 }
                 String verificationCode = VerificationCodeManager.generateAndCacheVerificationCode(email);
                 logger.debug("verificationCode: ", verificationCode);
@@ -120,6 +121,7 @@ public class CreateNewUser extends JFrame {
                     sendVerificationCodeEmail(email, verificationCode);
                 }catch (Exception ex){
                     JOptionPane.showMessageDialog(null, "Verification code sent failed.");
+                    return;
                 }
                 JOptionPane.showMessageDialog(null, "Verification code sent successfully.");
             }
