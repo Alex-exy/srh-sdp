@@ -83,6 +83,7 @@ public class EditBooks extends JFrame {
 
             }
         });
+
         editBookDataButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -92,6 +93,7 @@ public class EditBooks extends JFrame {
                     editBookData.setVisible(true);
                 }
                 else{
+
                     JOptionPane.showMessageDialog(null, "Book does not exist! \nPlease try again!");
                 }
             }

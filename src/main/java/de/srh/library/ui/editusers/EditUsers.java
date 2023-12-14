@@ -1,5 +1,6 @@
 package de.srh.library.ui.editusers;
 
+import de.srh.library.ui.edituserdata.EditUserData;
 import de.srh.library.ui.login.LoginWindow;
 import de.srh.library.ui.managementmenu.ManagementMenu;
 import org.slf4j.Logger;
@@ -44,6 +45,8 @@ public class EditUsers extends JFrame {
         editUserButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                EditUserData editUserData = new EditUserData();
+                editUserData.setVisible(true);
                 //Valid user check
                 /*
                 dispose();

@@ -1,5 +1,7 @@
 package de.srh.library.ui.edituserdata;
 
+import de.srh.library.dto.Global;
+import de.srh.library.entity.User;
 import de.srh.library.ui.editusers.EditUsers;
 import de.srh.library.ui.login.LoginWindow;
 import org.slf4j.Logger;
@@ -32,6 +34,7 @@ public class EditUserData extends JFrame {
     private JLabel registrationdateLable;
     private JComboBox userStatus;
     private JButton backButton;
+    private long userId = Global.loggedInUserId;
 
     public EditUserData() {
 
@@ -61,6 +64,10 @@ public class EditUserData extends JFrame {
             }
         });
 
+
+    }
+    public void updateUserData(long userId){
+        User user = new User();
     }
 
 

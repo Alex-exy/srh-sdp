@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
 
 public class InfosSettings extends JFrame {
 
@@ -134,6 +135,7 @@ public class InfosSettings extends JFrame {
     }
     public void updateUserInfo(Long userId) {
         User user = new User();
+        user.setUpdateDate(new Date());
         user.setUserId(userId);
         user.setFirstName(userFirstName.getText());
         user.setFamilyName(userLastName.getText());

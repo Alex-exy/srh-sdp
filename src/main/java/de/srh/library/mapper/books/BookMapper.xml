@@ -23,7 +23,8 @@
     <update id="updateBookInfo" parameterType="de.srh.library.entity.Book">
         update books
         set book_name = #{bookName},subtitles = #{subtitles},language = #{language}, isbn = #{isbn}, publish_date = #{publishDate},
-            book_author = #{bookAuthor}, genre_id = #{genreId}, price = #{price}, book_description = #{bookDescription}, library_id = #{libraryId}, doi = #{doi}
+            book_author = #{bookAuthor}, genre_id = #{genreId}, price = #{price}, book_description = #{bookDescription},
+            update_date = #{updateDate}, library_id = #{libraryId}, doi = #{doi}
         where book_id = #{bookId}
     </update>
 

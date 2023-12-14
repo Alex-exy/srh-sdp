@@ -14,7 +14,7 @@ CREATE TABLE users
     password_hash     VARCHAR(64)         NOT NULL,
     school_id         INT                 NOT NULL,
     registration_date TIMESTAMP           DEFAULT CURRENT_TIMESTAMP,
-    update_time       TIMESTAMP           DEFAULT CURRENT_TIMESTAMP
+    update_date       TIMESTAMP           DEFAULT CURRENT_TIMESTAMP
 );
 COMMENT ON COLUMN users.user_role IS 'S - Student, T - Teacher';
 COMMENT ON COLUMN users.user_status IS 'A - Active, O - Overdue, F - Frozen, I - Inactive';

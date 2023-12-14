@@ -18,13 +18,19 @@
         where email = #{email}
     </update>
 
-
+<!--    Method for User-->
     <update id="updateUserInfo" parameterType="de.srh.library.entity.User">
         update users
-        set first_name = #{firstName},family_name = #{familyName}, email = #{email}, address = #{address}
+        set first_name = #{firstName},family_name = #{familyName}, email = #{email}, address = #{address},update_date = #{updateDate}
         where user_id = #{userId}
     </update>
 
+<!--    Method for Admin-->
+    <update id="updateUserData" parameterType="de.srh.library.entity.User">
+        update users
+        set first_name = #{firstName},family_name = #{familyName}, email = #{email}, address = #{address},update_date = #{updateDate}
+        where user_id = #{userId}
+    </update>
 
     <select id="getUserByEmail" resultType="de.srh.library.entity.User">
         select * from users where email = #{email}

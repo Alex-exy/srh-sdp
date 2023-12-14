@@ -11,12 +11,14 @@ import org.slf4j.LoggerFactory;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
 
 public class EditBookData extends JFrame {
     private static final Logger logger = LoggerFactory.getLogger(LoginWindow.class);
     private JPanel editBookDataWindow;
     private JButton cancelButton;
     private JLabel pageTitle;
+    private Date date = new Date();
     private JButton saveChangesButton;
     private JTextField doiField;
     private JTextField libraryIDField;
@@ -95,6 +97,7 @@ public class EditBookData extends JFrame {
         book.setPrice(priceField.getText());
         book.setBookDescription(descriptionField.getText());
         book.setLibraryId(Integer.parseInt(libraryIDField.getText()));
+        book.setUpdateDate(new Date());
         book.setDoi(doiField.getText());
         bookDao.updateBookInfo(book);
     }
