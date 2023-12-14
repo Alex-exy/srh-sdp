@@ -1,6 +1,10 @@
 package de.srh.library.ui.editbookdata;
 
+import de.srh.library.dao.BookDao;
+import de.srh.library.entity.Genre;
+import de.srh.library.ui.editbooks.EditBooks;
 import de.srh.library.ui.login.LoginWindow;
+import de.srh.library.entity.Book;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,9 +31,10 @@ public class EditBookData extends JFrame {
     private JTextField languageField;
     private JTextField subtitleField;
     private JTextField titleField;
-    private static String testid = "123";
+    private BookDao bookDao = new BookDao();
 
-    public EditBookData(String bookID) {
+
+    public EditBookData(long bookId) {
 
         setAutoRequestFocus(false);
         setContentPane(editBookDataWindow);
@@ -39,12 +44,12 @@ public class EditBookData extends JFrame {
         setVisible(true);
         logger.info("Opening edit book data window ...");
 
-        loadCurrentBookData();
+        loadCurrentBookData(bookId);
 
         saveChangesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                updateBookData();
+                updateBookData(bookId);
             }
         });
         cancelButton.addActionListener(new ActionListener() {
@@ -55,15 +60,46 @@ public class EditBookData extends JFrame {
         });
     }
 
-    public void loadCurrentBookData() {
+    public void loadCurrentBookData(long bookId) {
+
+        Book book = bookDao.getBookById(bookId);
+        Genre genre = new Genre();
+
+    titleField.setText(book.getBookName());
+    subtitleField.setText(book.getSubtitles());
+    languageField.setText(book.getLanguage());
+    isbnField.setText(book.getIsbn());
+    publishDateField.setText(book.getPublishDate());
+    authorField.setText(book.getBookAuthor());
+    genreField.setText(genre.getGenreName());
+    priceField.setText(book.getPrice());
+    descriptionField.setText(book.getBookDescription());
+    addDateField.setText(book.getAdditionDate().toString());
+    updateDateField.setText(book.getUpdateDate().toString());
+    libraryIDField.setText(Integer.toString(book.getLibraryId()));
+    doiField.setText(book.getDoi());
+
+
 
     }
-    public void updateBookData() {
-        //Check valid data input
-        //Set new examplefield.getText() = saved database data . . .
+    public void updateBookData(Long bookId) {
+        Book book = new Book();
+        book.setBookId(bookId);
+        book.setBookName(titleField.getText());
+        book.setSubtitles(subtitleField.getText());
+        book.setLanguage(languageField.getText());
+        book.setIsbn(isbnField.getText());
+        book.setPublishDate(publishDateField.getText());
+        book.setBookAuthor(authorField.getText());
+        book.setPrice(priceField.getText());
+        book.setBookDescription(descriptionField.getText());
+        book.setLibraryId(Integer.parseInt(libraryIDField.getText()));
+        book.setDoi(doiField.getText());
+        bookDao.updateBookInfo(book);
     }
 
     public static void main(String[] args) {
-        new EditBookData(testid);
+        EditBookData editBookData = new EditBookData(4L);
     }
+
 }

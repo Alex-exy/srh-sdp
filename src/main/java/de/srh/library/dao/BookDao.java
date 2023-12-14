@@ -32,4 +32,16 @@ public class BookDao {
             return mapper.removeBook(bookId);
         }
     }
+    public int bookFound(Long bookId) {
+        try (SqlSession session = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession(true)) {
+            BookMapper mapper = session.getMapper(BookMapper.class);
+            return mapper.bookFound(bookId);
+        }
+    }
+    public int updateBookInfo(Book book) {
+        try (SqlSession session = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession(true)) {
+            BookMapper mapper = session.getMapper(BookMapper.class);
+            return mapper.updateBookInfo(book);
+        }
+    }
 }

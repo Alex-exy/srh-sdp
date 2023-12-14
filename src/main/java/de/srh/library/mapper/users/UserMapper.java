@@ -11,5 +11,5 @@ public interface UserMapper {
     User getUserById(Long userId);
     Long getIdByEmail(String email);
     void updateUserPassword(@Param("password") String password, @Param("email") String email);
-    int updateUserInfo(@Param ("firstName") String firstName, @Param ("familyName") String familyName,@Param("email") String email,@Param("address")  String address, @Param("userId") long userId);
+    int updateUserInfo(User user);
 }

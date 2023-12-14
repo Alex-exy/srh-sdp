@@ -1,5 +1,7 @@
 package de.srh.library.ui.editbooks;
 
+import de.srh.library.dao.BookDao;
+import de.srh.library.entity.Book;
 import de.srh.library.ui.addnewbook.AddNewBook;
 import de.srh.library.ui.editbookdata.EditBookData;
 import de.srh.library.ui.login.LoginWindow;
@@ -22,6 +24,10 @@ public class EditBooks extends JFrame {
     private JButton editBookDataButton;
     private JTextField bookIDField;
     private JButton searchBookButton;
+
+    private BookDao bookDao = new BookDao();
+
+
 
     public EditBooks() {
 
@@ -55,12 +61,7 @@ public class EditBooks extends JFrame {
                 removeBook.setVisible(true);
             }
         });
-        searchBookButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
 
-            }
-        });
         editBookDataButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -70,19 +71,42 @@ public class EditBooks extends JFrame {
         searchBookButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //Check book id with database if book is existing
-                JOptionPane.showMessageDialog(null, "Book found!");
-                JOptionPane.showMessageDialog(null, "Book nonexistent! \nPlease try again!");
+                long bookId = Long.parseLong(bookIDField.getText());
+                getBookById(bookId);
+
+                    if (bookFound()) {
+                        JOptionPane.showMessageDialog(null, " Book found!" + bookDao.getBookById(bookId));
+                    }else {
+                            JOptionPane.showMessageDialog(null, "Book does not exist! \nPlease try again!");
+                        }
+
+
             }
         });
         editBookDataButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                EditBookData editBookData = new EditBookData(bookIDField.toString());
-                editBookData.setVisible(true);
+
+                if(bookFound()){
+                    EditBookData editBookData = new EditBookData(Long.parseLong(bookIDField.getText()));
+                    editBookData.setVisible(true);
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "Book does not exist! \nPlease try again!");
+                }
             }
         });
+
     }
+    public Book getBookById(Long bookId){
+        return bookDao.getBookById((bookId));
+    }
+
+    public boolean bookFound(){
+        return bookDao.bookFound(Long.parseLong(bookIDField.getText())) == 1;
+    }
+
+
 
     public static void main(String[] args) {
         EditBooks editBooks = new EditBooks();

@@ -1,5 +1,8 @@
 package de.srh.library.ui.addnewbook;
 
+import de.srh.library.dao.BookDao;
+import de.srh.library.entity.Book;
+import de.srh.library.mapper.books.BookMapper;
 import de.srh.library.ui.editbooks.EditBooks;
 import de.srh.library.ui.login.LoginWindow;
 import de.srh.library.ui.managementmenu.ManagementMenu;
@@ -9,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.UUID;
 
 public class AddNewBook extends JFrame {
     private static final Logger logger = LoggerFactory.getLogger(LoginWindow.class);
@@ -30,6 +34,8 @@ public class AddNewBook extends JFrame {
     private JTextField subtitleField;
     private JTextField titleField;
 
+    private Book book;
+
     public AddNewBook() {
 
         setAutoRequestFocus(false);
@@ -44,7 +50,19 @@ public class AddNewBook extends JFrame {
         saveAndAddBookButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //Database logic - add book
+                BookDao bookDao = new BookDao();
+                book = new Book();
+                book.setBookName(titleField.getText());
+                book.setSubtitles(subtitleField.getText());
+                book.setLanguage(languageField.getText());
+                book.setIsbn(isbnField.getText());
+                book.setPublishDate(publishDateField.getText());
+                book.setBookAuthor( authorField.getText());
+                book.setPrice(priceField.getText());
+                book.setBookDescription(descriptionField.getText());
+                book.setLibraryId(Integer.parseInt(libraryIDField.getText()));
+                book.setDoi(doiField.getText());
+                bookDao.insertBook(book);
                 //Check valid inputs
             }
         });

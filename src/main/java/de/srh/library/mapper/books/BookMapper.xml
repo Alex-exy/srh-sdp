@@ -6,6 +6,12 @@
         select * from books where book_id = #{bookId}
     </select>
 
+    <select id="bookFound" resultType="int">
+        select count(book_id)
+        from books
+        Where book_id = #{book_id};
+    </select>
+
     <select id="getBookByAuthor" resultType="de.srh.library.entity.Book">
         select * from books where book_author = #{author}
     </select>
@@ -13,6 +19,13 @@
     delete from books
     where book_id = #{bookId}
 </delete>
+
+    <update id="updateBookInfo" parameterType="de.srh.library.entity.Book">
+        update books
+        set book_name = #{bookName},subtitles = #{subtitles},language = #{language}, isbn = #{isbn}, publish_date = #{publishDate},
+            book_author = #{bookAuthor}, price = #{price}, book_description = #{bookDescription}, library_id = #{libraryId}, doi = #{doi}
+        where book_id = #{bookId}
+    </update>
 
     <insert id="insertBook" parameterType="de.srh.library.entity.Book">
         <selectKey keyProperty="bookId" resultType="java.lang.Long" order="AFTER">

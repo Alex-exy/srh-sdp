@@ -90,10 +90,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ApiResponse updateUserInfo(String firstName, String familyName,String email, String address, long userId) {
+    public ApiResponse updateUserInfo(User user) {
         try{
 
-            userDao.updateUserInfo(firstName,familyName,email,address,userId);
+            userDao.updateUserInfo(user);
             return ApiResponse.success();
         }catch (Exception e){
             logger.error("User information update failed!", e);

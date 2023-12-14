@@ -11,7 +11,7 @@ public interface UserService {
     ApiResponse createUser(User user);
     ApiResponse<User> getUserByEmail(String email);
     ApiResponse<Integer> updateUserPassword(String password,String email);
-    ApiResponse<Integer> updateUserInfo(String firstName, String familyName,String email,String address, long userId);
+    ApiResponse<Integer> updateUserInfo(User user);
     Long getIdByEmail(String email);
 
 }

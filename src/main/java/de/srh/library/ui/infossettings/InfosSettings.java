@@ -2,6 +2,7 @@ package de.srh.library.ui.infossettings;
 
 import de.srh.library.dao.UserDao;
 import de.srh.library.dto.Global;
+import de.srh.library.entity.User;
 import de.srh.library.ui.login.LoginWindow;
 import de.srh.library.ui.mainmenu.MainMenu;
 import de.srh.library.ui.resetpassword.ResetPassword;
@@ -33,6 +34,7 @@ public class InfosSettings extends JFrame {
     private JTextField userFirstName;
     private JComboBox userSelectSchool;
     private long userId = Global.loggedInUserId;
+    private UserDao userDao = new UserDao();
 
     //Testing only
     private String testfirstname = "shiti";
@@ -85,7 +87,7 @@ public class InfosSettings extends JFrame {
                 //Save new user data, overwrite old user data from database
                 // ! Check for valid data input !
                 updateUserInformation(userFirstName.getText(), userLastName.getText(), userEmail.getText(), userAddress.getText(), Long.parseLong(userID.getText()), userRole.getText());
-                updateUserInfo(userFirstName.getText(),userLastName.getText(),userEmail.getText(), userAddress.getText(),userId);
+                updateUserInfo(userId);
             }
         });
         changePasswordButton.addActionListener(new ActionListener() {
@@ -130,12 +132,14 @@ public class InfosSettings extends JFrame {
         userID.setText(String.valueOf(newUserNumber));
         userRole.setText(newUserRole);
     }
-    public void updateUserInfo(String firstName,String lastName,String email, String address, long userId) {
-        email = userEmail.getText();
-        address = userAddress.getText();
-
-        UserDao userDao = new UserDao();
-        userDao.updateUserInfo(firstName,lastName,email, address, userId);
+    public void updateUserInfo(Long userId) {
+        User user = new User();
+        user.setUserId(userId);
+        user.setFirstName(userFirstName.getText());
+        user.setFamilyName(userLastName.getText());
+        user.setEmail(userEmail.getText());
+        user.setAddress(userAddress.getText());
+        userDao.updateUserInfo(user);
 
     }
 

@@ -10,4 +10,6 @@ public interface BookMapper {
 
     int insertBook(Book book);
     int removeBook(Long bookId);
+    int bookFound(Long bookId);
+    int updateBookInfo(Book book);
 }
