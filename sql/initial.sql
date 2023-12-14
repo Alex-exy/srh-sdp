@@ -164,10 +164,14 @@ insert into genre(genre_name)values
 
 ALTER SEQUENCE public.genre_genre_id_seq RESTART WITH 100;
 
-DROP TABLE IF EXISTS libraries
+DROP TABLE IF EXISTS libraries;
 
 CREATE TABLE libraries
 (
     library_id             SERIAL           PRIMARY KEY,
     library_name           VARCHAR(64)      UNIQUE NOT NULL
 );
+
+insert into libraries(library_id, library_name)
+values (10, 'SRH University Heidelberg Library'),
+       (11, 'Heidelberg Library');

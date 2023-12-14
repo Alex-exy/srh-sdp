@@ -20,7 +20,7 @@ public enum ApiResponseCode {
     this.message = message;
   }
 
-  public int getCode() {
+    public int getCode() {
     return code;
   }
 
