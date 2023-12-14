@@ -71,7 +71,7 @@ public class EditBookData extends JFrame {
     isbnField.setText(book.getIsbn());
     publishDateField.setText(book.getPublishDate());
     authorField.setText(book.getBookAuthor());
-    genreField.setText(genre.getGenreName());
+    genreField.setText(Integer.toString(book.getGenreId()));
     priceField.setText(book.getPrice());
     descriptionField.setText(book.getBookDescription());
     addDateField.setText(book.getAdditionDate().toString());
@@ -91,6 +91,7 @@ public class EditBookData extends JFrame {
         book.setIsbn(isbnField.getText());
         book.setPublishDate(publishDateField.getText());
         book.setBookAuthor(authorField.getText());
+        book.setGenreId(Integer.parseInt(genreField.getText()));
         book.setPrice(priceField.getText());
         book.setBookDescription(descriptionField.getText());
         book.setLibraryId(Integer.parseInt(libraryIDField.getText()));
@@ -99,7 +100,7 @@ public class EditBookData extends JFrame {
     }
 
     public static void main(String[] args) {
-        EditBookData editBookData = new EditBookData(4L);
+        EditBookData editBookData = new EditBookData(1L);
     }
 
 }

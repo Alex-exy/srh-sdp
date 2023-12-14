@@ -58,6 +58,7 @@ public class AddNewBook extends JFrame {
                 book.setIsbn(isbnField.getText());
                 book.setPublishDate(publishDateField.getText());
                 book.setBookAuthor( authorField.getText());
+                book.setGenreId(Integer.parseInt(genreField.getText()));
                 book.setPrice(priceField.getText());
                 book.setBookDescription(descriptionField.getText());
                 book.setLibraryId(Integer.parseInt(libraryIDField.getText()));

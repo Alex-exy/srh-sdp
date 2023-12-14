@@ -23,7 +23,7 @@
     <update id="updateBookInfo" parameterType="de.srh.library.entity.Book">
         update books
         set book_name = #{bookName},subtitles = #{subtitles},language = #{language}, isbn = #{isbn}, publish_date = #{publishDate},
-            book_author = #{bookAuthor}, price = #{price}, book_description = #{bookDescription}, library_id = #{libraryId}, doi = #{doi}
+            book_author = #{bookAuthor}, genre_id = #{genreId}, price = #{price}, book_description = #{bookDescription}, library_id = #{libraryId}, doi = #{doi}
         where book_id = #{bookId}
     </update>
 
@@ -33,13 +33,13 @@
         </selectKey>
 
         insert INTO books (
-        book_name, subtitles, language, isbn, publish_date, book_author,
+        book_name, subtitles, language, isbn, publish_date, book_author, genre_id,
         price, book_description, library_id, doi
         )
 
         VALUES (
         #{bookName}, #{subtitles}, #{language}, #{isbn}, #{publishDate},
-        #{bookAuthor}, #{price}, #{bookDescription}, #{libraryId}, #{doi}
+        #{bookAuthor},#{genreId}, #{price}, #{bookDescription}, #{libraryId}, #{doi}
         )
     </insert>
 </mapper>

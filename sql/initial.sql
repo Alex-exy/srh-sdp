@@ -79,6 +79,7 @@ CREATE TABLE books
     isbn               VARCHAR(15)        NOT NULL,
     publish_date       VARCHAR(20)        NOT NULL,
     book_author        VARCHAR(255)       NOT NULL,
+    genre_id           INT                NOT NULL,
     price              VARCHAR(10)        NOT NULL,
     book_description   VARCHAR(1024)      NOT NULL,
     addition_date      TIMESTAMP          DEFAULT CURRENT_TIMESTAMP,
