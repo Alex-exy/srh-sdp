@@ -58,7 +58,7 @@
         <properties/>
         <border type="none"/>
         <children>
-          <grid id="65e6f" layout-manager="GridLayoutManager" row-count="18" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="65e6f" layout-manager="GridLayoutManager" row-count="18" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="20" left="20" bottom="20" right="500"/>
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -72,7 +72,7 @@
             <children>
               <component id="5317f" class="javax.swing.JComboBox" binding="selectSchool">
                 <constraints>
-                  <grid row="13" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                  <grid row="13" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                     <preferred-size width="150" height="-1"/>
                     <maximum-size width="500" height="-1"/>
                   </grid>
@@ -95,7 +95,7 @@
               </component>
               <component id="42847" class="javax.swing.JTextField" binding="enterFirstName">
                 <constraints>
-                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                  <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                     <preferred-size width="150" height="-1"/>
                     <maximum-size width="500" height="-1"/>
                   </grid>
@@ -107,7 +107,7 @@
               </component>
               <component id="6a0f0" class="javax.swing.JComboBox" binding="selectRole">
                 <constraints>
-                  <grid row="15" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                  <grid row="15" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
                     <maximum-size width="500" height="-1"/>
                   </grid>
                 </constraints>
@@ -117,7 +117,7 @@
               </component>
               <component id="59afa" class="javax.swing.JTextField" binding="enterLastName">
                 <constraints>
-                  <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                  <grid row="3" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                     <preferred-size width="150" height="-1"/>
                     <maximum-size width="500" height="-1"/>
                   </grid>
@@ -129,7 +129,7 @@
               </component>
               <component id="9de59" class="javax.swing.JLabel" binding="labelFirstName">
                 <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <font name="Roboto" size="16" style="0"/>
@@ -138,7 +138,7 @@
               </component>
               <component id="71a5f" class="javax.swing.JLabel" binding="labelLastName">
                 <constraints>
-                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <font name="Roboto" size="16" style="0"/>
@@ -147,7 +147,7 @@
               </component>
               <component id="fb023" class="javax.swing.JLabel" binding="labelEmail">
                 <constraints>
-                  <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="4" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <font name="Roboto" size="16" style="0"/>
@@ -156,7 +156,7 @@
               </component>
               <component id="d92b5" class="javax.swing.JLabel" binding="labelAddress">
                 <constraints>
-                  <grid row="10" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="10" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <font name="Roboto" size="16" style="0"/>
@@ -165,7 +165,7 @@
               </component>
               <component id="96ab9" class="javax.swing.JLabel" binding="labelSchoolID">
                 <constraints>
-                  <grid row="12" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="12" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <font name="Roboto" size="16" style="0"/>
@@ -174,7 +174,7 @@
               </component>
               <component id="d6bce" class="javax.swing.JLabel" binding="labelRole">
                 <constraints>
-                  <grid row="14" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="14" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <font name="Roboto" size="16" style="0"/>
@@ -183,7 +183,7 @@
               </component>
               <component id="e7217" class="javax.swing.JLabel" binding="lableEnterPassword">
                 <constraints>
-                  <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="6" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <font name="Roboto" size="16" style="0"/>
@@ -192,7 +192,7 @@
               </component>
               <component id="a6cdb" class="javax.swing.JPasswordField" binding="enterPassword">
                 <constraints>
-                  <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                  <grid row="7" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                     <preferred-size width="150" height="-1"/>
                     <maximum-size width="500" height="-1"/>
                   </grid>
@@ -203,7 +203,7 @@
               </component>
               <component id="81e7a" class="javax.swing.JTextField" binding="enterAddress">
                 <constraints>
-                  <grid row="11" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                  <grid row="11" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                     <preferred-size width="150" height="-1"/>
                     <maximum-size width="500" height="-1"/>
                   </grid>
@@ -215,7 +215,7 @@
               </component>
               <component id="eaf57" class="javax.swing.JPasswordField" binding="reenterPassword">
                 <constraints>
-                  <grid row="9" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                  <grid row="9" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                     <preferred-size width="150" height="-1"/>
                     <maximum-size width="500" height="-1"/>
                   </grid>
@@ -226,16 +226,23 @@
               </component>
               <component id="57adf" class="javax.swing.JLabel" binding="lableReenterPassword">
                 <constraints>
-                  <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="8" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <font name="Roboto" size="16" style="0"/>
                   <text value="Reenter Password"/>
                 </properties>
               </component>
+              <vspacer id="a4237">
+                <constraints>
+                  <grid row="16" column="0" row-span="1" col-span="2" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false">
+                    <minimum-size width="-1" height="5"/>
+                  </grid>
+                </constraints>
+              </vspacer>
               <component id="3e0b9" class="javax.swing.JCheckBox" binding="agreementCheckBox">
                 <constraints>
-                  <grid row="17" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="3" use-parent-layout="false">
+                  <grid row="17" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="3" use-parent-layout="false">
                     <minimum-size width="10" height="-1"/>
                   </grid>
                 </constraints>
@@ -246,13 +253,33 @@
                   <text value="[Required]: I accept the terms and conditions of usage."/>
                 </properties>
               </component>
-              <vspacer id="a4237">
+              <component id="3cb3e" class="javax.swing.JButton" binding="getVerificationCodeButton" default-binding="true">
                 <constraints>
-                  <grid row="16" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false">
-                    <minimum-size width="-1" height="5"/>
+                  <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                    <minimum-size width="100" height="-1"/>
                   </grid>
                 </constraints>
-              </vspacer>
+                <properties>
+                  <text value="Get Verification Code"/>
+                </properties>
+              </component>
+              <component id="70d5e" class="javax.swing.JTextField" binding="verificationCode">
+                <constraints>
+                  <grid row="5" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                    <preferred-size width="150" height="-1"/>
+                  </grid>
+                </constraints>
+                <properties/>
+              </component>
+              <component id="bf17d" class="javax.swing.JLabel">
+                <constraints>
+                  <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <font name="Roboto" size="16" style="0"/>
+                  <text value="Enter Verification Code"/>
+                </properties>
+              </component>
             </children>
           </grid>
         </children>

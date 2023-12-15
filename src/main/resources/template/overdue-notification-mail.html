@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heidelberg Library - Overdue Book Notification</title>
+</head>
+<body>
+<div class="overdue-notification">
+    <h2>Overdue Book Notification</h2>
+    <p>
+        You have the following books overdue from Heidelberg Library. Please return them promptly to avoid further fines.
+    </p>
+
+    <ul>
+        <#list books as book>
+        <li>
+            <p>${book.bookName}, Overdue: ${book.daysOverdue} days, Fine: €${book.fineAmount}</p>
+        </li>
+    </#list>
+    </ul>
+
+</div>
+</body>
+</html>

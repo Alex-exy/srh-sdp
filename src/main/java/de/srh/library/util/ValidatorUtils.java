@@ -26,4 +26,9 @@ public class ValidatorUtils {
     Validator.validateMatchRegex(
         "^[\\p{L}0-9.,\\s-]{1,255}$", address, "Invalid address.");
     }
+
+    public static void validateVerificationCode(String code){
+        Validator.validateMatchRegex(
+                "\\d{4}", code, "Invalid verification code.");
+    }
 }

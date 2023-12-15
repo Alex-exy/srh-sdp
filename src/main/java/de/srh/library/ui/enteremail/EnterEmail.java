@@ -1,8 +1,8 @@
 package de.srh.library.ui.enteremail;
 
 import cn.hutool.core.collection.ListUtil;
+import cn.hutool.core.lang.Dict;
 import de.srh.library.dto.ApiResponse;
-import de.srh.library.dto.ApiResponseCode;
 import de.srh.library.entity.User;
 import de.srh.library.service.user.UserService;
 import de.srh.library.service.user.UserServiceImpl;
@@ -59,9 +59,10 @@ public class EnterEmail extends JFrame {
     }
 
     private void sendPasswordResetEmail(String emailAddress) {
-        EmailSender.send(ListUtil.toList(emailAddress),
+        EmailSender.send(
+                ListUtil.toList(emailAddress),
                 "Reset Password - Heidelberg Library",
-                "Click <a href = https://github.com/Alex-exy/srh-sdp/> here</a> to set a new password.",
+                Dict.create().set("mail", "Click <a href = https://github.com/Alex-exy/srh-sdp/> here</a> to set a new password."),
                 "password-reset-mail.html",
                 true);
     }

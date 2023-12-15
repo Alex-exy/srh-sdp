@@ -2,17 +2,13 @@ package de.srh.library.ui.addnewbook;
 
 import de.srh.library.dao.BookDao;
 import de.srh.library.entity.Book;
-import de.srh.library.mapper.books.BookMapper;
-import de.srh.library.ui.editbooks.EditBooks;
 import de.srh.library.ui.login.LoginWindow;
-import de.srh.library.ui.managementmenu.ManagementMenu;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.UUID;
 
 public class AddNewBook extends JFrame {
     private static final Logger logger = LoggerFactory.getLogger(LoginWindow.class);

@@ -33,7 +33,7 @@ class UsersDaoTest {
   @Order(1)
   void insertUser(){
       assertNull(initUser.getUserId());
-    assertEquals(1, usersDao.insertUser(initUser));
+      assertEquals(1, usersDao.insertUser(initUser));
       assertNotNull(initUser.getUserId());
   }
   @Test
