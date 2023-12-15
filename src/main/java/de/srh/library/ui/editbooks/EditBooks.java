@@ -29,8 +29,6 @@ public class EditBooks extends JFrame {
     private BookService bookService;
 
 
-
-
     public EditBooks() {
 
         setAutoRequestFocus(false);
@@ -56,13 +54,6 @@ public class EditBooks extends JFrame {
                 addNewBook.setVisible(true);
             }
         });
-        removeBookButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                RemoveBook removeBook = new RemoveBook();
-                removeBook.setVisible(true);
-            }
-        });
 
         searchBookButton.addActionListener(new ActionListener() {
             @Override
@@ -70,17 +61,16 @@ public class EditBooks extends JFrame {
                 long bookId = Long.parseLong(bookIDField.getText());
                 getBookById(bookId);
 
-                    if (bookFound()) {
-                        bookService = BookServiceImpl.createInstance();
-                        JOptionPane.showMessageDialog(null, " Book found!" + bookService.getBookById(bookId));
-                    }else {
-                            JOptionPane.showMessageDialog(null, "Book does not exist! \nPlease try again!");
-                        }
-
-
+                if (bookFound()) {
+                    bookService = BookServiceImpl.createInstance();
+                    JOptionPane.showMessageDialog(null, " Book found!" + bookService.getBookById(bookId));
+                } else {
+                    JOptionPane.showMessageDialog(null, "Book does not exist! \nPlease try again!");
+                }
             }
         });
 
+        /* BUTTON NO LONGER EXISTENT
         editBookDataButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -96,17 +86,18 @@ public class EditBooks extends JFrame {
                 }
             }
         });
+        */
 
     }
-    private ApiResponse getBookById(long bookId){
+
+    private ApiResponse getBookById(long bookId) {
         bookService = BookServiceImpl.createInstance();
         return bookService.getBookById((bookId));
     }
 
-    public boolean bookFound(){
+    public boolean bookFound() {
         return bookService.bookFound(Long.parseLong(bookIDField.getText())).getData() == 1;
     }
-
 
 
     public static void main(String[] args) {

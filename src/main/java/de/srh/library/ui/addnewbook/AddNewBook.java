@@ -27,6 +27,8 @@ public class AddNewBook extends JFrame {
     private JTextField languageField;
     private JTextField subtitleField;
     private JTextField titleField;
+    private JComboBox genreDropDown;
+    private JComboBox libraryDropDown;
 
     private Book book;
 
@@ -51,7 +53,7 @@ public class AddNewBook extends JFrame {
                 book.setLanguage(languageField.getText());
                 book.setIsbn(isbnField.getText());
                 book.setPublishDate(publishDateField.getText());
-                book.setBookAuthor( authorField.getText());
+                book.setBookAuthor(authorField.getText());
                 book.setGenreId(Integer.parseInt(genreField.getText()));
                 book.setPrice(priceField.getText());
                 book.setBookDescription(descriptionField.getText());

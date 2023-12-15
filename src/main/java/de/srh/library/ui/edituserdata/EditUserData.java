@@ -37,6 +37,9 @@ public class EditUserData extends JFrame {
     private JLabel userSchool;
     private JTextField userUpdateDate;
     private JLabel updateDate;
+    private JButton editDataButton;
+    private JButton deleteUserButton;
+    private JButton saveButton;
 
     public EditUserData() {
 
@@ -48,15 +51,25 @@ public class EditUserData extends JFrame {
         setVisible(true);
         logger.info("Opening edit user data window ...");
 
-
         saveChangesButton.addActionListener(new ActionListener() {
-            //Check for changes
             @Override
             public void actionPerformed(ActionEvent e) {
                 JOptionPane.showMessageDialog(null, "Changes Saved!");
+                saveChangesButton.setEnabled(false);
             }
         });
-
+        deleteUserButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            //DELETE USER FROM DATABASE LOGIC
+            }
+        });
+        editDataButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                saveChangesButton.setEnabled(true);
+            }
+        });
         goBack.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

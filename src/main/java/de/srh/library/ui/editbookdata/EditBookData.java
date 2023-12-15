@@ -38,7 +38,9 @@ public class EditBookData extends JFrame {
     private JTextField subtitleField;
     private JTextField titleField;
     private JComboBox genreDropDown;
-    private JComboBox comboBox1;
+    private JComboBox libraryDropDown;
+    private JButton editDataButton;
+    private JButton deleteBookButton;
 
     private BookService bookService;
     private Map<String, Integer> genresMap;
@@ -61,6 +63,7 @@ public class EditBookData extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 JOptionPane.showMessageDialog(null, "Changes Saved!");
                 updateBookData(bookId);
+                saveChangesButton.setEnabled(false);
             }
         });
         cancelButton.addActionListener(new ActionListener() {
@@ -69,13 +72,25 @@ public class EditBookData extends JFrame {
                 dispose();
             }
         });
+        editDataButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                saveChangesButton.setEnabled(true);
+            }
+        });
+        deleteBookButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
     }
 
     public void loadCurrentBookData(long bookId) {
 
         bookService = BookServiceImpl.createInstance();
         ApiResponse<Map<String, Integer>> apiResponse = bookService.getAllGenres();
-        if (ApiResponseCode.SUCCESS.getCode() == apiResponse.getCode()){
+        if (ApiResponseCode.SUCCESS.getCode() == apiResponse.getCode()) {
             genresMap = apiResponse.getData();
             genresMap.forEach((s, i) -> genreDropDown.addItem(s));
         }
