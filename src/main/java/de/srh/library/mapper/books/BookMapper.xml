@@ -2,8 +2,10 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="de.srh.library.mapper.books.BookMapper">
-    <select id="getBookById" resultType="de.srh.library.entity.Book">
-        select * from books where book_id = #{bookId}
+
+    <select id="getBookById" resultType="de.srh.library.dto.BookDto">
+        select * from books left join genres on books.genre_id = genres.genre_id
+        where books.book_id = #{bookId}
     </select>
 
     <select id="bookFound" resultType="int">

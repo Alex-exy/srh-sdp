@@ -97,15 +97,15 @@ CREATE INDEX idx_doi ON books (doi);
 COMMENT ON COLUMN books.doi IS 'DIGITAL OBJECT IDENTIFIERS ARE UNIQUE ALPHANUMERIC CODES ASSIGNED BY PUBLISHERS';
 COMMENT ON COLUMN books.price IS 'PRICE IS IN EUROS';
 
-DROP TABLE IF EXISTS genre;
+DROP TABLE IF EXISTS genres;
 
-CREATE TABLE genre
+CREATE TABLE genres
 (
     genre_id             SERIAL           PRIMARY KEY,
     genre_name           VARCHAR(64)      UNIQUE NOT NULL
 );
 
-insert into genre(genre_name)values
+insert into genres(genre_name)values
  ('Action and adventure'),
  ('Art/architecture'),
  ('Alternate history'),
@@ -162,7 +162,7 @@ insert into genre(genre_name)values
  ('Young adult'),
  ('True crime');
 
-ALTER SEQUENCE public.genre_genre_id_seq RESTART WITH 100;
+ALTER SEQUENCE public.genre_genres_id_seq RESTART WITH 100;
 
 DROP TABLE IF EXISTS libraries;
 

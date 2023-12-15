@@ -1,8 +1,11 @@
 package de.srh.library.ui.infossettings;
 
 import de.srh.library.dao.UserDao;
+import de.srh.library.dto.ApiResponse;
 import de.srh.library.dto.Global;
 import de.srh.library.entity.User;
+import de.srh.library.service.user.UserService;
+import de.srh.library.service.user.UserServiceImpl;
 import de.srh.library.ui.login.LoginWindow;
 import de.srh.library.ui.mainmenu.MainMenu;
 import de.srh.library.ui.resetpassword.ResetPassword;
@@ -35,7 +38,7 @@ public class InfosSettings extends JFrame {
     private JTextField userFirstName;
     private JComboBox userSelectSchool;
     private long userId = Global.loggedInUserId;
-    private UserDao userDao = new UserDao();
+    private UserService userService;
 
     //Testing only
     private String testfirstname = "shiti";
@@ -88,6 +91,7 @@ public class InfosSettings extends JFrame {
                 //Save new user data, overwrite old user data from database
                 // ! Check for valid data input !
                 updateUserInformation(userFirstName.getText(), userLastName.getText(), userEmail.getText(), userAddress.getText(), Long.parseLong(userID.getText()), userRole.getText());
+                userService = UserServiceImpl.createInstance();
                 updateUserInfo(userId);
             }
         });
@@ -133,7 +137,7 @@ public class InfosSettings extends JFrame {
         userID.setText(String.valueOf(newUserNumber));
         userRole.setText(newUserRole);
     }
-    public void updateUserInfo(Long userId) {
+    private ApiResponse updateUserInfo(Long userId) {
         User user = new User();
         user.setUpdateDate(new Date());
         user.setUserId(userId);
@@ -141,7 +145,7 @@ public class InfosSettings extends JFrame {
         user.setFamilyName(userLastName.getText());
         user.setEmail(userEmail.getText());
         user.setAddress(userAddress.getText());
-        userDao.updateUserInfo(user);
+        return userService.updateUserInfo(user);
 
     }
 

@@ -1,7 +1,11 @@
 package de.srh.library.ui.editbookdata;
 
-import de.srh.library.dao.BookDao;
-import de.srh.library.entity.Genre;
+
+import de.srh.library.dto.ApiResponse;
+import de.srh.library.dto.ApiResponseCode;
+import de.srh.library.dto.BookDto;
+import de.srh.library.service.book.BookService;
+import de.srh.library.service.book.BookServiceImpl;
 import de.srh.library.ui.login.LoginWindow;
 import de.srh.library.entity.Book;
 import org.slf4j.Logger;
@@ -11,6 +15,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Date;
+import java.util.Map;
 
 public class EditBookData extends JFrame {
     private static final Logger logger = LoggerFactory.getLogger(LoginWindow.class);
@@ -34,7 +39,9 @@ public class EditBookData extends JFrame {
     private JTextField titleField;
     private JComboBox genreDropDown;
     private JComboBox comboBox1;
-    private BookDao bookDao = new BookDao();
+
+    private BookService bookService;
+    private Map<String, Integer> genresMap;
 
 
     public EditBookData(long bookId) {
@@ -66,27 +73,29 @@ public class EditBookData extends JFrame {
 
     public void loadCurrentBookData(long bookId) {
 
-        Book book = bookDao.getBookById(bookId);
-        Genre genre = new Genre();
-
-        titleField.setText(book.getBookName());
-        subtitleField.setText(book.getSubtitles());
-        languageField.setText(book.getLanguage());
-        isbnField.setText(book.getIsbn());
-        publishDateField.setText(book.getPublishDate());
-        authorField.setText(book.getBookAuthor());
-        genreField.setText(Integer.toString(book.getGenreId()));
-        priceField.setText(book.getPrice());
-        descriptionField.setText(book.getBookDescription());
-        addDateField.setText(book.getAdditionDate().toString());
-        updateDateField.setText(book.getUpdateDate().toString());
-        libraryIDField.setText(Integer.toString(book.getLibraryId()));
-        doiField.setText(book.getDoi());
+        bookService = BookServiceImpl.createInstance();
+        ApiResponse<Map<String, Integer>> apiResponse = bookService.getAllGenres();
+        if (ApiResponseCode.SUCCESS.getCode() == apiResponse.getCode()){
+            genresMap = apiResponse.getData();
+            genresMap.forEach((s, i) -> genreDropDown.addItem(s));
+        }
+        BookDto bookDto = bookService.getBookById(bookId).getData();
+        titleField.setText(bookDto.getBookName());
+        subtitleField.setText(bookDto.getSubtitles());
+        languageField.setText(bookDto.getLanguage());
+        isbnField.setText(bookDto.getIsbn());
+        publishDateField.setText(bookDto.getPublishDate());
+        authorField.setText(bookDto.getBookAuthor());
+        genreDropDown.addItem(genresMap);
+        priceField.setText(bookDto.getPrice());
+        descriptionField.setText(bookDto.getBookDescription());
+//        libraryIDField.setText(Integer.toString(bookDto.getLibraryId()));
+        doiField.setText(bookDto.getDoi());
 
 
     }
 
-    public void updateBookData(Long bookId) {
+    private ApiResponse updateBookData(Long bookId) {
         Book book = new Book();
         book.setBookId(bookId);
         book.setBookName(titleField.getText());
@@ -95,13 +104,13 @@ public class EditBookData extends JFrame {
         book.setIsbn(isbnField.getText());
         book.setPublishDate(publishDateField.getText());
         book.setBookAuthor(authorField.getText());
-        book.setGenreId(Integer.parseInt(genreField.getText()));
+//        book.setGenreId(genresMap.get(genreDropDown.getSelectedItem().toString()));
         book.setPrice(priceField.getText());
         book.setBookDescription(descriptionField.getText());
-        book.setLibraryId(Integer.parseInt(libraryIDField.getText()));
+//        book.setLibraryId(Integer.parseInt(libraryIDField.getText()));
         book.setUpdateDate(new Date());
         book.setDoi(doiField.getText());
-        bookDao.updateBookInfo(book);
+        return bookService.updateBookInfo(book);
     }
 
     public static void main(String[] args) {

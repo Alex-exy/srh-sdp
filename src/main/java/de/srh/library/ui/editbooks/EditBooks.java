@@ -1,7 +1,9 @@
 package de.srh.library.ui.editbooks;
 
-import de.srh.library.dao.BookDao;
-import de.srh.library.entity.Book;
+
+import de.srh.library.dto.ApiResponse;
+import de.srh.library.service.book.BookService;
+import de.srh.library.service.book.BookServiceImpl;
 import de.srh.library.ui.addnewbook.AddNewBook;
 import de.srh.library.ui.editbookdata.EditBookData;
 import de.srh.library.ui.login.LoginWindow;
@@ -24,8 +26,8 @@ public class EditBooks extends JFrame {
     private JButton editBookDataButton;
     private JTextField bookIDField;
     private JButton searchBookButton;
+    private BookService bookService;
 
-    private BookDao bookDao = new BookDao();
 
 
 
@@ -62,12 +64,6 @@ public class EditBooks extends JFrame {
             }
         });
 
-        editBookDataButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
         searchBookButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -75,7 +71,8 @@ public class EditBooks extends JFrame {
                 getBookById(bookId);
 
                     if (bookFound()) {
-                        JOptionPane.showMessageDialog(null, " Book found!" + bookDao.getBookById(bookId));
+                        bookService = BookServiceImpl.createInstance();
+                        JOptionPane.showMessageDialog(null, " Book found!" + bookService.getBookById(bookId));
                     }else {
                             JOptionPane.showMessageDialog(null, "Book does not exist! \nPlease try again!");
                         }
@@ -87,9 +84,10 @@ public class EditBooks extends JFrame {
         editBookDataButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                bookService = BookServiceImpl.createInstance();
+                long bookId = Long.parseLong(bookIDField.getText());
                 if(bookFound()){
-                    EditBookData editBookData = new EditBookData(Long.parseLong(bookIDField.getText()));
+                    EditBookData editBookData = new EditBookData(bookId);
                     editBookData.setVisible(true);
                 }
                 else{
@@ -100,12 +98,13 @@ public class EditBooks extends JFrame {
         });
 
     }
-    public Book getBookById(Long bookId){
-        return bookDao.getBookById((bookId));
+    private ApiResponse getBookById(long bookId){
+        bookService = BookServiceImpl.createInstance();
+        return bookService.getBookById((bookId));
     }
 
     public boolean bookFound(){
-        return bookDao.bookFound(Long.parseLong(bookIDField.getText())) == 1;
+        return bookService.bookFound(Long.parseLong(bookIDField.getText())).getData() == 1;
     }
 
 
