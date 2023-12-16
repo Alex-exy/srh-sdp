@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="de.srh.library.mapper.users.UserMapper">
 
-    <select id="getUserById" resultType="de.srh.library.entity.User">
+    <select id="getUserById" resultType="de.srh.library.dto.UserDto">
         select * from users where user_id = #{userId}
     </select>
 
@@ -18,7 +18,25 @@
         where email = #{email}
     </update>
 
-<!--    Method for User-->
+    <select id="userFoundId" resultType="int">
+        select count(user_id)
+        from users
+        Where user_id = #{userId};
+    </select>
+
+    <select id="userFoundEmail" resultType="int">
+        select count(user_id)
+        from users
+        Where email = #{email};
+    </select>
+
+    <delete id="removeUser" parameterType="de.srh.library.entity.User">
+        delete from users
+        where user_id= #{userId}
+    </delete>
+
+
+    <!--    Method for User-->
     <update id="updateUserInfo" parameterType="de.srh.library.entity.User">
         update users
         set first_name = #{firstName},family_name = #{familyName}, email = #{email}, address = #{address},update_date = #{updateDate}
@@ -32,7 +50,7 @@
         where user_id = #{userId}
     </update>
 
-    <select id="getUserByEmail" resultType="de.srh.library.entity.User">
+    <select id="getUserByEmail" resultType="de.srh.library.dto.UserDto">
         select * from users where email = #{email}
     </select>
 

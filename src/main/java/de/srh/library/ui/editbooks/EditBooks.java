@@ -61,32 +61,22 @@ public class EditBooks extends JFrame {
                 long bookId = Long.parseLong(bookIDField.getText());
                 getBookById(bookId);
 
-                if (bookFound()) {
+
                     bookService = BookServiceImpl.createInstance();
-                    JOptionPane.showMessageDialog(null, " Book found!" + bookService.getBookById(bookId));
-                } else {
-                    JOptionPane.showMessageDialog(null, "Book does not exist! \nPlease try again!");
-                }
+                    if(bookFound()){
+                        EditBookData editBookData = new EditBookData(bookId);
+                        editBookData.setVisible(true);
+                    }
+                    else{
+
+                        JOptionPane.showMessageDialog(null, "Book does not exist! \nPlease try again!");
+                    }
+
+
             }
         });
 
-        /* BUTTON NO LONGER EXISTENT
-        editBookDataButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                bookService = BookServiceImpl.createInstance();
-                long bookId = Long.parseLong(bookIDField.getText());
-                if(bookFound()){
-                    EditBookData editBookData = new EditBookData(bookId);
-                    editBookData.setVisible(true);
-                }
-                else{
 
-                    JOptionPane.showMessageDialog(null, "Book does not exist! \nPlease try again!");
-                }
-            }
-        });
-        */
 
     }
 

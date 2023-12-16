@@ -17,6 +17,7 @@ public class BookDto {
     private String price;
     private String bookDescription;
     private int libraryId;
+    private String libraryName;
     private String doi;
     private Date additionDate;
     private Date updateDate;
@@ -133,6 +134,14 @@ public class BookDto {
 
     public void setLibraryId(int libraryId) {
         this.libraryId = libraryId;
+    }
+
+    public String getLibraryName() {
+        return libraryName;
+    }
+
+    public void setLibraryName(String libraryName) {
+        this.libraryName = libraryName;
     }
 
     public String getDoi() {

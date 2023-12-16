@@ -10,7 +10,7 @@ public interface BookMapper {
     BookDto getBookByAuthor(String author);
 
     int insertBook(Book book);
-    int removeBook(Long bookId);
-    int bookFound(Long bookId);
+    int removeBook(long bookId);
+    int bookFound(long bookId);
     int updateBookInfo(Book book);
 }

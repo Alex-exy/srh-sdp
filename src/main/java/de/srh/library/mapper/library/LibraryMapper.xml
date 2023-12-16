@@ -1,0 +1,33 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="de.srh.library.mapper.library.LibraryMapper">
+
+    <select id="getAllLibraries" resultType="de.srh.library.entity.Library">
+        select * from libraries;
+    </select>
+
+    <select id="getLibraryById" resultType="de.srh.library.entity.Library">
+        select * from libraries where library_id = #{libraryId}
+    </select>
+
+    <select id="getLibraryByName" resultType="de.srh.library.entity.Library">
+        select * from libraries where library_name  = #{libraryName}
+    </select>
+
+
+    <insert id="insertLibrary" parameterType="de.srh.library.entity.Library">
+        <selectKey keyProperty="libraryId" resultType="java.lang.Long" order="AFTER">
+            select currval(pg_get_serial_sequence('libraries', 'library_id')) AS library_id
+        </selectKey>
+
+        insert INTO libraries (
+        library_name
+        )
+
+        VALUES (
+        #{libraryName}
+        )
+    </insert>
+
+</mapper>

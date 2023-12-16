@@ -26,7 +26,7 @@
         )
 
         VALUES (
-       #{genre_name}
+       #{genreName}
         )
     </insert>
 </mapper>

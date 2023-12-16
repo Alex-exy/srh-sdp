@@ -4,14 +4,14 @@
 <mapper namespace="de.srh.library.mapper.books.BookMapper">
 
     <select id="getBookById" resultType="de.srh.library.dto.BookDto">
-        select * from books left join genres on books.genre_id = genres.genre_id
+        select * from books
         where books.book_id = #{bookId}
     </select>
 
     <select id="bookFound" resultType="int">
         select count(book_id)
         from books
-        Where book_id = #{book_id};
+        Where book_id = #{bookId};
     </select>
 
     <select id="getBookByAuthor" resultType="de.srh.library.entity.Book">

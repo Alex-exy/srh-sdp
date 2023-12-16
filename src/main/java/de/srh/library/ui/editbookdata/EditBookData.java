@@ -44,19 +44,25 @@ public class EditBookData extends JFrame {
 
     private BookService bookService;
     private Map<String, Integer> genresMap;
+    private Map<String,Integer> libraryMap;
 
 
     public EditBookData(long bookId) {
 
         setAutoRequestFocus(false);
+        bookService = BookServiceImpl.createInstance();
+        getLibraries();
+        getGenres();
+
         setContentPane(editBookDataWindow);
         setTitle("Edit Book Data");
         setSize(720, 1000);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setVisible(true);
         logger.info("Opening edit book data window ...");
-
         loadCurrentBookData(bookId);
+
+
 
         saveChangesButton.addActionListener(new ActionListener() {
             @Override
@@ -66,6 +72,7 @@ public class EditBookData extends JFrame {
                 saveChangesButton.setEnabled(false);
             }
         });
+
         cancelButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -81,7 +88,8 @@ public class EditBookData extends JFrame {
         deleteBookButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                bookService = BookServiceImpl.createInstance();
+                bookService.removeBook(bookId);
             }
         });
     }
@@ -89,11 +97,6 @@ public class EditBookData extends JFrame {
     public void loadCurrentBookData(long bookId) {
 
         bookService = BookServiceImpl.createInstance();
-        ApiResponse<Map<String, Integer>> apiResponse = bookService.getAllGenres();
-        if (ApiResponseCode.SUCCESS.getCode() == apiResponse.getCode()) {
-            genresMap = apiResponse.getData();
-            genresMap.forEach((s, i) -> genreDropDown.addItem(s));
-        }
         BookDto bookDto = bookService.getBookById(bookId).getData();
         titleField.setText(bookDto.getBookName());
         subtitleField.setText(bookDto.getSubtitles());
@@ -101,16 +104,12 @@ public class EditBookData extends JFrame {
         isbnField.setText(bookDto.getIsbn());
         publishDateField.setText(bookDto.getPublishDate());
         authorField.setText(bookDto.getBookAuthor());
-        genreDropDown.addItem(genresMap);
         priceField.setText(bookDto.getPrice());
         descriptionField.setText(bookDto.getBookDescription());
-//        libraryIDField.setText(Integer.toString(bookDto.getLibraryId()));
         doiField.setText(bookDto.getDoi());
-
-
     }
 
-    private ApiResponse updateBookData(Long bookId) {
+    private ApiResponse updateBookData(long bookId) {
         Book book = new Book();
         book.setBookId(bookId);
         book.setBookName(titleField.getText());
@@ -119,13 +118,27 @@ public class EditBookData extends JFrame {
         book.setIsbn(isbnField.getText());
         book.setPublishDate(publishDateField.getText());
         book.setBookAuthor(authorField.getText());
-//        book.setGenreId(genresMap.get(genreDropDown.getSelectedItem().toString()));
+        book.setGenreId(genresMap.get(genreDropDown.getSelectedItem().toString()));
         book.setPrice(priceField.getText());
         book.setBookDescription(descriptionField.getText());
-//        book.setLibraryId(Integer.parseInt(libraryIDField.getText()));
+        book.setLibraryId(libraryMap.get(libraryDropDown.getSelectedItem().toString()));
         book.setUpdateDate(new Date());
         book.setDoi(doiField.getText());
         return bookService.updateBookInfo(book);
+    }
+    public void getGenres(){
+        ApiResponse<Map<String, Integer>> apiResponseGenre = bookService.getAllGenres();
+        if (ApiResponseCode.SUCCESS.getCode() == apiResponseGenre.getCode()){
+            genresMap = apiResponseGenre.getData();
+            genresMap.forEach((s, i) -> genreDropDown.addItem(s));
+        }
+    }
+    public void getLibraries(){
+        ApiResponse<Map<String, Integer>> apiResponseLibrary = bookService.getAllLibraries();
+        if (ApiResponseCode.SUCCESS.getCode() == apiResponseLibrary.getCode()){
+            libraryMap = apiResponseLibrary.getData();
+            libraryMap.forEach((s, i) -> libraryDropDown.addItem(s));
+        }
     }
 
     public static void main(String[] args) {

@@ -1,6 +1,5 @@
 package de.srh.library.mapper.genre;
 import de.srh.library.entity.Genre;
-import de.srh.library.entity.School;
 
 import java.util.List;
 

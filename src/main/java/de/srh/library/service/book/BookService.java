@@ -7,6 +7,7 @@ import java.util.Map;
 
 public interface BookService {
     ApiResponse<Map<String, Integer>> getAllGenres();
+    ApiResponse<Map<String, Integer>> getAllLibraries();
     ApiResponse<BookDto> getBookById(long bookId);
     ApiResponse<Integer> updateBookInfo(Book book);
     ApiResponse<Integer> insertBook(Book book);

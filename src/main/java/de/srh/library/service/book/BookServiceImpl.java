@@ -2,6 +2,7 @@ package de.srh.library.service.book;
 
 import de.srh.library.dao.BookDao;
 import de.srh.library.dao.GenreDao;
+import de.srh.library.dao.LibraryDao;
 import de.srh.library.dto.ApiResponse;
 import de.srh.library.dto.ApiResponseCode;
 import de.srh.library.dto.BookDto;
@@ -15,16 +16,19 @@ public class BookServiceImpl implements BookService{
     Logger logger = LoggerFactory.getLogger(BookServiceImpl.class);
     private final BookDao bookDao;
     private final GenreDao genreDao;
+    private final LibraryDao libraryDao;
 
-    public BookServiceImpl(BookDao bookDao, GenreDao genreDao) {
+    public BookServiceImpl(BookDao bookDao, GenreDao genreDao, LibraryDao libraryDao) {
         this.bookDao = bookDao;
         this.genreDao = genreDao;
+        this.libraryDao = libraryDao;
     }
 
     public static BookServiceImpl createInstance(){
         BookDao bookDao = new BookDao();
         GenreDao genreDao = new GenreDao();
-        return new BookServiceImpl(bookDao,genreDao);
+        LibraryDao libraryDao = new LibraryDao();
+        return new BookServiceImpl(bookDao,genreDao,libraryDao);
     }
 
     @Override
@@ -33,6 +37,16 @@ public class BookServiceImpl implements BookService{
             return ApiResponse.success(genreDao.getAllGenres());
         }catch (Exception e){
             logger.error("Querying genre list failed.", e);
+            return ApiResponse.error(ApiResponseCode.ERROR_DATABASE);
+        }
+    }
+
+    @Override
+    public ApiResponse<Map<String, Integer>> getAllLibraries() {
+        try{
+            return ApiResponse.success(libraryDao.getAllLibraries());
+        }catch (Exception e){
+            logger.error("Querying library list failed.", e);
             return ApiResponse.error(ApiResponseCode.ERROR_DATABASE);
         }
     }

@@ -1,7 +1,11 @@
 package de.srh.library.ui.addnewbook;
 
-import de.srh.library.dao.BookDao;
+
+import de.srh.library.dto.ApiResponse;
+import de.srh.library.dto.ApiResponseCode;
 import de.srh.library.entity.Book;
+import de.srh.library.service.book.BookService;
+import de.srh.library.service.book.BookServiceImpl;
 import de.srh.library.ui.login.LoginWindow;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Map;
 
 public class AddNewBook extends JFrame {
     private static final Logger logger = LoggerFactory.getLogger(LoginWindow.class);
@@ -30,23 +35,34 @@ public class AddNewBook extends JFrame {
     private JComboBox genreDropDown;
     private JComboBox libraryDropDown;
 
+    private BookService bookService;
+    private Map<String, Integer> genresMap;
+    private Map<String,Integer> libraryMap;
+
     private Book book;
 
     public AddNewBook() {
 
         setAutoRequestFocus(false);
+        bookService = BookServiceImpl.createInstance();
+        getGenres();
+        getLibraries();
+
         setContentPane(addNewBookWindow);
         setTitle("Add New Book");
         setSize(720, 1000);
-        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
         logger.info("Opening add new book window ...");
 
 
         saveAndAddBookButton.addActionListener(new ActionListener() {
+
             @Override
             public void actionPerformed(ActionEvent e) {
-                BookDao bookDao = new BookDao();
+
+
+              bookService = BookServiceImpl.createInstance();
                 book = new Book();
                 book.setBookName(titleField.getText());
                 book.setSubtitles(subtitleField.getText());
@@ -54,12 +70,12 @@ public class AddNewBook extends JFrame {
                 book.setIsbn(isbnField.getText());
                 book.setPublishDate(publishDateField.getText());
                 book.setBookAuthor(authorField.getText());
-                book.setGenreId(Integer.parseInt(genreField.getText()));
+                book.setGenreId(genresMap.get(genreDropDown.getSelectedItem()));
                 book.setPrice(priceField.getText());
                 book.setBookDescription(descriptionField.getText());
-                book.setLibraryId(Integer.parseInt(libraryIDField.getText()));
+                book.setLibraryId(libraryMap.get(libraryDropDown.getSelectedItem()));
                 book.setDoi(doiField.getText());
-                bookDao.insertBook(book);
+                bookService.insertBook(book);
                 //Check valid inputs
             }
         });
@@ -69,6 +85,21 @@ public class AddNewBook extends JFrame {
                 dispose();
             }
         });
+    }
+    public void getGenres(){
+        ApiResponse<Map<String, Integer>> apiResponseGenre = bookService.getAllGenres();
+
+        if (ApiResponseCode.SUCCESS.getCode() == apiResponseGenre.getCode()){
+            genresMap = apiResponseGenre.getData();
+            genresMap.forEach((s, i) -> genreDropDown.addItem(s));
+        }
+    }
+    public void getLibraries(){
+        ApiResponse<Map<String, Integer>> apiResponseLibrary = bookService.getAllLibraries();
+        if (ApiResponseCode.SUCCESS.getCode() == apiResponseLibrary.getCode()){
+            libraryMap = apiResponseLibrary.getData();
+            libraryMap.forEach((s, i) -> libraryDropDown.addItem(s));
+        }
     }
 
     public static void main(String[] args){

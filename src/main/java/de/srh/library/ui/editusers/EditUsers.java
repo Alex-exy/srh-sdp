@@ -1,7 +1,8 @@
 package de.srh.library.ui.editusers;
 
+import de.srh.library.service.user.UserService;
+import de.srh.library.service.user.UserServiceImpl;
 import de.srh.library.ui.edituserdata.EditUserData;
-import de.srh.library.ui.login.LoginWindow;
 import de.srh.library.ui.managementmenu.ManagementMenu;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +22,8 @@ public class EditUsers extends JFrame {
     private JTextField searchByUserEmailTextField;
     private JButton searchUserButton;
     private JButton editUserButton;
+    private UserService userService;
+
 
     public EditUsers() {
 
@@ -36,16 +39,25 @@ public class EditUsers extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 searchUserButton.setEnabled(false);
-                //Valid user check
-                JOptionPane.showMessageDialog(null, "User found!");
+                userService = UserServiceImpl.createInstance();
+                long userId = Long.parseLong(searchByUserIDTextField.getText());
+                String userEmail = searchByUserEmailTextField.getText();
+                if(userFoundId(userId) || userFoundEmail(userEmail)){
+                    EditUserData editUserData = new EditUserData(userId,userEmail);
+                    editUserData.setVisible(true);
+
+                } else{
+                    JOptionPane.showMessageDialog(null, "User does not exist! \nPlease try again!");
+                }
                 editUserButton.setEnabled(true);
-                JOptionPane.showMessageDialog(null, "Credentials wrong or user nonexistent!");
             }
         });
         editUserButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                EditUserData editUserData = new EditUserData();
+                long userId = Long.parseLong(searchByUserIDTextField.getText());
+                String userEmail = searchByUserEmailTextField.getText();
+                EditUserData editUserData = new EditUserData(userId,userEmail);
                 editUserData.setVisible(true);
                 //Valid user check
                 /*
@@ -86,6 +98,12 @@ public class EditUsers extends JFrame {
                 searchByUserEmailTextField.setText("");
             }
         });
+    }
+    public boolean userFoundId(long userId){
+        return userService.userFoundId(Long.parseLong(searchByUserIDTextField.getText())).getData() == 1;
+    }
+    public boolean userFoundEmail(String email){
+        return userService.userFoundEmail(searchByUserEmailTextField.getText()).getData() == 1;
     }
 
     public static void main(String[] args) {

@@ -3,7 +3,7 @@ package de.srh.library.ui.enteremail;
 import cn.hutool.core.collection.ListUtil;
 import cn.hutool.core.lang.Dict;
 import de.srh.library.dto.ApiResponse;
-import de.srh.library.entity.User;
+import de.srh.library.dto.UserDto;
 import de.srh.library.service.user.UserService;
 import de.srh.library.service.user.UserServiceImpl;
 import de.srh.library.util.EmailSender;
@@ -68,7 +68,7 @@ public class EnterEmail extends JFrame {
     }
 
     public boolean checkValidEmail(String email) {
-        ApiResponse<User> apiResponse = userService.getUserByEmail(email);
+        ApiResponse<UserDto> apiResponse = userService.getUserByEmail(email);
         if (apiResponse.isSuccess() && apiResponse.getData() != null){
             return true;
         }

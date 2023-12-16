@@ -26,5 +26,6 @@
         <mapper class="de.srh.library.mapper.schools.SchoolMapper"/>
         <mapper class="de.srh.library.mapper.admins.AdminMapper"/>
         <mapper class="de.srh.library.mapper.borrows.BorrowsMapper"/>
+        <mapper class="de.srh.library.mapper.library.LibraryMapper"/>
     </mappers>
 </configuration>
