@@ -28,7 +28,7 @@ public class UserDao {
       }
   }
     public void updateUserPassword(String password, String email ){
-        try (SqlSession session = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession()) {
+        try (SqlSession session = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession(true)) {
             UserMapper mapper = session.getMapper(UserMapper.class);
             mapper.updateUserPassword(password,email);
         }
