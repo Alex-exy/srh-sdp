@@ -51,8 +51,7 @@ public class EditBookData extends JFrame {
 
         setAutoRequestFocus(false);
         bookService = BookServiceImpl.createInstance();
-        getLibraries();
-        getGenres();
+
 
         setContentPane(editBookDataWindow);
         setTitle("Edit Book Data");
@@ -97,11 +96,15 @@ public class EditBookData extends JFrame {
     public void loadCurrentBookData(long bookId) {
 
         bookService = BookServiceImpl.createInstance();
+        getLibraries();
+        getGenres();
         BookDto bookDto = bookService.getBookById(bookId).getData();
         titleField.setText(bookDto.getBookName());
         subtitleField.setText(bookDto.getSubtitles());
         languageField.setText(bookDto.getLanguage());
         isbnField.setText(bookDto.getIsbn());
+        genreDropDown.setSelectedItem(bookGenreName(bookId));
+        libraryDropDown.setSelectedItem(bookLibraryName(bookId));
         publishDateField.setText(bookDto.getPublishDate());
         authorField.setText(bookDto.getBookAuthor());
         priceField.setText(bookDto.getPrice());
@@ -140,9 +143,19 @@ public class EditBookData extends JFrame {
             libraryMap.forEach((s, i) -> libraryDropDown.addItem(s));
         }
     }
+    private String bookGenreName(long bookId){
+        bookService = BookServiceImpl.createInstance();
+        BookDto bookDto = new BookDto();
+        return bookDto.getGenreName(bookId);
+    }
+    private String bookLibraryName(long bookId){
+        bookService = BookServiceImpl.createInstance();
+        BookDto bookDto = new BookDto();
+        return bookDto.getLibraryName(bookId);
+    }
 
     public static void main(String[] args) {
-        EditBookData editBookData = new EditBookData(1L);
+        EditBookData editBookData = new EditBookData(2L);
     }
 
 }

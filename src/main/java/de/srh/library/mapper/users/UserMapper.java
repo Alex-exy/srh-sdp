@@ -16,4 +16,6 @@ public interface UserMapper {
     long getIdByEmail(String email);
     void updateUserPassword(@Param("password") String password, @Param("email") String email);
     int updateUserInfo(User user);
+    int updateUserData(User user);
+    String userSchoolName(long userId);
 }

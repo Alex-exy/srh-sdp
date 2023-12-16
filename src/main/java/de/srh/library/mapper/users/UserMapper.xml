@@ -30,6 +30,13 @@
         Where email = #{email};
     </select>
 
+    <select id="userSchoolName" resultType="java.lang.String">
+        SELECT s.school_name
+        FROM users u
+                 INNER JOIN schools s ON u.school_id = s.school_id
+        where user_id = #{userId};
+    </select>
+
     <delete id="removeUser" parameterType="de.srh.library.entity.User">
         delete from users
         where user_id= #{userId}
@@ -46,7 +53,8 @@
 <!--    Method for Admin-->
     <update id="updateUserData" parameterType="de.srh.library.entity.User">
         update users
-        set first_name = #{firstName},family_name = #{familyName}, email = #{email}, address = #{address},update_date = #{updateDate}
+        set first_name = #{firstName},family_name = #{familyName}, email = #{email}, address = #{address},
+        user_role = #{userRole}, user_status = #{userStatus}, school_id = #{schoolId},update_date = #{updateDate}
         where user_id = #{userId}
     </update>
 

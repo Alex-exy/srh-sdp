@@ -13,10 +13,13 @@ public interface UserService {
     ApiResponse<UserDto> getUserByEmail(String email);
     ApiResponse<Integer> updateUserPassword(String password,String email);
     ApiResponse<Integer> updateUserInfo(User user);
+    ApiResponse<Integer> updateUserData(User user);
     ApiResponse<Integer> removeUser(long userId);
     ApiResponse<UserDto> getUserById(long userId);
     ApiResponse<Integer> userFoundId(long userId);
     ApiResponse<Integer> userFoundEmail(String email);
-    Long getIdByEmail(String email);
+    long getIdByEmail(String email);
+    String userSchoolName(long userId);
+
 
 }

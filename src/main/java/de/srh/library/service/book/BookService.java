@@ -14,6 +14,8 @@ public interface BookService {
     ApiResponse<BookDto> getBookByAuthor(String author);
     ApiResponse<Integer> removeBook(long bookId);
     ApiResponse<Integer> bookFound(long bookId);
+    String bookGenreName(long bookId);
+    String bookLibraryName(long bookId);
 
 
 }

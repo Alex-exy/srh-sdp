@@ -45,4 +45,16 @@ public class BookDao {
             return mapper.updateBookInfo(book);
         }
     }
+    public String bookGenreName(long bookId){
+        try (SqlSession session = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession(true)) {
+            BookMapper mapper = session.getMapper(BookMapper.class);
+            return mapper.bookGenreName(bookId);
+        }
+    }
+    public String bookLibraryName(long bookId){
+        try (SqlSession session = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession(true)) {
+            BookMapper mapper = session.getMapper(BookMapper.class);
+            return mapper.bookLibraryName(bookId);
+        }
+    }
 }

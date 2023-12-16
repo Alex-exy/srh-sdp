@@ -1,5 +1,8 @@
 package de.srh.library.dto;
 
+import de.srh.library.service.user.UserService;
+import de.srh.library.service.user.UserServiceImpl;
+
 import java.util.Date;
 
 public class UserDto {
@@ -15,6 +18,7 @@ public class UserDto {
     private Date updateDate;
     private Integer schoolId;
     private String schoolName;
+    private UserService userService;
 
     public long getUserId() {
         return userId;
@@ -104,8 +108,9 @@ public class UserDto {
         this.schoolId = schoolId;
     }
 
-    public String getSchoolName() {
-        return schoolName;
+    public String getSchoolName(long userId) {
+        userService = UserServiceImpl.createInstance();
+       return userService.userSchoolName(userId);
     }
 
     public void setSchoolName(String schoolName) {

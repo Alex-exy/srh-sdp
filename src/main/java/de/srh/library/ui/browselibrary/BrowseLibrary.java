@@ -1,6 +1,10 @@
 package de.srh.library.ui.browselibrary;
 
 
+import de.srh.library.dto.ApiResponse;
+import de.srh.library.dto.ApiResponseCode;
+import de.srh.library.service.book.BookService;
+import de.srh.library.service.book.BookServiceImpl;
 import de.srh.library.ui.createnewuser.CreateNewUser;
 import de.srh.library.ui.mainmenu.MainMenu;
 import org.slf4j.Logger;
@@ -10,6 +14,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Map;
 
 public class BrowseLibrary extends JFrame {
 
@@ -22,17 +27,26 @@ public class BrowseLibrary extends JFrame {
     private JTextField bookIDTextField;
     private JTextField bookTitleTextField;
     private JTextField bookAuthorTextField;
-    private JTextField bookGenreTextField;
     private JComboBox searchLibrary;
     private JList resultsList;
     private JLabel labelResults;
     private JTextField doiTextField;
     private JTable resultsTableDisplay;
     private JButton goBack;
+    private JComboBox searchGenre;
+    private BookService bookService;
+    private Map<String, Integer> genresMap;
+    private Map<String,Integer> libraryMap;
 
     public BrowseLibrary() {
 
-
+        bookService = BookServiceImpl.createInstance();
+        getLibraries();
+        getGenres();
+        searchGenre.addItem("None");
+        searchGenre.setSelectedItem("None");
+        searchLibrary.addItem("None");
+        searchLibrary.setSelectedItem("None");
         setAutoRequestFocus(false);
         setContentPane(browseLibrary);
         setTitle("Browse Library");
@@ -45,17 +59,19 @@ public class BrowseLibrary extends JFrame {
         JScrollPane scrollPane = new JScrollPane(resultsTableDisplay);
 
 
-        //TEST DATA REPLACE WITH DATABASE
-        // get database libraries forEach -> searchLibrary.addItem() . . .
-        searchLibrary.addItem("Search all Libraries");
-        searchLibrary.addItem("Heidelberg University Library");
-        searchLibrary.addItem("Stadtbücherei Heidelberg");
-        searchLibrary.addItem("Hauptbibliothek Heidelberg");
+
 
 
         buttonSearch.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if(bookTitleTextField.getText().trim().isEmpty() && bookAuthorTextField.getText().trim().isEmpty()
+                        && enterISBN.getText().trim().isEmpty() && doiTextField.getText().trim().isEmpty()
+                        && bookIDTextField.getText().trim().isEmpty() && searchGenre.getSelectedItem().equals("None")
+                        && searchLibrary.getSelectedItem().equals("None")){
+                    JOptionPane.showMessageDialog(null, "Please enter or select atleast 1 search parameter");
+                    System.out.println();
+                }
             }
         });
         goBack.addActionListener(new ActionListener() {
@@ -75,6 +91,20 @@ public class BrowseLibrary extends JFrame {
         Object[][] data = {};
         DefaultTableModel tableModel = new DefaultTableModel(data, columnNames);
         return new JTable(tableModel);
+    }
+    public void getLibraries(){
+        ApiResponse<Map<String, Integer>> apiResponseLibrary = bookService.getAllLibraries();
+        if (ApiResponseCode.SUCCESS.getCode() == apiResponseLibrary.getCode()){
+            libraryMap = apiResponseLibrary.getData();
+            libraryMap.forEach((s, i) -> searchLibrary.addItem(s));
+        }
+    }
+    public void getGenres(){
+        ApiResponse<Map<String, Integer>> apiResponseGenre = bookService.getAllGenres();
+        if (ApiResponseCode.SUCCESS.getCode() == apiResponseGenre.getCode()){
+            genresMap = apiResponseGenre.getData();
+            genresMap.forEach((s, i) -> searchGenre.addItem(s));
+        }
     }
 
     public static void main(String[] args) {

@@ -64,4 +64,16 @@ public class UserDao {
             return mapper.removeUser(userId);
         }
     }
+    public void updateUserData(User user){
+        try (SqlSession session = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession(true)) {
+            UserMapper mapper = session.getMapper(UserMapper.class);
+            mapper.updateUserData(user);
+        }
+    }
+    public String userSchoolName(long userId){
+        try (SqlSession session = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession(true)) {
+            UserMapper mapper = session.getMapper(UserMapper.class);
+           return mapper.userSchoolName(userId);
+        }
+    }
 }

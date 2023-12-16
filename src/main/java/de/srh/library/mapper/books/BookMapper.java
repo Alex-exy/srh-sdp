@@ -13,4 +13,6 @@ public interface BookMapper {
     int removeBook(long bookId);
     int bookFound(long bookId);
     int updateBookInfo(Book book);
+    String bookGenreName(long bookId);
+    String bookLibraryName(long bookId);
 }

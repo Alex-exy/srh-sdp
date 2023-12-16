@@ -110,4 +110,24 @@ public class BookServiceImpl implements BookService{
             return ApiResponse.error(ApiResponseCode.ERROR_DATABASE);
         }
     }
+
+    @Override
+    public String bookGenreName(long bookId) {
+        try{
+            return bookDao.bookGenreName(bookId);
+        }catch (Exception e){
+            logger.error("Book genre name retrieval failed", e);
+            return"Book genre name retrieval failed";
+        }
+    }
+
+    @Override
+    public String bookLibraryName(long bookId) {
+        try{
+            return bookDao.bookLibraryName(bookId);
+        }catch (Exception e){
+            logger.error("Book library name retrieval failed", e);
+            return"Book library name retrieval failed";
+        }
+    }
 }

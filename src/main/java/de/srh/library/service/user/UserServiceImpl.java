@@ -102,6 +102,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public ApiResponse updateUserData(User user) {
+        try{
+            userDao.updateUserData(user);
+            return ApiResponse.success();
+        }catch (Exception e){
+            logger.error("User information update failed!", e);
+            return ApiResponse.error(ApiResponseCode.ERROR_DATABASE);
+        }
+    }
+    @Override
     public ApiResponse<Integer> removeUser(long userId) {
         try{
             userDao.removeUser(userId);
@@ -145,12 +155,22 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public Long getIdByEmail(String email) {
+    public long getIdByEmail(String email) {
         try{
             return ApiResponse.success(userDao.getIdByEmail(email)).getData();
         }catch (Exception e){
             logger.error("Error getting Id.", e);
             return 0L;
+        }
+    }
+
+    @Override
+    public String userSchoolName(long userId) {
+        try{
+            return userDao.userSchoolName(userId);
+        }catch (Exception e){
+            logger.error("User school name retrieval failed.", e);
+            return "User school name retrieval failed.";
         }
     }
 

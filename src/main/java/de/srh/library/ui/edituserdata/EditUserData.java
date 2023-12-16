@@ -49,13 +49,15 @@ public class EditUserData extends JFrame {
     private JButton editDataButton;
     private JButton deleteUserButton;
     private JButton saveButton;
-    private UserService userService;
+    private static UserService userService;
     private Map<String, Integer> schoolsMap;
 
 
-    public EditUserData(long userId, String email) {
+    public EditUserData(UserDto user) {
 
         userService = UserServiceImpl.createInstance();
+
+
         setAutoRequestFocus(false);
         setContentPane(editUserDataWindow);
         setTitle("Edit User Data");
@@ -63,7 +65,11 @@ public class EditUserData extends JFrame {
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setVisible(true);
         logger.info("Opening edit user data window ...");
-        loadCurrentUserData(userId,email);
+        long userId = user.getUserId();
+        loadCurrentUserData(user);
+
+        UserDto userDto = userService.getUserById(userId).getData();
+
 
         saveChangesButton.addActionListener(new ActionListener() {
             @Override
@@ -96,37 +102,72 @@ public class EditUserData extends JFrame {
         });
     }
 
-    public void loadCurrentUserData(long userId,String email) {
+    public void loadCurrentUserData(UserDto user) {
         userService = UserServiceImpl.createInstance();
         getSchools();
+
         for (UserRole role : UserRole.values()) {
             userRole.addItem(role.getRoleName());
         }
         for (UserStatus status : UserStatus.values()){
             userStatus.addItem(status.getUserStatusName());
         }
-        UserDto userDto = userService.getUserById(userId).getData();
+
+        UserDto userDto = userService.getUserById(user.getUserId()).getData();
         firstName.setText(userDto.getFirstName());
         lastName.setText(userDto.getFamilyName());
+        userStatus.setSelectedItem(
+            switch (userDto.getUserStatus()){
+            case "F" -> "Frozen";
+            case "A" -> "Active";
+            case "O" -> "Overdue";
+            case "I" -> "Inactive";
+            default -> "None";
+        });
+       userRole.setSelectedItem(
+            switch (userDto.getUserRole()) {
+            case "S" -> "Student";
+            case "T" -> "Teacher";
+            default -> "None";
+       });
         userEmail.setText(userDto.getEmail());
+        school.setSelectedItem(userSchoolName(user.getUserId()));
         userAddress.setText(userDto.getAddress());
         userID.setText(String.valueOf(userDto.getUserId()));
         userRegistrationDate.setText(userDto.getRegistrationDate().toString());
         userUpdateDate.setText(userDto.getUpdateDate().toString());
 
-
     }
     private ApiResponse updateUserData(long userId){
         User user = new User();
+
         user.setUserId(userId);
         user.setFirstName(firstName.getText());
+        user.setSchoolId(schoolsMap.get(school.getSelectedItem().toString()));
+        user.setUserRole(
+            switch(userRole.getSelectedItem().toString()){
+            case "Student" -> "S";
+            case "Teacher" -> "T";
+            default -> "None";
+        });
+        user.setUserStatus(
+            switch (userStatus.getSelectedItem().toString()){
+                case "Frozen"   -> "F";
+                case "Active"   -> "A";
+                case "Overdue"  -> "O";
+                case "Inactive" -> "I";
+            default -> "None";
+        });
         user.setFamilyName(lastName.getText());
         user.setEmail(userEmail.getText());
         user.setAddress(addressLabel.getText());
         user.setUpdateDate(new Date());
-        return userService.updateUserInfo(user);
-
-
+        return userService.updateUserData(user);
+    }
+    private String userSchoolName(long userId){
+        userService = UserServiceImpl.createInstance();
+        UserDto userDto = new UserDto();
+        return userDto.getSchoolName(userId);
     }
     public void getSchools(){
         userService = UserServiceImpl.createInstance();
@@ -137,7 +178,9 @@ public class EditUserData extends JFrame {
         }    }
 
     public static void main(String[] args) {
-        EditUserData editUserData = new EditUserData(1000L,"test@gmail.com");
+        userService = UserServiceImpl.createInstance();
+        UserDto user = userService.getUserById(1000L).getData();
+        new EditUserData(user);
     }
 
 }

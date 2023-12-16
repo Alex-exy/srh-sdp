@@ -1,5 +1,8 @@
 package de.srh.library.ui.editusers;
 
+import de.srh.library.dto.ApiResponse;
+import de.srh.library.dto.UserDto;
+import de.srh.library.entity.User;
 import de.srh.library.service.user.UserService;
 import de.srh.library.service.user.UserServiceImpl;
 import de.srh.library.ui.edituserdata.EditUserData;
@@ -25,7 +28,9 @@ public class EditUsers extends JFrame {
     private UserService userService;
 
 
+
     public EditUsers() {
+
 
         setAutoRequestFocus(false);
         setContentPane(editUsersWindow);
@@ -40,28 +45,48 @@ public class EditUsers extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 searchUserButton.setEnabled(false);
                 userService = UserServiceImpl.createInstance();
-                long userId = Long.parseLong(searchByUserIDTextField.getText());
-                String userEmail = searchByUserEmailTextField.getText();
-                if(userFoundId(userId) || userFoundEmail(userEmail)){
-                    EditUserData editUserData = new EditUserData(userId,userEmail);
-                    editUserData.setVisible(true);
 
-                } else{
-                    JOptionPane.showMessageDialog(null, "User does not exist! \nPlease try again!");
+                if(searchByUserEmailTextField.getText().trim().isEmpty() && !searchByUserIDTextField.getText().trim().isEmpty()){
+                    long userId = Long.parseLong(searchByUserIDTextField.getText().trim());
+                    UserDto userById = userService.getUserById(userId).getData();
+                    if(userFoundId(userId)){
+                    EditUserData editUserData = new EditUserData(userById);
+                    editUserData.setVisible(true);}
+                    else {
+                        JOptionPane.showMessageDialog(null, "User does not exist! \nPlease try again!");
+                    }
                 }
+                else if(searchByUserIDTextField.getText().trim().isEmpty() && !searchByUserEmailTextField.getText().trim().isEmpty()){
+                    String userEmailText = searchByUserEmailTextField.getText().trim();
+                    UserDto userByEmail = userService.getUserByEmail(userEmailText).getData();
+                    if(userFoundEmail(userEmailText)){
+                    EditUserData editUserData = new EditUserData(userByEmail);
+                    editUserData.setVisible(true);}
+                    else {
+                        JOptionPane.showMessageDialog(null, "User does not exist! \nPlease try again!");
+                    }
+                }
+                else if (searchByUserIDTextField.getText().trim().isEmpty() && searchByUserEmailTextField.getText().trim().isEmpty()){
+                    JOptionPane.showMessageDialog(null, "Fields can not be empty!");
+                 }
+                else {
+                    System.out.println("Failed");
+                }
+
                 editUserButton.setEnabled(true);
             }
         });
+
         editUserButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 long userId = Long.parseLong(searchByUserIDTextField.getText());
                 String userEmail = searchByUserEmailTextField.getText();
-                EditUserData editUserData = new EditUserData(userId,userEmail);
-                editUserData.setVisible(true);
+//                EditUserData editUserData = new EditUserData(userId);
+//                editUserData.setVisible(true);
                 //Valid user check
                 /*
-                dispose();
+//                dispose();
                 edit user information menu
                 */
             }
@@ -107,6 +132,7 @@ public class EditUsers extends JFrame {
     }
 
     public static void main(String[] args) {
+
         EditUsers editUser = new EditUsers();
     }
 }

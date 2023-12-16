@@ -1,5 +1,8 @@
 package de.srh.library.dto;
 
+import de.srh.library.service.book.BookService;
+import de.srh.library.service.book.BookServiceImpl;
+
 import java.util.Date;
 
 public class BookDto {
@@ -21,6 +24,8 @@ public class BookDto {
     private String doi;
     private Date additionDate;
     private Date updateDate;
+    private BookService bookService;
+
 
 
 
@@ -88,8 +93,9 @@ public class BookDto {
         this.genreId = genreId;
     }
 
-    public String getGenreName() {
-        return genreName;
+    public String getGenreName(long bookId) {
+        bookService = BookServiceImpl.createInstance();
+        return bookService.bookGenreName(bookId);
     }
 
     public void setGenreName(String genreName) {
@@ -136,8 +142,9 @@ public class BookDto {
         this.libraryId = libraryId;
     }
 
-    public String getLibraryName() {
-        return libraryName;
+    public String getLibraryName(long bookId) {
+        bookService = BookServiceImpl.createInstance();
+        return bookService.bookLibraryName(bookId);
     }
 
     public void setLibraryName(String libraryName) {

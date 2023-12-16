@@ -14,6 +14,20 @@
         Where book_id = #{bookId};
     </select>
 
+    <select id="bookGenreName" resultType="java.lang.String">
+        SELECT g.genre_name
+        FROM books b
+                 INNER JOIN genres g ON b.genre_id = g.genre_id
+        where book_id = #{bookId};
+    </select>
+
+    <select id="bookLibraryName" resultType="java.lang.String">
+        SELECT l.library_name
+        FROM books b
+                 INNER JOIN libraries l ON b.library_id = l.library_id
+        where book_id = #{bookId};
+    </select>
+
     <select id="getBookByAuthor" resultType="de.srh.library.entity.Book">
         select * from books where book_author = #{author}
     </select>
