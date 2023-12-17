@@ -1,7 +1,11 @@
 package de.srh.library.ui.mainmenu;
 
 import de.srh.library.dto.Global;
+import de.srh.library.dto.UserDto;
+import de.srh.library.service.user.UserService;
+import de.srh.library.service.user.UserServiceImpl;
 import de.srh.library.ui.borrowreturn.BorrowReturn;
+import de.srh.library.ui.browselibrary.BrowseLibrary;
 import de.srh.library.ui.infossettings.InfosSettings;
 import de.srh.library.ui.login.LoginWindow;
 import org.slf4j.Logger;
@@ -19,6 +23,8 @@ public class MainMenu extends JFrame {
     private JButton borrowReturn;
     private JButton browseLibraries;
     private JPanel mainMenuWindow;
+    private long userId = Global.loggedInUserId;
+    private static UserService userService;
     private JButton logOut;
 
     public MainMenu() {
@@ -33,7 +39,8 @@ public class MainMenu extends JFrame {
         browseLibraries.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                BrowseLibrary browseLibrary = new BrowseLibrary();
+                browseLibrary.setVisible(true);
             }
         });
         borrowReturn.addActionListener(new ActionListener() {
@@ -49,7 +56,9 @@ public class MainMenu extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 dispose();
                 InfosSettings infosSettings = new InfosSettings();
-                infosSettings.setVisible(true);
+                userService = UserServiceImpl.createInstance();
+                UserDto userDto = userService.getUserById(userId).getData();
+                infosSettings.loadUserInformation(userDto);
             }
         });
         logOut.addActionListener(new ActionListener() {

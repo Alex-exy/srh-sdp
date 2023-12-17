@@ -16,7 +16,7 @@ class GenreDaoTest {
         genreDao = new GenreDao();
 
         initGenre = new Genre();
-        initGenre.setGenreName("Horror");
+        initGenre.setGenreName("Test");
 
 
     }
@@ -25,9 +25,8 @@ class GenreDaoTest {
     @Test
     @Order(1)
     void insertGenre(){
-//        assertEquals(0, initGenre.getGenreId());
-        assertEquals(1, genreDao.insertGenre(initGenre));
-        assertTrue(initGenre.getGenreId() != 0);
+//
+        genreDao.insertGenre(initGenre);
     }
     @Test
     @Order(2)

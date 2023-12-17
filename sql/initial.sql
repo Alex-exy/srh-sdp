@@ -88,7 +88,8 @@ CREATE TABLE books
     doi                VARCHAR(64)        NULL
 
 );
-CREATE INDEX idx_book_name ON books (book_name);
+CREATE EXTENSION IF NOT EXISTS pg_trgm;
+CREATE INDEX idx_books_book_name_gin ON books USING gin (book_name gin_trgm_ops);
 CREATE INDEX idx_book_author ON books (book_author);
 CREATE INDEX idx_isbn ON books (isbn);
 CREATE INDEX idx_doi ON books (doi);

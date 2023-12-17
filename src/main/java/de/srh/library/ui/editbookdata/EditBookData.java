@@ -7,7 +7,6 @@ import de.srh.library.dto.BookDto;
 import de.srh.library.service.book.BookService;
 import de.srh.library.service.book.BookServiceImpl;
 import de.srh.library.ui.login.LoginWindow;
-import de.srh.library.entity.Book;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -113,21 +112,21 @@ public class EditBookData extends JFrame {
     }
 
     private ApiResponse updateBookData(long bookId) {
-        Book book = new Book();
-        book.setBookId(bookId);
-        book.setBookName(titleField.getText());
-        book.setSubtitles(subtitleField.getText());
-        book.setLanguage(languageField.getText());
-        book.setIsbn(isbnField.getText());
-        book.setPublishDate(publishDateField.getText());
-        book.setBookAuthor(authorField.getText());
-        book.setGenreId(genresMap.get(genreDropDown.getSelectedItem().toString()));
-        book.setPrice(priceField.getText());
-        book.setBookDescription(descriptionField.getText());
-        book.setLibraryId(libraryMap.get(libraryDropDown.getSelectedItem().toString()));
-        book.setUpdateDate(new Date());
-        book.setDoi(doiField.getText());
-        return bookService.updateBookInfo(book);
+        BookDto bookDto = new BookDto();
+        bookDto.setBookId(bookId);
+        bookDto.setBookName(titleField.getText());
+        bookDto.setSubtitles(subtitleField.getText());
+        bookDto.setLanguage(languageField.getText());
+        bookDto.setIsbn(isbnField.getText());
+        bookDto.setPublishDate(publishDateField.getText());
+        bookDto.setBookAuthor(authorField.getText());
+        bookDto.setGenreId(genresMap.get(genreDropDown.getSelectedItem().toString()));
+        bookDto.setPrice(priceField.getText());
+        bookDto.setBookDescription(descriptionField.getText());
+        bookDto.setLibraryId(libraryMap.get(libraryDropDown.getSelectedItem().toString()));
+        bookDto.setUpdateDate(new Date());
+        bookDto.setDoi(doiField.getText());
+        return bookService.updateBookInfo(bookDto);
     }
     public void getGenres(){
         ApiResponse<Map<String, Integer>> apiResponseGenre = bookService.getAllGenres();
@@ -155,7 +154,7 @@ public class EditBookData extends JFrame {
     }
 
     public static void main(String[] args) {
-        EditBookData editBookData = new EditBookData(2L);
+        EditBookData editBookData = new EditBookData(1L);
     }
 
 }

@@ -4,7 +4,8 @@
 <mapper namespace="de.srh.library.mapper.genre.GenreMapper">
 
     <select id="getAllGenres" resultType="de.srh.library.entity.Genre">
-      select * from genres;
+      select * from genres
+      order by genre_id;
     </select>
 
     <select id="getGenreById" resultType="de.srh.library.entity.Genre">

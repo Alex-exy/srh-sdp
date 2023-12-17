@@ -3,7 +3,7 @@ package de.srh.library.ui.addnewbook;
 
 import de.srh.library.dto.ApiResponse;
 import de.srh.library.dto.ApiResponseCode;
-import de.srh.library.entity.Book;
+import de.srh.library.dto.BookDto;
 import de.srh.library.service.book.BookService;
 import de.srh.library.service.book.BookServiceImpl;
 import de.srh.library.ui.login.LoginWindow;
@@ -39,7 +39,7 @@ public class AddNewBook extends JFrame {
     private Map<String, Integer> genresMap;
     private Map<String,Integer> libraryMap;
 
-    private Book book;
+    private BookDto bookDto;
 
     public AddNewBook() {
 
@@ -63,19 +63,19 @@ public class AddNewBook extends JFrame {
 
 
               bookService = BookServiceImpl.createInstance();
-                book = new Book();
-                book.setBookName(titleField.getText());
-                book.setSubtitles(subtitleField.getText());
-                book.setLanguage(languageField.getText());
-                book.setIsbn(isbnField.getText());
-                book.setPublishDate(publishDateField.getText());
-                book.setBookAuthor(authorField.getText());
-                book.setGenreId(genresMap.get(genreDropDown.getSelectedItem()));
-                book.setPrice(priceField.getText());
-                book.setBookDescription(descriptionField.getText());
-                book.setLibraryId(libraryMap.get(libraryDropDown.getSelectedItem()));
-                book.setDoi(doiField.getText());
-                bookService.insertBook(book);
+                bookDto = new BookDto();
+                bookDto.setBookName(titleField.getText());
+                bookDto.setSubtitles(subtitleField.getText());
+                bookDto.setLanguage(languageField.getText());
+                bookDto.setIsbn(isbnField.getText());
+                bookDto.setPublishDate(publishDateField.getText());
+                bookDto.setBookAuthor(authorField.getText());
+                bookDto.setGenreId(genresMap.get(genreDropDown.getSelectedItem()));
+                bookDto.setPrice(priceField.getText());
+                bookDto.setBookDescription(descriptionField.getText());
+                bookDto.setLibraryId(libraryMap.get(libraryDropDown.getSelectedItem()));
+                bookDto.setDoi(doiField.getText());
+                bookService.insertBook(bookDto);
                 //Check valid inputs
             }
         });

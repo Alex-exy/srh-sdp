@@ -2,6 +2,7 @@ package de.srh.library.ui.editbooks;
 
 
 import de.srh.library.dto.ApiResponse;
+import de.srh.library.dto.BookDto;
 import de.srh.library.entity.Book;
 import de.srh.library.service.book.BookService;
 import de.srh.library.service.book.BookServiceImpl;
@@ -21,7 +22,9 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileInputStream;
+import java.math.BigInteger;
 import java.text.SimpleDateFormat;
+import java.util.Objects;
 
 public class EditBooks extends JFrame {
     private static final Logger logger = LoggerFactory.getLogger(EditBooks.class);
@@ -68,18 +71,23 @@ public class EditBooks extends JFrame {
         searchBookButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                long bookId = Long.parseLong(bookIDField.getText());
-                getBookById(bookId);
 
-
+                if(bookIDField.getText().trim().isEmpty()){
+                    JOptionPane.showMessageDialog(null, "Please enter a value in the ID field!");
+                }
+                else {
+                    long bookId = Long.parseLong(bookIDField.getText());
+                    getBookById(bookId);
                     bookService = BookServiceImpl.createInstance();
-                    if(bookFound()){
+                    BookDto bookDto = new BookDto();
+                    bookDto.setBookId(bookId);
+                    if (bookFound(bookDto)) {
                         EditBookData editBookData = new EditBookData(bookId);
                         editBookData.setVisible(true);
-                    }
-                    else{
+                    } else {
                         JOptionPane.showMessageDialog(null, "Book does not exist! \nPlease try again!");
                     }
+                }
             }
         });
 
@@ -110,12 +118,12 @@ public class EditBooks extends JFrame {
                 for (int rowIndex = 1; rowIndex < rowCount; rowIndex++) {
                     Row row = sheet.getRow(rowIndex);
                     if (row != null) {
-                        Book book = assembleBook(row);
+                        BookDto bookDto = assembleBook(row);
                         try{
-                            bookService.insertBook(book);
+                            bookService.insertBook(bookDto);
                             insertCount ++;
                         }catch (Exception e){
-                            logger.error("book insert failed: " + book, e);
+                            logger.error("book insert failed: " + bookDto, e);
                         }
                     }
                 }
@@ -129,21 +137,21 @@ public class EditBooks extends JFrame {
         }
     }
 
-    private static Book assembleBook(Row row) {
-        Book book = new Book();
-        book.setBookName(row.getCell(0).getStringCellValue());
-        book.setSubtitles(row.getCell(1).getStringCellValue());
-        book.setLanguage(row.getCell(2).getStringCellValue());
-        book.setIsbn(row.getCell(3).getStringCellValue());
+    private static BookDto assembleBook(Row row) {
+        BookDto bookDto = new BookDto();
+        bookDto.setBookName(row.getCell(0).getStringCellValue());
+        bookDto.setSubtitles(row.getCell(1).getStringCellValue());
+        bookDto.setLanguage(row.getCell(2).getStringCellValue());
+        bookDto.setIsbn(row.getCell(3).getStringCellValue());
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        book.setPublishDate(dateFormat.format(row.getCell(4).getDateCellValue()));
-        book.setBookAuthor(row.getCell(5).getStringCellValue());
-        book.setGenreId((int)(row.getCell(6).getNumericCellValue()));
-        book.setPrice(row.getCell(7).getStringCellValue());
-        book.setBookDescription(row.getCell(8).getStringCellValue());
-        book.setLibraryId((int)row.getCell(9).getNumericCellValue());
-        book.setDoi(row.getCell(10).getStringCellValue());
-        return book;
+        bookDto.setPublishDate(dateFormat.format(row.getCell(4).getDateCellValue()));
+        bookDto.setBookAuthor(row.getCell(5).getStringCellValue());
+        bookDto.setGenreId((int)(row.getCell(6).getNumericCellValue()));
+        bookDto.setPrice(row.getCell(7).getStringCellValue());
+        bookDto.setBookDescription(row.getCell(8).getStringCellValue());
+        bookDto.setLibraryId((int)row.getCell(9).getNumericCellValue());
+        bookDto.setDoi(row.getCell(10).getStringCellValue());
+        return bookDto;
     }
 
     private ApiResponse getBookById(long bookId) {
@@ -151,8 +159,10 @@ public class EditBooks extends JFrame {
         return bookService.getBookById((bookId));
     }
 
-    public boolean bookFound() {
-        return bookService.bookFound(Long.parseLong(bookIDField.getText())).getData() == 1;
+    public boolean bookFound(BookDto bookDto) {
+        bookService = BookServiceImpl.createInstance();
+        bookService.bookFound(bookDto);
+        return bookService.bookFound(bookDto).getData() != 0;
     }
 
 

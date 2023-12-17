@@ -80,15 +80,6 @@ public class EditUsers extends JFrame {
         editUserButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                long userId = Long.parseLong(searchByUserIDTextField.getText());
-                String userEmail = searchByUserEmailTextField.getText();
-//                EditUserData editUserData = new EditUserData(userId);
-//                editUserData.setVisible(true);
-                //Valid user check
-                /*
-//                dispose();
-                edit user information menu
-                */
             }
         });
         searchByUserIDTextField.addFocusListener(new FocusAdapter() {
