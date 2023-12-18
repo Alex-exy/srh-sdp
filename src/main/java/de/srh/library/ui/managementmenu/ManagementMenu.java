@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -18,6 +19,8 @@ public class ManagementMenu extends JFrame {
     private JButton logOut;
     private JButton userManagementButton;
     private JButton bookManagementButton;
+    private JLabel bannerLogo;
+
     private JButton borrowAndReturnManagementButton;
 
     public ManagementMenu() {
@@ -29,6 +32,7 @@ public class ManagementMenu extends JFrame {
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setVisible(true);
         logger.info("Opening manage menu window ...");
+
         userManagementButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -57,5 +61,11 @@ public class ManagementMenu extends JFrame {
     }
     public static void main(String[] args) {
         ManagementMenu managementMenu = new ManagementMenu();
+    }
+
+    private void createUIComponents() {
+        // place custom component creation code here
+        bannerLogo = new JLabel(new ImageIcon("images/HLSLogo.png"));
+
     }
 }
