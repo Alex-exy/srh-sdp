@@ -14,6 +14,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class AddNewBook extends JFrame {
     private static final Logger logger = LoggerFactory.getLogger(LoginWindow.class);
@@ -89,9 +90,12 @@ public class AddNewBook extends JFrame {
     public void getGenres(){
         ApiResponse<Map<String, Integer>> apiResponseGenre = bookService.getAllGenres();
 
-        if (ApiResponseCode.SUCCESS.getCode() == apiResponseGenre.getCode()){
+        if (ApiResponseCode.SUCCESS.getCode() == apiResponseGenre.getCode()) {
             genresMap = apiResponseGenre.getData();
-            genresMap.forEach((s, i) -> genreDropDown.addItem(s));
+
+            TreeMap<String, Integer> sortedGenresMap = new TreeMap<>(genresMap);
+            genreDropDown.removeAllItems();
+            sortedGenresMap.forEach((s, i) -> genreDropDown.addItem(s));
         }
     }
     public void getLibraries(){
