@@ -5,6 +5,7 @@ import java.awt.event.*;
 import java.util.Objects;
 import javax.swing.*;
 
+import cn.hutool.core.exceptions.ValidateException;
 import de.srh.library.dto.ApiResponse;
 import de.srh.library.dto.ApiResponseCode;
 import de.srh.library.dto.Global;
@@ -17,6 +18,7 @@ import de.srh.library.ui.enteremail.EnterEmail;
 import de.srh.library.ui.faq.FAQ;
 import de.srh.library.ui.mainmenu.MainMenu;
 import de.srh.library.ui.managementmenu.ManagementMenu;
+import de.srh.library.util.ValidatorUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -76,21 +78,30 @@ public class LoginWindow extends JFrame {
                 logger.debug("username: " + username);
                 char[] password = passwordField.getPassword();
 
-                ApiResponse<Long> loginResponse = userService.checkPassword(username, String.valueOf(password));
-                switch (ApiResponseCode.getByCode(loginResponse.getCode())) {
-                    case SUCCESS:
-                        Global.userLogin(loginResponse.getData());
-                        JOptionPane.showMessageDialog(null, "Welcome user " + username);
-
-                        dispose();
-                        MainMenu mainMenu = new MainMenu();
-                        mainMenu.setVisible(true);
-                        break;
-                    default:
-                        JOptionPane.showMessageDialog(null,
-                                loginResponse.getCode() + ": " + loginResponse.getMessage());
-                        break;
+                try{
+                    ValidatorUtils.validateUsername(usernameField.getText());
+                }catch (ValidateException ve ){
+                    JOptionPane.showMessageDialog(null, ve.getMessage());
+                    return;
                 }
+
+
+                    ApiResponse<Long> loginResponse = userService.checkPassword(username, String.valueOf(password));
+                    switch (ApiResponseCode.getByCode(loginResponse.getCode())) {
+                        case SUCCESS:
+                            Global.userLogin(loginResponse.getData());
+                            JOptionPane.showMessageDialog(null, "Welcome user " + username);
+
+                            dispose();
+                            MainMenu mainMenu = new MainMenu();
+                            mainMenu.setVisible(true);
+                            break;
+                        default:
+                            JOptionPane.showMessageDialog(null,
+                                    loginResponse.getCode() + ": " + loginResponse.getMessage());
+                            break;
+                    }
+
             }
         });
         loginAdminButton.addActionListener(new ActionListener() {

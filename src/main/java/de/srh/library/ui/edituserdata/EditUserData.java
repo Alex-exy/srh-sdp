@@ -1,5 +1,6 @@
 package de.srh.library.ui.edituserdata;
 
+import cn.hutool.core.exceptions.ValidateException;
 import de.srh.library.constant.UserRole;
 import de.srh.library.constant.UserStatus;
 import de.srh.library.dto.ApiResponse;
@@ -10,6 +11,7 @@ import de.srh.library.service.user.UserService;
 import de.srh.library.service.user.UserServiceImpl;
 import de.srh.library.ui.editusers.EditUsers;
 import de.srh.library.ui.login.LoginWindow;
+import de.srh.library.util.ValidatorUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -74,6 +76,12 @@ public class EditUserData extends JFrame {
         saveChangesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                try{
+                    inputValidation();
+                }catch (ValidateException ve ){
+                    JOptionPane.showMessageDialog(null, ve.getMessage());
+                    return;
+                }
                 JOptionPane.showMessageDialog(null, "Changes Saved!");
                 updateUserData(userId);
                 saveChangesButton.setEnabled(false);
@@ -160,7 +168,7 @@ public class EditUserData extends JFrame {
         });
         user.setFamilyName(lastName.getText());
         user.setEmail(userEmail.getText());
-        user.setAddress(addressLabel.getText());
+        user.setAddress(userAddress.getText());
         user.setUpdateDate(new Date());
         return userService.updateUserData(user);
     }
@@ -179,6 +187,13 @@ public class EditUserData extends JFrame {
             school.removeAllItems();
             sortedLibrariesMap.forEach((s, i) -> school.addItem(s));
         }
+    }
+    public void inputValidation(){
+        ValidatorUtils.validateFirstName(firstName.getText());
+        ValidatorUtils.validateLastName(lastName.getText());
+        ValidatorUtils.validateEmail(userEmail.getText());
+        ValidatorUtils.validateAddress(userAddress.getText());
+
     }
 
     public static void main(String[] args) {

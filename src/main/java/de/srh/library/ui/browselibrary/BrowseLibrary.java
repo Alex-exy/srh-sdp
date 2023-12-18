@@ -91,6 +91,7 @@ public class BrowseLibrary extends JFrame {
                     JOptionPane.showMessageDialog(null, "Please enter or select atleast 1 search parameter");
                     resultsTableDisplay.setModel(getjTableDefault());
                 }
+
                 else if(!bookIDTextField.getText().trim().isEmpty()){
                     try{
                         ValidatorUtils.validateBookId(bookIDTextField.getText());
@@ -107,6 +108,7 @@ public class BrowseLibrary extends JFrame {
                         resultsTableDisplay.setModel(getjTableDefault());
                     }
                 }
+
                 else if(!enterISBN.getText().trim().isEmpty()){
                     try{
                         ValidatorUtils.validateIsbn(enterISBN.getText());
@@ -122,8 +124,8 @@ public class BrowseLibrary extends JFrame {
                     }else {
                         resultsTableDisplay.setModel(getjTableDefault());
                     }
-
                 }
+
                 else if(!doiTextField.getText().trim().isEmpty()){
                     try{
                         ValidatorUtils.validateDoi(doiTextField.getText());
@@ -139,7 +141,9 @@ public class BrowseLibrary extends JFrame {
                         resultsTableDisplay.setModel(getjTableDefault());
                     }
 
-                }else if(!bookTitleTextField.getText().trim().isEmpty()){
+                }
+
+                else if(!bookTitleTextField.getText().trim().isEmpty()){
                     BookDto bookDto = new BookDto();
                     bookDto.setBookName(bookTitleTextField.getText().trim());
                     if(bookFound(bookDto)){
@@ -147,7 +151,9 @@ public class BrowseLibrary extends JFrame {
                     }else{
                         resultsTableDisplay.setModel(getjTableDefault());
                     }
-                }else if(!bookAuthorTextField.getText().trim().isEmpty()){
+                }
+
+                else if(!bookAuthorTextField.getText().trim().isEmpty()){
                     BookDto bookDto = new BookDto();
                     bookDto.setBookAuthor(bookAuthorTextField.getText().trim());
                     if(bookFound(bookDto)){
@@ -156,17 +162,23 @@ public class BrowseLibrary extends JFrame {
                         resultsTableDisplay.setModel(getjTableDefault());
                     }
 
-                }else if(!searchGenre.getSelectedItem().equals("None")){
+                }
+
+                else if(!searchGenre.getSelectedItem().equals("None")){
                     BookDto bookDto = new BookDto();
                     long bookId = bookDto.getBookId();
                     bookDto.getGenreName(bookId);
                     resultsTableDisplay.setModel(getJTableGenre());
-                }else if(!searchLibrary.getSelectedItem().equals("None")){
+                }
+
+                else if(!searchLibrary.getSelectedItem().equals("None")){
                     BookDto bookDto = new BookDto();
                     long bookId = bookDto.getBookId();
                     bookDto.getLibraryName(bookId);
                     resultsTableDisplay.setModel(getJTableLibrary());
-                }else {
+                }
+
+                else {
                     resultsTableDisplay.setModel(getjTableDefault());
                 }
             }

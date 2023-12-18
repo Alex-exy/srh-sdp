@@ -66,7 +66,12 @@ public class EditBookData extends JFrame {
         saveChangesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                try{
+                    inputValidation();
+                }catch (ValidateException ve ){
+                    JOptionPane.showMessageDialog(null, ve.getMessage());
+                    return;
+                }
                 JOptionPane.showMessageDialog(null, "Changes Saved!");
                 updateBookData(bookId);
                 saveChangesButton.setEnabled(false);
