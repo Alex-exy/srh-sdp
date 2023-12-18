@@ -85,7 +85,7 @@
               <component id="72c78" class="javax.swing.JTextField" binding="doiField">
                 <constraints>
                   <grid row="21" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                    <maximum-size width="500" height="-1"/>
+                    <maximum-size width="600" height="-1"/>
                   </grid>
                 </constraints>
                 <properties>
@@ -113,7 +113,7 @@
               <component id="f3839" class="javax.swing.JTextField" binding="descriptionField">
                 <constraints>
                   <grid row="17" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                    <maximum-size width="500" height="-1"/>
+                    <maximum-size width="600" height="-1"/>
                   </grid>
                 </constraints>
                 <properties>
@@ -124,7 +124,7 @@
               <component id="5c410" class="javax.swing.JTextField" binding="priceField">
                 <constraints>
                   <grid row="15" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                    <maximum-size width="500" height="-1"/>
+                    <maximum-size width="600" height="-1"/>
                   </grid>
                 </constraints>
                 <properties>
@@ -134,7 +134,7 @@
               <component id="a7f02" class="javax.swing.JTextField" binding="authorField">
                 <constraints>
                   <grid row="11" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                    <maximum-size width="500" height="-1"/>
+                    <maximum-size width="600" height="-1"/>
                   </grid>
                 </constraints>
                 <properties>
@@ -144,7 +144,7 @@
               <component id="8cf7" class="javax.swing.JTextField" binding="publishDateField">
                 <constraints>
                   <grid row="9" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                    <maximum-size width="500" height="-1"/>
+                    <maximum-size width="600" height="-1"/>
                   </grid>
                 </constraints>
                 <properties>
@@ -155,7 +155,7 @@
               <component id="8d3ac" class="javax.swing.JTextField" binding="isbnField">
                 <constraints>
                   <grid row="7" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                    <maximum-size width="500" height="-1"/>
+                    <maximum-size width="600" height="-1"/>
                   </grid>
                 </constraints>
                 <properties>
@@ -165,7 +165,7 @@
               <component id="586fb" class="javax.swing.JTextField" binding="languageField">
                 <constraints>
                   <grid row="5" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                    <maximum-size width="500" height="-1"/>
+                    <maximum-size width="600" height="-1"/>
                   </grid>
                 </constraints>
                 <properties>
@@ -176,7 +176,7 @@
               <component id="9b835" class="javax.swing.JTextField" binding="subtitleField">
                 <constraints>
                   <grid row="3" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                    <maximum-size width="500" height="-1"/>
+                    <maximum-size width="600" height="-1"/>
                   </grid>
                 </constraints>
                 <properties>
@@ -186,7 +186,7 @@
               <component id="dffd9" class="javax.swing.JTextField" binding="titleField">
                 <constraints>
                   <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                    <maximum-size width="500" height="-1"/>
+                    <maximum-size width="600" height="-1"/>
                   </grid>
                 </constraints>
                 <properties>
@@ -284,7 +284,7 @@
               <component id="46b4a" class="javax.swing.JComboBox" binding="genreDropDown">
                 <constraints>
                   <grid row="13" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                    <maximum-size width="500" height="-1"/>
+                    <maximum-size width="600" height="-1"/>
                   </grid>
                 </constraints>
                 <properties>
@@ -294,7 +294,7 @@
               <component id="b174a" class="javax.swing.JComboBox" binding="libraryDropDown">
                 <constraints>
                   <grid row="19" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                    <maximum-size width="500" height="-1"/>
+                    <maximum-size width="600" height="-1"/>
                   </grid>
                 </constraints>
                 <properties>

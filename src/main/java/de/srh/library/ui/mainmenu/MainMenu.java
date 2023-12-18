@@ -6,6 +6,7 @@ import de.srh.library.service.user.UserService;
 import de.srh.library.service.user.UserServiceImpl;
 import de.srh.library.ui.borrowreturn.BorrowReturn;
 import de.srh.library.ui.browselibrary.BrowseLibrary;
+import de.srh.library.ui.ConfirmationRequest;
 import de.srh.library.ui.infossettings.InfosSettings;
 import de.srh.library.ui.login.LoginWindow;
 import org.slf4j.Logger;
@@ -64,10 +65,19 @@ public class MainMenu extends JFrame {
         logOut.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Global.userLogOut();
-                dispose();
-                LoginWindow loginWindow = new LoginWindow();
-                loginWindow.setVisible(true);
+
+                // CONFIRMATION TESTING
+                ConfirmationRequest confirmation = new ConfirmationRequest();
+                if(confirmation.userDecision) {
+                    JOptionPane.showMessageDialog(null, "Logged out!");
+                    Global.userLogOut();
+                    dispose();
+                    LoginWindow loginWindow = new LoginWindow();
+                    loginWindow.setVisible(true);
+                }
+                else {
+                    JOptionPane.showMessageDialog(null, "Logout canceled!");
+                }
             }
         });
     }
