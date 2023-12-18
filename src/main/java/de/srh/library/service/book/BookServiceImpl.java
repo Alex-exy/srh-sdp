@@ -102,7 +102,7 @@ public class BookServiceImpl implements BookService{
     }
 
     @Override
-    public ApiResponse<BookDto> getBookByDoi(String doi) {
+    public ApiResponse<Map<Long,List<String>>> getBookByDoi(String doi) {
         try{
             return ApiResponse.success(bookDao.getBookByDoi(doi));
         }catch (Exception e){

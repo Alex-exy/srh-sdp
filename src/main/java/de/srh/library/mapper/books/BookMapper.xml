@@ -9,10 +9,10 @@
     </select>
 
     <select id="getBookByName" resultType="de.srh.library.dto.BookDto">
-        CREATE EXTENSION IF NOT EXISTS pg_trgm;
+
         SELECT *
         FROM books
-        WHERE LOWER(book_name) LIKE '%' || LOWER(#{name}) || '%';
+        WHERE book_name LIKE '%' || #{name} || '%';
     </select>
 
 
@@ -32,8 +32,8 @@
         WHERE CAST(book_id AS INT) = #{bookId}
         OR CAST(isbn AS VARCHAR) = #{isbn}
         OR CAST(doi AS VARCHAR) = #{doi}
-        OR LOWER(book_name) LIKE '%' || LOWER(#{bookName}) || '%'
-        OR LOWER(book_author) LIKE '%' || LOWER(#{bookAuthor}) || '%';
+        OR book_name LIKE '%' || #{bookName} || '%'
+        OR book_author LIKE '%' ||#{bookAuthor} || '%';
 
 
     </select>
@@ -63,10 +63,10 @@
     </select>
 
     <select id="getBookByAuthor" resultType="de.srh.library.dto.BookDto">
-        CREATE EXTENSION IF NOT EXISTS pg_trgm;
+
         SELECT *
         FROM books
-        WHERE LOWER(book_author) LIKE '%' || LOWER(#{bookAuthor}) || '%';
+        WHERE book_author LIKE '%' || #{bookAuthor} || '%';
     </select>
 
 <delete id="removeBook" parameterType="de.srh.library.entity.Book">

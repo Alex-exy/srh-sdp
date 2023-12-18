@@ -18,6 +18,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Date;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class EditUserData extends JFrame {
 
@@ -68,7 +69,6 @@ public class EditUserData extends JFrame {
         long userId = user.getUserId();
         loadCurrentUserData(user);
 
-        UserDto userDto = userService.getUserById(userId).getData();
 
 
         saveChangesButton.addActionListener(new ActionListener() {
@@ -171,11 +171,15 @@ public class EditUserData extends JFrame {
     }
     public void getSchools(){
         userService = UserServiceImpl.createInstance();
-        ApiResponse<Map<String, Integer>> apiResponse = userService.getAllSchools();
-        if (ApiResponseCode.SUCCESS.getCode() == apiResponse.getCode()){
-            schoolsMap = apiResponse.getData();
-            schoolsMap.forEach((s, i) -> school.addItem(s));
-        }    }
+        ApiResponse<Map<String, Integer>> apiResponseSchools = userService.getAllSchools();
+        if (ApiResponseCode.SUCCESS.getCode() == apiResponseSchools.getCode()) {
+            schoolsMap = apiResponseSchools.getData();
+
+            TreeMap<String, Integer> sortedLibrariesMap = new TreeMap<>(schoolsMap);
+            school.removeAllItems();
+            sortedLibrariesMap.forEach((s, i) -> school.addItem(s));
+        }
+    }
 
     public static void main(String[] args) {
         userService = UserServiceImpl.createInstance();

@@ -5,7 +5,7 @@
 
     <select id="getAllGenres" resultType="de.srh.library.entity.Genre">
       select * from genres
-      order by genre_id;
+      order by genre_name asc;
     </select>
 
     <select id="getGenreById" resultType="de.srh.library.entity.Genre">

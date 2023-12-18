@@ -9,7 +9,7 @@ public interface BookMapper {
     List<BookDto> getBookByIsbn(String isbn);
     List<BookDto> getBookByName(String bookName);
 
-    BookDto getBookByDoi(String doi);
+    List<BookDto> getBookByDoi(String doi);
 
     List<BookDto> getBookByAuthor(String bookAuthor);
     List<BookDto> bookByGenre(int genreId);

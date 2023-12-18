@@ -107,6 +107,17 @@
                   <text value="Add A New Book"/>
                 </properties>
               </component>
+              <component id="a51bf" class="javax.swing.JButton" binding="searchBookButton" default-binding="true">
+                <constraints>
+                  <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false">
+                    <minimum-size width="150" height="-1"/>
+                  </grid>
+                </constraints>
+                <properties>
+                  <font name="Roboto" size="16" style="0"/>
+                  <text value="Search/Edit Book"/>
+                </properties>
+              </component>
               <component id="41fc1" class="javax.swing.JButton" binding="importBooksButton" default-binding="true">
                 <constraints>
                   <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false">
@@ -116,17 +127,6 @@
                 <properties>
                   <font name="Roboto" size="16" style="0"/>
                   <text value="Import Books"/>
-                </properties>
-              </component>
-              <component id="a51bf" class="javax.swing.JButton" binding="searchBookButton" default-binding="true">
-                <constraints>
-                  <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false">
-                    <minimum-size width="150" height="-1"/>
-                  </grid>
-                </constraints>
-                <properties>
-                  <font name="Roboto" size="16" style="0"/>
-                  <text value="Search for Book"/>
                 </properties>
               </component>
             </children>

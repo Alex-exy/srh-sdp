@@ -1,6 +1,7 @@
 package de.srh.library.ui.editbooks;
 
 
+import cn.hutool.core.exceptions.ValidateException;
 import de.srh.library.dto.ApiResponse;
 import de.srh.library.dto.BookDto;
 import de.srh.library.entity.Book;
@@ -10,6 +11,7 @@ import de.srh.library.ui.addnewbook.AddNewBook;
 import de.srh.library.ui.editbookdata.EditBookData;
 import de.srh.library.ui.login.LoginWindow;
 import de.srh.library.ui.managementmenu.ManagementMenu;
+import de.srh.library.util.ValidatorUtils;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -76,6 +78,12 @@ public class EditBooks extends JFrame {
                     JOptionPane.showMessageDialog(null, "Please enter a value in the ID field!");
                 }
                 else {
+                    try{
+                        ValidatorUtils.validateBookId(bookIDField.getText());
+                    }catch (ValidateException ve ){
+                        JOptionPane.showMessageDialog(null, ve.getMessage());
+                        return;
+                    }
                     long bookId = Long.parseLong(bookIDField.getText());
                     getBookById(bookId);
                     bookService = BookServiceImpl.createInstance();

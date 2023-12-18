@@ -70,36 +70,36 @@ ALTER SEQUENCE public.borrows_borrow_id_seq RESTART WITH 1000;
 
 DROP TABLE IF EXISTS books;
 
-CREATE TABLE books
-(
-    book_id            BIGSERIAL       PRIMARY KEY,
-    book_name          VARCHAR(64)        NOT NULL,
-    subtitles          VARCHAR(128)       NOT NULL,
-    language           VARCHAR(32)        NOT NULL,
-    isbn               VARCHAR(20)        NOT NULL,
-    publish_date       VARCHAR(20)        NOT NULL,
-    book_author        VARCHAR(255)       NOT NULL,
-    genre_id           INT                NOT NULL,
-    price              VARCHAR(10)        NOT NULL,
-    book_description   VARCHAR(1024)      NOT NULL,
-    addition_date      TIMESTAMP          DEFAULT CURRENT_TIMESTAMP,
-    update_date        TIMESTAMP          DEFAULT CURRENT_TIMESTAMP,
-    library_id         INT                NOT NULL,
-    doi                VARCHAR(64)        NULL
+    CREATE TABLE books
+    (
+        book_id            BIGSERIAL       PRIMARY KEY,
+        book_name          VARCHAR(64)        NOT NULL,
+        subtitles          VARCHAR(128)       NOT NULL,
+        language           VARCHAR(32)        NOT NULL,
+        isbn               VARCHAR(20)        NOT NULL,
+        publish_date       VARCHAR(20)        NOT NULL,
+        book_author        VARCHAR(255)       NOT NULL,
+        genre_id           INT                NOT NULL,
+        price              VARCHAR(10)        NOT NULL,
+        book_description   VARCHAR(1024)      NOT NULL,
+        addition_date      TIMESTAMP          DEFAULT CURRENT_TIMESTAMP,
+        update_date        TIMESTAMP          DEFAULT CURRENT_TIMESTAMP,
+        library_id         INT                NOT NULL,
+        doi                VARCHAR(64)        NULL
 
-);
-CREATE EXTENSION IF NOT EXISTS pg_trgm;
-CREATE INDEX idx_books_book_name_gin ON books USING gin (book_name gin_trgm_ops);
-CREATE INDEX idx_book_author ON books (book_author);
-CREATE INDEX idx_isbn ON books (isbn);
-CREATE INDEX idx_doi ON books (doi);
+    );
+
+    CREATE INDEX idx_books_book_name_gin ON books USING gin (book_name gin_trgm_ops);
+    CREATE INDEX idx_book_author ON books (book_author);
+    CREATE INDEX idx_isbn ON books (isbn);
+    CREATE INDEX idx_doi ON books (doi);
 
 
-COMMENT ON COLUMN books.doi IS 'DIGITAL OBJECT IDENTIFIERS ARE UNIQUE ALPHANUMERIC CODES ASSIGNED BY PUBLISHERS';
-COMMENT ON COLUMN books.price IS 'PRICE IS IN EUROS';
+    COMMENT ON COLUMN books.doi IS 'DIGITAL OBJECT IDENTIFIERS ARE UNIQUE ALPHANUMERIC CODES ASSIGNED BY PUBLISHERS';
+    COMMENT ON COLUMN books.price IS 'PRICE IS IN EUROS';
 
-ALTER TABLE books ADD FOREIGN KEY (genre_id) REFERENCES genres (genre_id) ON UPDATE CASCADE ON DELETE RESTRICT;
-ALTER TABLE books ADD FOREIGN KEY (library_id) REFERENCES libraries (library_id) ON UPDATE CASCADE ON DELETE RESTRICT;
+    ALTER TABLE books ADD FOREIGN KEY (genre_id) REFERENCES genres (genre_id) ON UPDATE CASCADE ON DELETE RESTRICT;
+    ALTER TABLE books ADD FOREIGN KEY (library_id) REFERENCES libraries (library_id) ON UPDATE CASCADE ON DELETE RESTRICT;
 
 
 DROP TABLE IF EXISTS genres;
@@ -109,7 +109,7 @@ CREATE TABLE genres
     genre_id             SERIAL           PRIMARY KEY,
     genre_name           VARCHAR(64)      UNIQUE NOT NULL
 );
-ALTER SEQUENCE public.genres_genre_id_seq RESTART WITH 100;
+
 
 insert into genres(genre_name)values
  ('Action and adventure'),

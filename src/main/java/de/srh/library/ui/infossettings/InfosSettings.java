@@ -1,5 +1,6 @@
 package de.srh.library.ui.infossettings;
 
+import cn.hutool.core.exceptions.ValidateException;
 import de.srh.library.constant.UserRole;
 import de.srh.library.dto.*;
 import de.srh.library.entity.User;
@@ -8,6 +9,7 @@ import de.srh.library.service.user.UserServiceImpl;
 import de.srh.library.ui.login.LoginWindow;
 import de.srh.library.ui.mainmenu.MainMenu;
 import de.srh.library.ui.resetpassword.ResetPassword;
+import de.srh.library.util.ValidatorUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,6 +18,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Date;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class InfosSettings extends JFrame {
 
@@ -56,11 +59,6 @@ public class InfosSettings extends JFrame {
         setVisible(true);
         logger.info("Opening infos and settings window ...");
 
-        // ! Fill with correct user data from saved users in database
-//        initUserInformation(testfirstname, testlastname, testemail, testaddress, testid, testrole);
-        // ! Fill with school data string from database
-//        initSchools(schule1, schule2);
-
         changeInformationButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -75,6 +73,12 @@ public class InfosSettings extends JFrame {
         saveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent safe) {
+                try{
+                    inputValidation();
+                }catch (ValidateException ve ){
+                    JOptionPane.showMessageDialog(null, ve.getMessage());
+                    return;
+                }
                 userService = UserServiceImpl.createInstance();
                 updateUserInfo(userId);
             }
@@ -169,11 +173,22 @@ public class InfosSettings extends JFrame {
     }
     public void getSchools(){
         userService = UserServiceImpl.createInstance();
-        ApiResponse<Map<String, Integer>> apiResponse = userService.getAllSchools();
-        if (ApiResponseCode.SUCCESS.getCode() == apiResponse.getCode()){
-            schoolsMap = apiResponse.getData();
-            schoolsMap.forEach((s, i) -> userSelectSchool.addItem(s));
-        }    }
+        ApiResponse<Map<String, Integer>> apiResponseLibrary = userService.getAllSchools();
+        if (ApiResponseCode.SUCCESS.getCode() == apiResponseLibrary.getCode()) {
+            schoolsMap = apiResponseLibrary.getData();
+
+            TreeMap<String, Integer> sortedLibrariesMap = new TreeMap<>(schoolsMap);
+            userSelectSchool.removeAllItems();
+            sortedLibrariesMap.forEach((s, i) -> userSelectSchool.addItem(s));
+        }
+    }
+    public void inputValidation(){
+        ValidatorUtils.validateFirstName(userFirstName.getText());
+        ValidatorUtils.validateLastName(userLastName.getText());
+        ValidatorUtils.validateEmail(userEmail.getText());
+        ValidatorUtils.validateAddress(addressLabel.getText());
+
+    }
 
     //Testing Only
     public static void main(String[] args) {

@@ -121,10 +121,17 @@ public class BookDao {
             }return nameBooksMap;
         }
     }
-    public BookDto getBookByDoi(String doi) {
+    public Map<Long,List<String>> getBookByDoi(String doi) {
         try (SqlSession session = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession()) {
             BookMapper mapper = session.getMapper(BookMapper.class);
-            return mapper.getBookByDoi(doi);
+            List<BookDto> doiBooks = mapper.getBookByDoi(doi);
+            Map<Long, List<String>> doiBooksMap = new HashMap<>();
+            for (BookDto bookDto : doiBooks) {
+                long bookId = bookDto.getBookId();
+                doiBooksMap.put(bookDto.getBookId(), Arrays.asList(bookDto.getBookName(),
+                        bookDto.getBookAuthor(),bookDto.getGenreName(bookId),
+                        bookDto.getIsbn(),bookDto.getDoi(),bookDto.getLibraryName(bookId)));
+            }return doiBooksMap;
         }
     }
 }

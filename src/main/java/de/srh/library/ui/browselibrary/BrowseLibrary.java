@@ -1,6 +1,7 @@
 package de.srh.library.ui.browselibrary;
 
 
+import cn.hutool.core.exceptions.ValidateException;
 import de.srh.library.dto.ApiResponse;
 import de.srh.library.dto.ApiResponseCode;
 import de.srh.library.dto.BookDto;
@@ -8,6 +9,7 @@ import de.srh.library.service.book.BookService;
 import de.srh.library.service.book.BookServiceImpl;
 import de.srh.library.ui.createnewuser.CreateNewUser;
 import de.srh.library.ui.mainmenu.MainMenu;
+import de.srh.library.util.ValidatorUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,6 +22,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 
 public class BrowseLibrary extends JFrame {
@@ -46,6 +49,7 @@ public class BrowseLibrary extends JFrame {
     private Map<String, Integer> genresMap;
     private Map<String,Integer> libraryMap;
    private Map<Long,List<String>> isbnBooks;
+   private Map<Long,List<String>> doiBooks;
    private Map<Long,List<String>> nameBooks;
    private Map<Long,List<String>> authorBooks;
     private Map<Long,List<String>> bookGenre;
@@ -60,9 +64,10 @@ public class BrowseLibrary extends JFrame {
         resultsTableDisplay.setModel(getjTableDefault());
         mouseClick(resultsTableDisplay);
 
-        searchGenre.addItem("None");
+
+        searchGenre.insertItemAt("None",0);
+        searchLibrary.insertItemAt("None",0);
         searchGenre.setSelectedItem("None");
-        searchLibrary.addItem("None");
         searchLibrary.setSelectedItem("None");
         setAutoRequestFocus(false);
         setContentPane(browseLibrary);
@@ -87,7 +92,12 @@ public class BrowseLibrary extends JFrame {
                     resultsTableDisplay.setModel(getjTableDefault());
                 }
                 else if(!bookIDTextField.getText().trim().isEmpty()){
-
+                    try{
+                        ValidatorUtils.validateBookId(bookIDTextField.getText());
+                    }catch (ValidateException ve ){
+                        JOptionPane.showMessageDialog(null, ve.getMessage());
+                        return;
+                    }
                     long bookId = Long.parseLong(bookIDTextField.getText());
                     BookDto bookDto = new BookDto();
                     bookDto.setBookId(bookId);
@@ -98,6 +108,13 @@ public class BrowseLibrary extends JFrame {
                     }
                 }
                 else if(!enterISBN.getText().trim().isEmpty()){
+                    try{
+                        ValidatorUtils.validateIsbn(enterISBN.getText());
+                    }catch (ValidateException ve ){
+                        JOptionPane.showMessageDialog(null, ve.getMessage());
+                        return;
+                    }
+
                     BookDto bookDto = new BookDto();
                     bookDto.setIsbn(enterISBN.getText().trim());
                     if(bookFound(bookDto)){
@@ -108,6 +125,12 @@ public class BrowseLibrary extends JFrame {
 
                 }
                 else if(!doiTextField.getText().trim().isEmpty()){
+                    try{
+                        ValidatorUtils.validateDoi(doiTextField.getText());
+                    }catch (ValidateException ve ){
+                        JOptionPane.showMessageDialog(null, ve.getMessage());
+                        return;
+                    }
                     BookDto bookDto = new BookDto();
                     bookDto.setDoi(doiTextField.getText().trim());
                     if(bookFound(bookDto)){
@@ -325,14 +348,29 @@ public class BrowseLibrary extends JFrame {
         return tableModel;
     }
     private  TableModel getJTableDoi() {
-        String[] columnNames = {"Book ID", "Title","Book Author","Genre","ISBN","DOI","In Library"};
+        DefaultTableModel tableModel = new DefaultTableModel();
+        tableModel.addColumn("Book ID");
+        tableModel.addColumn("Title");
+        tableModel.addColumn("Book Author");
+        tableModel.addColumn("Genre");
+        tableModel.addColumn("ISBN");
+        tableModel.addColumn("DOI");
+        tableModel.addColumn("In Library");
         bookService = BookServiceImpl.createInstance();
-        BookDto bookDto = bookService.getBookByDoi(doiTextField.getText().trim()).getData();
-            Object[][] data = {
-                    {bookDto.getBookId(), bookDto.getBookName()}
-            };
-            DefaultTableModel tableModel = new DefaultTableModel(data, columnNames);
-            return tableModel;
+        ApiResponse<Map<Long,List<String>>> apiResponseDoi = bookService.getBookByDoi(doiTextField.getText().trim());
+        if(ApiResponseCode.SUCCESS.getCode() == apiResponseDoi.getCode()){
+            doiBooks = apiResponseDoi.getData();
+            for(Map.Entry<Long,List<String>> entry : doiBooks.entrySet()) {
+                List<String> values = entry.getValue();
+                Object[] rowData = new Object[7];
+                rowData[0] = entry.getKey();
+                for (int i = 0; i < values.size(); i++) {
+                    rowData[i + 1] = values.get(i);
+                }
+                tableModel.addRow(rowData);
+            }
+        }
+        return tableModel;
 
     }
 
@@ -373,26 +411,34 @@ public class BrowseLibrary extends JFrame {
         return new DefaultTableModel(data, columnNames);
     }
 
-    public void getLibraries(){
-        ApiResponse<Map<String, Integer>> apiResponseLibrary = bookService.getAllLibraries();
-        if (ApiResponseCode.SUCCESS.getCode() == apiResponseLibrary.getCode()){
-            libraryMap = apiResponseLibrary.getData();
-            libraryMap.forEach((s, i) -> searchLibrary.addItem(s));
+    private void getGenres(){
+        ApiResponse<Map<String, Integer>> apiResponseGenre = bookService.getAllGenres();
+
+        if (ApiResponseCode.SUCCESS.getCode() == apiResponseGenre.getCode()) {
+            genresMap = apiResponseGenre.getData();
+
+            TreeMap<String, Integer> sortedGenresMap = new TreeMap<>(genresMap);
+            searchGenre.removeAllItems();
+            sortedGenresMap.forEach((s, i) -> searchGenre.addItem(s));
         }
     }
-    public void getGenres(){
-        ApiResponse<Map<String, Integer>> apiResponseGenre = bookService.getAllGenres();
-        if (ApiResponseCode.SUCCESS.getCode() == apiResponseGenre.getCode()){
-            genresMap = apiResponseGenre.getData();
-            genresMap.forEach((s, i) -> searchGenre.addItem(s));
+    private void getLibraries(){
+        ApiResponse<Map<String, Integer>> apiResponseLibrary = bookService.getAllLibraries();
+        if (ApiResponseCode.SUCCESS.getCode() == apiResponseLibrary.getCode()) {
+            libraryMap = apiResponseLibrary.getData();
+
+            TreeMap<String, Integer> sortedLibrariesMap = new TreeMap<>(libraryMap);
+            searchLibrary.removeAllItems();
+            sortedLibrariesMap.forEach((s, i) -> searchLibrary.addItem(s));
         }
     }
 
-    public boolean bookFound(BookDto bookDto) {
+    private boolean bookFound(BookDto bookDto) {
         bookService = BookServiceImpl.createInstance();
         bookService.bookFound(bookDto);
         return bookService.bookFound(bookDto).getData() != 0;
     }
+
 
 
     public static void main(String[] args) {

@@ -1,5 +1,6 @@
 package de.srh.library.ui.editusers;
 
+import cn.hutool.core.exceptions.ValidateException;
 import de.srh.library.dto.ApiResponse;
 import de.srh.library.dto.UserDto;
 import de.srh.library.entity.User;
@@ -7,6 +8,7 @@ import de.srh.library.service.user.UserService;
 import de.srh.library.service.user.UserServiceImpl;
 import de.srh.library.ui.edituserdata.EditUserData;
 import de.srh.library.ui.managementmenu.ManagementMenu;
+import de.srh.library.util.ValidatorUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,7 +26,6 @@ public class EditUsers extends JFrame {
     private JTextField searchByUserIDTextField;
     private JTextField searchByUserEmailTextField;
     private JButton searchUserButton;
-    private JButton editUserButton;
     private UserService userService;
 
 
@@ -47,6 +48,12 @@ public class EditUsers extends JFrame {
                 userService = UserServiceImpl.createInstance();
 
                 if(searchByUserEmailTextField.getText().trim().isEmpty() && !searchByUserIDTextField.getText().trim().isEmpty()){
+                    try{
+                        ValidatorUtils.validateUserId(searchByUserIDTextField.getText());
+                    }catch (ValidateException ve ){
+                        JOptionPane.showMessageDialog(null, ve.getMessage());
+                        return;
+                    }
                     long userId = Long.parseLong(searchByUserIDTextField.getText().trim());
                     UserDto userById = userService.getUserById(userId).getData();
                     if(userFoundId(userId)){
@@ -57,6 +64,12 @@ public class EditUsers extends JFrame {
                     }
                 }
                 else if(searchByUserIDTextField.getText().trim().isEmpty() && !searchByUserEmailTextField.getText().trim().isEmpty()){
+                    try{
+                        ValidatorUtils.validateEmail(searchByUserEmailTextField.getText());
+                    }catch (ValidateException ve ){
+                        JOptionPane.showMessageDialog(null, ve.getMessage());
+                        return;
+                    }
                     String userEmailText = searchByUserEmailTextField.getText().trim();
                     UserDto userByEmail = userService.getUserByEmail(userEmailText).getData();
                     if(userFoundEmail(userEmailText)){
@@ -73,15 +86,11 @@ public class EditUsers extends JFrame {
                     System.out.println("Failed");
                 }
 
-                editUserButton.setEnabled(true);
+
             }
         });
 
-        editUserButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            }
-        });
+
         searchByUserIDTextField.addFocusListener(new FocusAdapter() {
             @Override
             public void focusGained(FocusEvent e) {

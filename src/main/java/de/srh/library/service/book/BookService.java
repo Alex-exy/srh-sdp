@@ -13,7 +13,7 @@ public interface BookService {
     ApiResponse<Map<Long,List<String>>> getBookByName(String bookName);
     ApiResponse<Map<Long,List<String>>> bookByGenre(int genreId);
     ApiResponse<Map<Long,List<String>>> bookByLibrary(int genreId);
-    ApiResponse<BookDto> getBookByDoi(String doi);
+    ApiResponse<Map<Long,List<String>>> getBookByDoi(String doi);
     ApiResponse<Integer> updateBookInfo(BookDto bookDto);
     ApiResponse<Integer> insertBook(BookDto bookDto);
     ApiResponse<Map<Long, List<String>>> getBookByAuthor(String bookAuthor);
