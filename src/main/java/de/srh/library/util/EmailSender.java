@@ -10,15 +10,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.Map;
 
 public class EmailSender {
 
     private static Logger logger = LoggerFactory.getLogger(EmailSender.class);
-    public static void send(List<String> receivers, String emailSubject, String emailBody, String emailTemplate, boolean isHtml){
+    public static void send(List<String> receivers, String emailSubject, Map<String, Object> dataModel,
+                            String emailTemplate, boolean isHtml){
         try{
-            TemplateEngine engine = TemplateUtil.createEngine(new TemplateConfig("template", TemplateConfig.ResourceMode.CLASSPATH));
+            TemplateEngine engine = TemplateUtil.createEngine(new TemplateConfig("template",
+                    TemplateConfig.ResourceMode.CLASSPATH));
             Template template = engine.getTemplate(emailTemplate);
-            String content = template.render(Dict.create().set("mail", emailBody));
+            String content = template.render(dataModel);
             MailUtil.send(receivers, emailSubject, content, isHtml);
         }catch (Exception e){
             logger.error("Email send failed, subject: {}",emailSubject, e);

@@ -2,31 +2,99 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="de.srh.library.mapper.books.BookMapper">
-    <select id="getBookById" resultType="de.srh.library.entity.Book">
-        select * from books where book_id = #{bookId}
+
+    <select id="getBookById" resultType="de.srh.library.dto.BookDto">
+        SELECT * FROM books
+        WHERE books.book_id = #{bookId}
     </select>
 
-    <select id="getBookByAuthor" resultType="de.srh.library.entity.Book">
-        select * from books where book_author = #{author}
+    <select id="getBookByName" resultType="de.srh.library.dto.BookDto">
+
+        SELECT *
+        FROM books
+        WHERE book_name LIKE '%' || #{name} || '%';
     </select>
+
+
+    <select id="getBookByIsbn" resultType="de.srh.library.dto.BookDto">
+        SELECT * FROM books
+        WHERE isbn = #{isbn}
+    </select>
+
+    <select id="getBookByDoi" resultType="de.srh.library.dto.BookDto">
+        SELECT * FROM books
+        WHERE books.doi = #{doi}
+    </select>
+
+    <select id="bookFound" resultType="int">
+        SELECT COUNT (book_id)
+        FROM books
+        WHERE CAST(book_id AS INT) = #{bookId}
+        OR CAST(isbn AS VARCHAR) = #{isbn}
+        OR CAST(doi AS VARCHAR) = #{doi}
+        OR book_name LIKE '%' || #{bookName} || '%'
+        OR book_author LIKE '%' ||#{bookAuthor} || '%';
+
+
+    </select>
+
+    <select id="bookGenreName" resultType="java.lang.String">
+        SELECT g.genre_name
+        FROM books b
+                 INNER JOIN genres g ON b.genre_id = g.genre_id
+        WHERE b.book_id = #{bookId};
+    </select>
+
+    <select id="bookByGenre" resultType="de.srh.library.dto.BookDto">
+        SELECT * FROM books
+        WHERE genre_id = #{genreId};
+    </select>
+
+    <select id="bookByLibrary" resultType="de.srh.library.dto.BookDto">
+        SELECT * FROM books
+        WHERE library_id = #{libraryId};
+    </select>
+
+    <select id="bookLibraryName" resultType="java.lang.String">
+        SELECT l.library_name
+        FROM books b
+                 INNER JOIN libraries l ON b.library_id = l.library_id
+        WHERE b.book_id = #{bookId};
+    </select>
+
+    <select id="getBookByAuthor" resultType="de.srh.library.dto.BookDto">
+
+        SELECT *
+        FROM books
+        WHERE book_author LIKE '%' || #{bookAuthor} || '%';
+    </select>
+
 <delete id="removeBook" parameterType="de.srh.library.entity.Book">
-    delete from books
-    where book_id = #{bookId}
+    DELETE FROM books
+    WHERE book_id = #{bookId}
 </delete>
+
+    <update id="updateBookInfo" parameterType="de.srh.library.entity.Book">
+        UPDATE books
+        SET book_name = #{bookName},subtitles = #{subtitles},language = #{language}, isbn = #{isbn}, publish_date = #{publishDate},
+            book_author = #{bookAuthor}, genre_id = #{genreId}, price = #{price}, book_description = #{bookDescription},
+            update_date = #{updateDate}, library_id = #{libraryId}, doi = #{doi}
+        WHERE book_id = #{bookId}
+    </update>
 
     <insert id="insertBook" parameterType="de.srh.library.entity.Book">
         <selectKey keyProperty="bookId" resultType="java.lang.Long" order="AFTER">
-            select currval(pg_get_serial_sequence('books', 'book_id')) AS book_id
+            SELECT currval(pg_get_serial_sequence('books', 'book_id')) AS book_id
         </selectKey>
 
-        insert INTO books (
-        book_name, subtitles, language, isbn, publish_date, book_author,
+        INSERT INTO books (
+        book_name, subtitles, language, isbn, publish_date, book_author, genre_id,
         price, book_description, library_id, doi
         )
 
         VALUES (
         #{bookName}, #{subtitles}, #{language}, #{isbn}, #{publishDate},
-        #{bookAuthor}, #{price}, #{bookDescription}, #{libraryId}, #{doi}
+        #{bookAuthor},#{genreId}, #{price}, #{bookDescription}, #{libraryId}, #{doi}
         )
     </insert>
 </mapper>

@@ -4,6 +4,7 @@ import de.srh.library.dao.SchoolDao;
 import de.srh.library.dao.UserDao;
 import de.srh.library.dto.ApiResponse;
 import de.srh.library.dto.ApiResponseCode;
+import de.srh.library.dto.UserDto;
 import de.srh.library.entity.User;
 import de.srh.library.util.PasswordUtils;
 import org.slf4j.Logger;
@@ -32,7 +33,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public ApiResponse<Long> checkPassword(String username, String password) {
         try{
-            User user = userDao.getUserByEmail(username);
+            UserDto user = userDao.getUserByEmail(username);
             if (user == null){
                 return ApiResponse.error(ApiResponseCode.ERROR_USER_NOT_EXIT);
             }
@@ -69,7 +70,7 @@ public class UserServiceImpl implements UserService {
   }
 
     @Override
-    public ApiResponse<User> getUserByEmail(String email) {
+    public ApiResponse<UserDto> getUserByEmail(String email) {
         try{
             return ApiResponse.success(userDao.getUserByEmail(email));
         }catch (Exception e){
@@ -90,10 +91,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ApiResponse updateUserInfo(String firstName, String familyName,String email, String address, long userId) {
+    public ApiResponse updateUserInfo(User user) {
         try{
-
-            userDao.updateUserInfo(firstName,familyName,email,address,userId);
+            userDao.updateUserInfo(user);
             return ApiResponse.success();
         }catch (Exception e){
             logger.error("User information update failed!", e);
@@ -102,12 +102,75 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Long getIdByEmail(String email) {
+    public ApiResponse updateUserData(User user) {
+        try{
+            userDao.updateUserData(user);
+            return ApiResponse.success();
+        }catch (Exception e){
+            logger.error("User information update failed!", e);
+            return ApiResponse.error(ApiResponseCode.ERROR_DATABASE);
+        }
+    }
+    @Override
+    public ApiResponse<Integer> removeUser(long userId) {
+        try{
+            userDao.removeUser(userId);
+            return ApiResponse.success();
+        }catch (Exception e){
+            logger.error("User removal failed!", e);
+            return ApiResponse.error(ApiResponseCode.ERROR_DATABASE);
+        }
+    }
+
+    @Override
+    public ApiResponse<UserDto> getUserById(long userId) {
+        try{
+            return ApiResponse.success(userDao.getUserById(userId));
+        }catch (Exception e){
+            logger.error("Query user by ID failed.", e);
+            return ApiResponse.error(ApiResponseCode.ERROR_DATABASE);
+        }
+    }
+
+    @Override
+    public ApiResponse<Integer> userFoundId(long userId) {
+        try{
+            return ApiResponse.success(userDao.userFoundId(userId));
+        }catch (Exception e){
+            logger.error("User search failed.", e);
+            return ApiResponse.error(ApiResponseCode.ERROR_DATABASE);
+        }
+    }
+
+    @Override
+    public ApiResponse<Integer> userFoundEmail(String email) {
+        try{
+            return ApiResponse.success(userDao.userFoundEmail(email));
+        }catch (Exception e){
+            logger.error("User search failed.", e);
+            return ApiResponse.error(ApiResponseCode.ERROR_DATABASE);
+        }
+    }
+
+
+
+    @Override
+    public long getIdByEmail(String email) {
         try{
             return ApiResponse.success(userDao.getIdByEmail(email)).getData();
         }catch (Exception e){
             logger.error("Error getting Id.", e);
             return 0L;
+        }
+    }
+
+    @Override
+    public String userSchoolName(long userId) {
+        try{
+            return userDao.userSchoolName(userId);
+        }catch (Exception e){
+            logger.error("User school name retrieval failed.", e);
+            return "User school name retrieval failed.";
         }
     }
 

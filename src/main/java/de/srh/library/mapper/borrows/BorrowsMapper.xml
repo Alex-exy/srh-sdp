@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="de.srh.library.mapper.borrows.BorrowsMapper">
 
-    <select id="listOfBorrowedBooks" resultType="de.srh.library.entity.Book">
+    <select id="listOfBorrowedBooks" resultType="de.srh.library.entity.Borrows">
         select * from borrows where borrow_status = #{borrowStatus}
     </select>
 

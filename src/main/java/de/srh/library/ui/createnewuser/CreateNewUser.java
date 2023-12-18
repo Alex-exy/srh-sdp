@@ -1,6 +1,7 @@
 package de.srh.library.ui.createnewuser;
 
 import cn.hutool.core.exceptions.ValidateException;
+import de.srh.library.cache.VerificationCodeManager;
 import de.srh.library.constant.UserRole;
 import de.srh.library.constant.UserStatus;
 import de.srh.library.dto.ApiResponse;
@@ -9,6 +10,7 @@ import de.srh.library.entity.User;
 import de.srh.library.service.user.UserService;
 import de.srh.library.service.user.UserServiceImpl;
 import de.srh.library.ui.login.LoginWindow;
+import de.srh.library.util.EmailSender;
 import de.srh.library.util.PasswordUtils;
 import de.srh.library.util.ValidatorUtils;
 import org.slf4j.Logger;
@@ -19,6 +21,8 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class CreateNewUser extends JFrame {
@@ -44,6 +48,8 @@ public class CreateNewUser extends JFrame {
     private JLabel lableReenterPassword;
     private JPasswordField reenterPassword;
     private JCheckBox agreementCheckBox;
+    private JButton getVerificationCodeButton;
+    private JTextField verificationCode;
 
     private UserService userService;
     private Map<String, Integer> schoolsMap;
@@ -94,9 +100,42 @@ public class CreateNewUser extends JFrame {
             public void stateChanged(ChangeEvent e) {
                 if (agreementCheckBox.isSelected()) {
                     buttonContinue.setEnabled(true);
+                }else {
+                    buttonContinue.setEnabled(false);
                 }
             }
         });
+        getVerificationCodeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String email = enterEmail.getText();
+                try{
+                    ValidatorUtils.validateEmail(email);
+                }catch (ValidateException ve){
+                    JOptionPane.showMessageDialog(null, ve.getMessage());
+                    return;
+                }
+                String verificationCode = VerificationCodeManager.generateAndCacheVerificationCode(email);
+                logger.debug("verificationCode: ", verificationCode);
+                try{
+                    sendVerificationCodeEmail(email, verificationCode);
+                }catch (Exception ex){
+                    JOptionPane.showMessageDialog(null, "Verification code sent failed.");
+                    return;
+                }
+                JOptionPane.showMessageDialog(null, "Verification code sent successfully.");
+            }
+        });
+    }
+
+    private void sendVerificationCodeEmail(String email,String verificationCode){
+        Map<String, Object> dataModel = new HashMap<>();
+        dataModel.put("verificationCode", verificationCode);
+        EmailSender.send(List.of(email),
+                "Verification Code - Heidelberg Library",
+                dataModel,
+                "verification-code-mail.html",
+                true);
     }
 
     private ApiResponse createUser() {
@@ -113,11 +152,20 @@ public class CreateNewUser extends JFrame {
     }
 
     private void inputDataValidation(){
+        String email = enterEmail.getText();
         ValidatorUtils.validateEmail(enterEmail.getText());
         ValidatorUtils.validatePassword(enterPassword.getText(), reenterPassword.getText());
         ValidatorUtils.validateName(enterFirstName.getText());
         ValidatorUtils.validateName(enterLastName.getText());
         ValidatorUtils.validateAddress(enterAddress.getText());
+
+        String enteredVerificationCode = verificationCode.getText();
+        ValidatorUtils.validateVerificationCode(verificationCode.getText());
+        String cachedVerificationCode = VerificationCodeManager.getVerificationCode(email);
+        if (cachedVerificationCode == null ||
+                !cachedVerificationCode.equals(enteredVerificationCode)){
+            throw new ValidateException("Wrong verification code, try again.");
+        }
     }
 
     public static void main(String[] args) {

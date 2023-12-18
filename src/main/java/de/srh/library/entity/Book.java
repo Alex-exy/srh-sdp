@@ -10,6 +10,7 @@ public class Book {
     private String isbn;
     private String publishDate;
     private String bookAuthor;
+    private int genreId;
     private String price;
     private String bookDescription;
     private int libraryId;
@@ -75,9 +76,16 @@ public class Book {
         this.bookAuthor = bookAuthor;
     }
 
+    public int getGenreId() {
+        return genreId;
+    }
+
+    public void setGenreId(int genreId) {
+        this.genreId = genreId;
+    }
 
     public String getPrice() {
-        return price;
+        return (price);
     }
 
     public void setPrice(String price) {
@@ -126,19 +134,20 @@ public class Book {
 
     @Override
     public String toString() {
-        return "Books{" +
-                "book_id=" + bookId +
-                ", book_name='" + bookName + '\'' +
-                ", subtitles='" + subtitles + '\'' +
-                ", language='" + language + '\'' +
-                ", isbn=" + isbn +
-                ", publish_date='" + publishDate + '\'' +
-                ", book_author='" + bookAuthor + '\'' +
-                ", book_description='" + bookDescription + '\'' +
-                ", addition_date= " + additionDate +
-                ", update_date= " + updateDate +
-                ", library_id=" + libraryId +
-                ", doi='" + doi + '\'' +
-                '}';
+        return
+                "\n" +
+                " Book ID = " + bookId + "\n" +
+                " Book Name = '" + bookName + '\'' + "\n" +
+                " Subtitles = '" + subtitles + '\'' + "\n" +
+                " Language = '" + language + '\'' + "\n" +
+                " ISBN = '" + isbn + '\'' + "\n" +
+                " Publish Date = '" + publishDate + '\'' + "\n" +
+                " Book Author = '" + bookAuthor + '\'' + "\n" +
+                " Genre ID = '" + genreId + '\'' + "\n" +
+                " Book Description = '" + bookDescription + '\'' + "\n" +
+                " Addition Date = '" + additionDate + '\'' + "\n" +
+                " Update Date '= " + updateDate + '\'' + "\n" +
+                " Library ID = '" + libraryId + '\'' + "\n" +
+                " DOI = '" + doi + '\'' +" ";
     }
 }

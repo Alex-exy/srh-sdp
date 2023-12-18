@@ -14,7 +14,7 @@ CREATE TABLE users
     password_hash     VARCHAR(64)         NOT NULL,
     school_id         INT                 NOT NULL,
     registration_date TIMESTAMP           DEFAULT CURRENT_TIMESTAMP,
-    update_time       TIMESTAMP           DEFAULT CURRENT_TIMESTAMP
+    update_date       TIMESTAMP           DEFAULT CURRENT_TIMESTAMP
 );
 COMMENT ON COLUMN users.user_role IS 'S - Student, T - Teacher';
 COMMENT ON COLUMN users.user_status IS 'A - Active, O - Overdue, F - Frozen, I - Inactive';
@@ -70,41 +70,48 @@ ALTER SEQUENCE public.borrows_borrow_id_seq RESTART WITH 1000;
 
 DROP TABLE IF EXISTS books;
 
-CREATE TABLE books
-(
-    book_id            BIGSERIAL       PRIMARY KEY,
-    book_name          VARCHAR(64)        NOT NULL,
-    subtitles          VARCHAR(128)       NOT NULL,
-    language           VARCHAR(32)        NOT NULL,
-    isbn               VARCHAR(15)        NOT NULL,
-    publish_date       VARCHAR(20)        NOT NULL,
-    book_author        VARCHAR(255)       NOT NULL,
-    price              VARCHAR(10)        NOT NULL,
-    book_description   VARCHAR(1024)      NOT NULL,
-    addition_date      TIMESTAMP          DEFAULT CURRENT_TIMESTAMP,
-    update_date        TIMESTAMP          DEFAULT CURRENT_TIMESTAMP,
-    library_id         INT                NOT NULL,
-    doi                VARCHAR(20)        NULL
+    CREATE TABLE books
+    (
+        book_id            BIGSERIAL       PRIMARY KEY,
+        book_name          VARCHAR(64)        NOT NULL,
+        subtitles          VARCHAR(128)       NOT NULL,
+        language           VARCHAR(32)        NOT NULL,
+        isbn               VARCHAR(20)        NOT NULL,
+        publish_date       VARCHAR(20)        NOT NULL,
+        book_author        VARCHAR(255)       NOT NULL,
+        genre_id           INT                NOT NULL,
+        price              VARCHAR(10)        NOT NULL,
+        book_description   VARCHAR(1024)      NOT NULL,
+        addition_date      TIMESTAMP          DEFAULT CURRENT_TIMESTAMP,
+        update_date        TIMESTAMP          DEFAULT CURRENT_TIMESTAMP,
+        library_id         INT                NOT NULL,
+        doi                VARCHAR(64)        NULL
 
-);
-CREATE INDEX idx_book_name ON books (book_name);
-CREATE INDEX idx_book_author ON books (book_author);
-CREATE INDEX idx_isbn ON books (isbn);
-CREATE INDEX idx_doi ON books (doi);
+    );
+
+    CREATE INDEX idx_books_book_name_gin ON books USING gin (book_name gin_trgm_ops);
+    CREATE INDEX idx_book_author ON books (book_author);
+    CREATE INDEX idx_isbn ON books (isbn);
+    CREATE INDEX idx_doi ON books (doi);
 
 
-COMMENT ON COLUMN books.doi IS 'DIGITAL OBJECT IDENTIFIERS ARE UNIQUE ALPHANUMERIC CODES ASSIGNED BY PUBLISHERS';
-COMMENT ON COLUMN books.price IS 'PRICE IS IN EUROS';
+    COMMENT ON COLUMN books.doi IS 'DIGITAL OBJECT IDENTIFIERS ARE UNIQUE ALPHANUMERIC CODES ASSIGNED BY PUBLISHERS';
+    COMMENT ON COLUMN books.price IS 'PRICE IS IN EUROS';
 
-DROP TABLE IF EXISTS genre;
+    ALTER TABLE books ADD FOREIGN KEY (genre_id) REFERENCES genres (genre_id) ON UPDATE CASCADE ON DELETE RESTRICT;
+    ALTER TABLE books ADD FOREIGN KEY (library_id) REFERENCES libraries (library_id) ON UPDATE CASCADE ON DELETE RESTRICT;
 
-CREATE TABLE genre
+
+DROP TABLE IF EXISTS genres;
+
+CREATE TABLE genres
 (
     genre_id             SERIAL           PRIMARY KEY,
     genre_name           VARCHAR(64)      UNIQUE NOT NULL
 );
 
-insert into genre(genre_name)values
+
+insert into genres(genre_name)values
  ('Action and adventure'),
  ('Art/architecture'),
  ('Alternate history'),
@@ -161,7 +168,6 @@ insert into genre(genre_name)values
  ('Young adult'),
  ('True crime');
 
-ALTER SEQUENCE public.genre_genre_id_seq RESTART WITH 100;
 
 DROP TABLE IF EXISTS libraries;
 

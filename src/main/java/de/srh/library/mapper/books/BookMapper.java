@@ -1,13 +1,25 @@
 package de.srh.library.mapper.books;
 
-import de.srh.library.entity.Book;
+import de.srh.library.dto.BookDto;
+import java.util.List;
 
 
 public interface BookMapper {
-    Book getBookById(Long bookId);
+    BookDto getBookById(long bookId);
+    List<BookDto> getBookByIsbn(String isbn);
+    List<BookDto> getBookByName(String bookName);
 
-    Book getBookByAuthor(String author);
+    List<BookDto> getBookByDoi(String doi);
 
-    int insertBook(Book book);
-    int removeBook(Long bookId);
+    List<BookDto> getBookByAuthor(String bookAuthor);
+    List<BookDto> bookByGenre(int genreId);
+    List<BookDto> bookByLibrary(int libraryId);
+
+    int insertBook(BookDto bookDto);
+    int removeBook(long bookId);
+    int bookFound(BookDto bookDto);
+    int updateBookInfo(BookDto bookDto);
+    String bookGenreName(long bookId);
+    String bookLibraryName(long bookId);
+
 }

@@ -1,7 +1,14 @@
 package de.srh.library.ui.editusers;
 
-import de.srh.library.ui.login.LoginWindow;
+import cn.hutool.core.exceptions.ValidateException;
+import de.srh.library.dto.ApiResponse;
+import de.srh.library.dto.UserDto;
+import de.srh.library.entity.User;
+import de.srh.library.service.user.UserService;
+import de.srh.library.service.user.UserServiceImpl;
+import de.srh.library.ui.edituserdata.EditUserData;
 import de.srh.library.ui.managementmenu.ManagementMenu;
+import de.srh.library.util.ValidatorUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,9 +26,12 @@ public class EditUsers extends JFrame {
     private JTextField searchByUserIDTextField;
     private JTextField searchByUserEmailTextField;
     private JButton searchUserButton;
-    private JButton editUserButton;
+    private UserService userService;
+
+
 
     public EditUsers() {
+
 
         setAutoRequestFocus(false);
         setContentPane(editUsersWindow);
@@ -35,22 +45,52 @@ public class EditUsers extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 searchUserButton.setEnabled(false);
-                //Valid user check
-                JOptionPane.showMessageDialog(null, "User found!");
-                editUserButton.setEnabled(true);
-                JOptionPane.showMessageDialog(null, "Credentials wrong or user nonexistent!");
+                userService = UserServiceImpl.createInstance();
+
+                if(searchByUserEmailTextField.getText().trim().isEmpty() && !searchByUserIDTextField.getText().trim().isEmpty()){
+                    try{
+                        ValidatorUtils.validateUserId(searchByUserIDTextField.getText());
+                    }catch (ValidateException ve ){
+                        JOptionPane.showMessageDialog(null, ve.getMessage());
+                        return;
+                    }
+                    long userId = Long.parseLong(searchByUserIDTextField.getText().trim());
+                    UserDto userById = userService.getUserById(userId).getData();
+                    if(userFoundId(userId)){
+                    EditUserData editUserData = new EditUserData(userById);
+                    editUserData.setVisible(true);}
+                    else {
+                        JOptionPane.showMessageDialog(null, "User does not exist! \nPlease try again!");
+                    }
+                }
+                else if(searchByUserIDTextField.getText().trim().isEmpty() && !searchByUserEmailTextField.getText().trim().isEmpty()){
+                    try{
+                        ValidatorUtils.validateEmail(searchByUserEmailTextField.getText());
+                    }catch (ValidateException ve ){
+                        JOptionPane.showMessageDialog(null, ve.getMessage());
+                        return;
+                    }
+                    String userEmailText = searchByUserEmailTextField.getText().trim();
+                    UserDto userByEmail = userService.getUserByEmail(userEmailText).getData();
+                    if(userFoundEmail(userEmailText)){
+                    EditUserData editUserData = new EditUserData(userByEmail);
+                    editUserData.setVisible(true);}
+                    else {
+                        JOptionPane.showMessageDialog(null, "User does not exist! \nPlease try again!");
+                    }
+                }
+                else if (searchByUserIDTextField.getText().trim().isEmpty() && searchByUserEmailTextField.getText().trim().isEmpty()){
+                    JOptionPane.showMessageDialog(null, "Fields can not be empty!");
+                 }
+                else {
+                    System.out.println("Failed");
+                }
+
+
             }
         });
-        editUserButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //Valid user check
-                /*
-                dispose();
-                edit user information menu
-                */
-            }
-        });
+
+
         searchByUserIDTextField.addFocusListener(new FocusAdapter() {
             @Override
             public void focusGained(FocusEvent e) {
@@ -71,9 +111,28 @@ public class EditUsers extends JFrame {
                 managementMenu.setVisible(true);
             }
         });
+        searchByUserIDTextField.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                searchByUserIDTextField.setText("");
+            }
+        });
+        searchByUserEmailTextField.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                searchByUserEmailTextField.setText("");
+            }
+        });
+    }
+    public boolean userFoundId(long userId){
+        return userService.userFoundId(Long.parseLong(searchByUserIDTextField.getText())).getData() == 1;
+    }
+    public boolean userFoundEmail(String email){
+        return userService.userFoundEmail(searchByUserEmailTextField.getText()).getData() == 1;
     }
 
     public static void main(String[] args) {
+
         EditUsers editUser = new EditUsers();
     }
 }

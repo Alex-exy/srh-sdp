@@ -12,7 +12,7 @@ public class User {
   private String userStatus;
   private String passwordHash;
   private Date registrationDate;
-  private Date updateTime;
+  private Date updateDate;
   private Integer schoolId;
 
   public Long getUserId() {
@@ -87,12 +87,12 @@ public class User {
     this.registrationDate = registrationDate;
   }
 
-  public Date getUpdateTime() {
-    return updateTime;
+  public Date getUpdateDate() {
+    return updateDate;
   }
 
-  public void setUpdateTime(Date updateTime) {
-    this.updateTime = updateTime;
+  public void setUpdateDate(Date updateDate) {
+    this.updateDate = updateDate;
   }
 
   public Integer getSchoolId() {
@@ -115,7 +115,7 @@ public class User {
             ", userStatus='" + userStatus + '\'' +
             ", passwordHash='" + passwordHash + '\'' +
             ", registrationDate=" + registrationDate +
-            ", updateTime=" + updateTime +
+            ", updateTime=" + updateDate +
             ", schoolId=" + schoolId +
             '}';
   }
