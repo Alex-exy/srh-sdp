@@ -3,7 +3,7 @@
   <grid id="27dc6" binding="browseLibrary" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="20" y="20" width="597" height="699"/>
+      <xy x="20" y="20" width="597" height="723"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -29,7 +29,7 @@
           </component>
         </children>
       </grid>
-      <grid id="5427f" layout-manager="GridLayoutManager" row-count="1" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+      <grid id="5427f" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="20" left="20" bottom="20" right="20"/>
         <constraints>
           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -45,7 +45,7 @@
             <properties/>
             <border type="none"/>
             <children>
-              <grid id="f155c" layout-manager="GridLayoutManager" row-count="14" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+              <grid id="f155c" layout-manager="GridLayoutManager" row-count="16" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                 <margin top="10" left="10" bottom="10" right="10"/>
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -191,6 +191,23 @@
                       <font size="16" style="0"/>
                     </properties>
                   </component>
+                  <component id="2da94" class="javax.swing.JButton" binding="buttonSearch">
+                    <constraints>
+                      <grid row="15" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <font name="Roboto" size="16" style="0"/>
+                      <text value="Search Book"/>
+                    </properties>
+                  </component>
+                  <vspacer id="f8080">
+                    <constraints>
+                      <grid row="14" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false">
+                        <minimum-size width="3" height="-1"/>
+                        <maximum-size width="3" height="-1"/>
+                      </grid>
+                    </constraints>
+                  </vspacer>
                 </children>
               </grid>
             </children>
@@ -198,7 +215,7 @@
           <grid id="8560" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="10" left="10" bottom="10" right="10"/>
             <constraints>
-              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties/>
             <border type="none"/>
@@ -236,11 +253,11 @@
                         </constraints>
                         <properties>
                           <font name="Roboto" size="18" style="0"/>
-                          <text value="Results"/>
+                          <text value="Search Results"/>
                         </properties>
                       </component>
                       <grid id="3ee05" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-                        <margin top="10" left="10" bottom="10" right="10"/>
+                        <margin top="5" left="5" bottom="5" right="5"/>
                         <constraints>
                           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                         </constraints>
@@ -266,6 +283,8 @@
                                   <cellSelectionEnabled value="true"/>
                                   <columnSelectionAllowed value="true"/>
                                   <enabled value="true"/>
+                                  <font name="Roboto" size="12" style="0"/>
+                                  <toolTipText value="Available Books"/>
                                   <updateSelectionOnSort value="false"/>
                                 </properties>
                               </component>
@@ -277,25 +296,6 @@
                   </grid>
                 </children>
               </grid>
-            </children>
-          </grid>
-          <grid id="4b351" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-            <margin top="10" left="10" bottom="10" right="10"/>
-            <constraints>
-              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties/>
-            <border type="none"/>
-            <children>
-              <component id="2da94" class="javax.swing.JButton" binding="buttonSearch">
-                <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <font name="Roboto" size="16" style="0"/>
-                  <text value="Search Book"/>
-                </properties>
-              </component>
             </children>
           </grid>
         </children>
