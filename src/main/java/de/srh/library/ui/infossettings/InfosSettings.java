@@ -81,6 +81,8 @@ public class InfosSettings extends JFrame {
                 }
                 userService = UserServiceImpl.createInstance();
                 updateUserInfo(userId);
+                JOptionPane.showMessageDialog(null, "User data changed!");
+                saveButton.setEnabled(false);
             }
         });
         changePasswordButton.addActionListener(new ActionListener() {

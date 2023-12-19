@@ -40,6 +40,7 @@ public class MainMenu extends JFrame {
         browseLibraries.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                dispose();
                 BrowseLibrary browseLibrary = new BrowseLibrary();
                 browseLibrary.setVisible(true);
             }
