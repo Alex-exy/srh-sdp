@@ -9,6 +9,7 @@ import de.srh.library.dto.UserDto;
 import de.srh.library.entity.User;
 import de.srh.library.service.user.UserService;
 import de.srh.library.service.user.UserServiceImpl;
+import de.srh.library.ui.ConfirmationRequest;
 import de.srh.library.ui.editusers.EditUsers;
 import de.srh.library.ui.login.LoginWindow;
 import de.srh.library.util.ValidatorUtils;
@@ -82,16 +83,30 @@ public class EditUserData extends JFrame {
                     JOptionPane.showMessageDialog(null, ve.getMessage());
                     return;
                 }
-                JOptionPane.showMessageDialog(null, "Changes Saved!");
-                updateUserData(userId);
-                saveChangesButton.setEnabled(false);
+
+                ConfirmationRequest confirmation = new ConfirmationRequest();
+                if(confirmation.userDecision) {
+                    updateUserData(userId);
+                    saveChangesButton.setEnabled(false);
+                    JOptionPane.showMessageDialog(null, "Changes saved!");
+                }
+                else {
+                    JOptionPane.showMessageDialog(null, "Changes discarded!");
+                }
             }
         });
         deleteUserButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            userService = UserServiceImpl.createInstance();
-            userService.removeUser(userId);
+                ConfirmationRequest confirmation = new ConfirmationRequest();
+                if(confirmation.userDecision) {
+                    userService = UserServiceImpl.createInstance();
+                    userService.removeUser(userId);
+                    JOptionPane.showMessageDialog(null, "User deleted!");
+                }
+                else {
+                    JOptionPane.showMessageDialog(null, "Deletion canceled!");
+                }
             }
         });
         editDataButton.addActionListener(new ActionListener() {

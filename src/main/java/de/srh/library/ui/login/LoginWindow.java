@@ -52,24 +52,6 @@ public class LoginWindow extends JFrame {
         userService = UserServiceImpl.createInstance();
         adminService = AdminServiceImpl.createInstance();
 
-        //Clear field description of focus
-        usernameField.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (usernameField.getText().equals("username")) {
-                    usernameField.setText("");
-                }
-            }
-        });
-        passwordField.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (Objects.equals(String.valueOf(passwordField.getPassword()), "password")) {
-                    passwordField.setText("");
-                }
-            }
-        });
-
         //Login button action
         loginButton.addActionListener(new ActionListener() {
             @Override

@@ -7,6 +7,7 @@ import de.srh.library.dto.ApiResponseCode;
 import de.srh.library.dto.BookDto;
 import de.srh.library.service.book.BookService;
 import de.srh.library.service.book.BookServiceImpl;
+import de.srh.library.ui.ConfirmationRequest;
 import de.srh.library.ui.login.LoginWindow;
 import de.srh.library.util.ValidatorUtils;
 import org.slf4j.Logger;
@@ -72,9 +73,16 @@ public class EditBookData extends JFrame {
                     JOptionPane.showMessageDialog(null, ve.getMessage());
                     return;
                 }
-                JOptionPane.showMessageDialog(null, "Changes Saved!");
-                updateBookData(bookId);
-                saveChangesButton.setEnabled(false);
+
+                ConfirmationRequest confirmation = new ConfirmationRequest();
+                if(confirmation.userDecision) {
+                    updateBookData(bookId);
+                    saveChangesButton.setEnabled(false);
+                    JOptionPane.showMessageDialog(null, "Changes saved!");
+                }
+                else {
+                    JOptionPane.showMessageDialog(null, "Changes discarded!");
+                }
             }
         });
 
@@ -93,8 +101,15 @@ public class EditBookData extends JFrame {
         deleteBookButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                bookService = BookServiceImpl.createInstance();
-                bookService.removeBook(bookId);
+                ConfirmationRequest confirmation = new ConfirmationRequest();
+                if(confirmation.userDecision) {
+                    bookService = BookServiceImpl.createInstance();
+                    bookService.removeBook(bookId);
+                    JOptionPane.showMessageDialog(null, "Book deleted!");
+                }
+                else {
+                    JOptionPane.showMessageDialog(null, "Deletion canceled!");
+                }
             }
         });
     }

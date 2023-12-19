@@ -6,9 +6,11 @@ import de.srh.library.constant.UserRole;
 import de.srh.library.constant.UserStatus;
 import de.srh.library.dto.ApiResponse;
 import de.srh.library.dto.ApiResponseCode;
+import de.srh.library.dto.Global;
 import de.srh.library.entity.User;
 import de.srh.library.service.user.UserService;
 import de.srh.library.service.user.UserServiceImpl;
+import de.srh.library.ui.ConfirmationRequest;
 import de.srh.library.ui.login.LoginWindow;
 import de.srh.library.util.EmailSender;
 import de.srh.library.util.PasswordUtils;
@@ -84,14 +86,22 @@ public class CreateNewUser extends JFrame {
                     JOptionPane.showMessageDialog(null, ve.getMessage());
                     return;
                 }
-                ApiResponse response = createUser();
-                if (ApiResponseCode.SUCCESS.getCode() == response.getCode()){
-                    JOptionPane.showMessageDialog(null, "Success!");
-                    dispose();
-                    LoginWindow loginWindow = new LoginWindow();
-                    loginWindow.setVisible(true);
-                }else {
-                    JOptionPane.showMessageDialog(null, response.getCode() + response.getMessage());
+
+                ConfirmationRequest confirmation = new ConfirmationRequest();
+                if(confirmation.userDecision) {
+                    ApiResponse response = createUser();
+                    if (ApiResponseCode.SUCCESS.getCode() == response.getCode()){
+                        JOptionPane.showMessageDialog(null, "Success!");
+                        dispose();
+                        LoginWindow loginWindow = new LoginWindow();
+                        loginWindow.setVisible(true);
+                        JOptionPane.showMessageDialog(null, "New user created!");
+                    }else {
+                        JOptionPane.showMessageDialog(null, response.getCode() + response.getMessage());
+                    }
+                }
+                else {
+                    JOptionPane.showMessageDialog(null, "Creation canceled!");
                 }
             }
         });
