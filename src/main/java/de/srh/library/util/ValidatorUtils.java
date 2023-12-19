@@ -24,7 +24,7 @@ public class ValidatorUtils {
         "^.{1,50}$", name, "The length of name must be between 6 and 50 characters.");
     }
     public static void validateUsername(String username){
-        Validator.validateMatchRegex("^[\\p{L}@.]{1,150}$",username,"Username field can not be empty");
+        Validator.validateMatchRegex("^[\\p{L}0-9@.]{1,150}$",username,"Username field can not be empty");
     }
     public static void validateFirstName(String firstName){
         Validator.validateMatchRegex("^[\\p{L}]{1,60}$",firstName,"First Name field cannot be empty and should only contain alphabets");
@@ -34,8 +34,7 @@ public class ValidatorUtils {
     }
 
     public static void validateAddress(String address){
-    Validator.validateMatchRegex(
-        "^[\\p{L}0-9.,\\s-]{1,255}$", address, "Invalid address.");
+    Validator.validateMatchRegex("^[\\p{L}0-9.,\\s-]{1,255}$", address, "Invalid address.");
     }
     public static void validateLanguage(String language){
         Validator.validateMatchRegex("^[\\p{L}]{1,60}$",language,"Language field cannot be empty and should only contain alphabets");
@@ -51,10 +50,10 @@ public class ValidatorUtils {
         Validator.validateMatchRegex("^[0-9.]{1,40}$",price,"Price field cannot be empty and should only contain numbers");
     }
     public  static void validateBookId(String bookId){
-        Validator.validateMatchRegex("^[0-9]$",bookId,"Book ID field should only contain numbers");
+        Validator.validateMatchRegex("^[0-9]{1,15}$",bookId,"Book ID field should only contain numbers");
     }
     public  static void validateUserId(String userId){
-        Validator.validateMatchRegex("^[0-9]$",userId,"User ID field should only contain numbers");
+        Validator.validateMatchRegex("^[0-9]{1,15}$",userId,"User ID field should only contain numbers");
     }
     public static void validateBookName(String bookName){
         Validator.validateMatchRegex("^[\\p{L}0-9.,\\s-]{1,200}$",bookName,"Book Title field cannot be empty");
