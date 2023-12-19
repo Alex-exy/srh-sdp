@@ -94,7 +94,7 @@
                 <properties>
                   <enabled value="false"/>
                   <font name="Roboto" size="16" style="0"/>
-                  <text value="Search/Edit User"/>
+                  <text value="Search / Edit User"/>
                 </properties>
               </component>
               <component id="a01fc" class="javax.swing.JLabel">

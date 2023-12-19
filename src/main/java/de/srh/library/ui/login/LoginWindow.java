@@ -52,24 +52,6 @@ public class LoginWindow extends JFrame {
         userService = UserServiceImpl.createInstance();
         adminService = AdminServiceImpl.createInstance();
 
-        //Clear field description of focus
-        usernameField.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (usernameField.getText().equals("username")) {
-                    usernameField.setText("");
-                }
-            }
-        });
-        passwordField.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (Objects.equals(String.valueOf(passwordField.getPassword()), "password")) {
-                    passwordField.setText("");
-                }
-            }
-        });
-
         //Login button action
         loginButton.addActionListener(new ActionListener() {
             @Override
@@ -85,23 +67,21 @@ public class LoginWindow extends JFrame {
                     return;
                 }
 
+                ApiResponse<Long> loginResponse = userService.checkPassword(username, String.valueOf(password));
+                switch (ApiResponseCode.getByCode(loginResponse.getCode())) {
+                    case SUCCESS:
+                        Global.userLogin(loginResponse.getData());
+                        JOptionPane.showMessageDialog(null, "Welcome user " + username);
 
-                    ApiResponse<Long> loginResponse = userService.checkPassword(username, String.valueOf(password));
-                    switch (ApiResponseCode.getByCode(loginResponse.getCode())) {
-                        case SUCCESS:
-                            Global.userLogin(loginResponse.getData());
-                            JOptionPane.showMessageDialog(null, "Welcome user " + username);
-
-                            dispose();
-                            MainMenu mainMenu = new MainMenu();
-                            mainMenu.setVisible(true);
-                            break;
-                        default:
-                            JOptionPane.showMessageDialog(null,
-                                    loginResponse.getCode() + ": " + loginResponse.getMessage());
-                            break;
-                    }
-
+                        dispose();
+                        MainMenu mainMenu = new MainMenu();
+                        mainMenu.setVisible(true);
+                        break;
+                    default:
+                        JOptionPane.showMessageDialog(null,
+                                loginResponse.getCode() + ": " + loginResponse.getMessage());
+                        break;
+                }
             }
         });
         loginAdminButton.addActionListener(new ActionListener() {
