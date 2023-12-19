@@ -23,8 +23,8 @@ public class ValidatorUtils {
     Validator.validateMatchRegex(
         "^.{1,50}$", name, "The length of name must be between 6 and 50 characters.");
     }
-    public static void validateUsername(String username){
-        Validator.validateMatchRegex("^[\\p{L}0-9@.]{1,150}$",username,"Username field can not be empty");
+    public static void validateAdmin(String username){
+        Validator.validateMatchRegex("^[\\p{L}0-9@.-]{1,150}$",username,"Username field can not be empty");
     }
     public static void validateFirstName(String firstName){
         Validator.validateMatchRegex("^[\\p{L}]{1,60}$",firstName,"First Name field cannot be empty and should only contain alphabets");
@@ -44,7 +44,7 @@ public class ValidatorUtils {
         Validator.validateMatchRegex("^[\\p{L}\\s-]{1,255}$",author,"Author field cannot be empty and should only contain alphabets");
     }
     public  static void validateIsbn(String isbn){
-        Validator.validateMatchRegex("^[0-9-]{1,100}$",isbn,"ISBN field cannot be empty and should only contain numbers and \"-\"");
+        Validator.validateMatchRegex("^[0-9-]{1,100}$",isbn,"ISBN field cannot be empty and/or should only contain numbers and \"-\"");
     }
     public  static void validatePrice(String price){
         Validator.validateMatchRegex("^[0-9.]{1,40}$",price,"Price field cannot be empty and should only contain numbers");
@@ -69,7 +69,7 @@ public class ValidatorUtils {
         Validator.validateMatchRegex("^[0-9\\-]{1,20}$",publishDate,"Please enter a date with format YYYY-MM-DD");
     }
     public static void validateDoi(String doi){
-        Validator.validateMatchRegex("^[0-9\\-]*$|^$",doi,"DOI field should only contain numbers and \"-\"");
+        Validator.validateMatchRegex("^[0-9\\-]*$|^$",doi,"DOI field cannot be empty and/or should only contain numbers and \"-\"");
 
     }
 

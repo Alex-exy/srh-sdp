@@ -79,7 +79,7 @@ public class LoginWindow extends JFrame {
                 char[] password = passwordField.getPassword();
 
                 try{
-                    ValidatorUtils.validateUsername(usernameField.getText());
+                    ValidatorUtils.validateEmail(usernameField.getText());
                 }catch (ValidateException ve ){
                     JOptionPane.showMessageDialog(null, ve.getMessage());
                     return;
@@ -107,8 +107,15 @@ public class LoginWindow extends JFrame {
         loginAdminButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                try{
+                    ValidatorUtils.validateAdmin(usernameField.getText());
+                }catch (ValidateException ve ){
+                    JOptionPane.showMessageDialog(null, ve.getMessage());
+                    return;
+                }
                 String adminUserName = usernameField.getText();
                 String adminPassword = String.valueOf(passwordField.getPassword());
+
                 ApiResponse loginResponse = adminService.checkPassword(adminUserName,adminPassword);
 
                 switch (ApiResponseCode.getByCode(loginResponse.getCode())) {

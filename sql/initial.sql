@@ -93,6 +93,8 @@ DROP TABLE IF EXISTS books;
     CREATE INDEX idx_book_author ON books (book_author);
     CREATE INDEX idx_isbn ON books (isbn);
     CREATE INDEX idx_doi ON books (doi);
+    CREATE INDEX idx_genre on books (genre_id);
+    CREATE INDEX idx_library on books (library_id);
 
 
     COMMENT ON COLUMN books.doi IS 'DIGITAL OBJECT IDENTIFIERS ARE UNIQUE ALPHANUMERIC CODES ASSIGNED BY PUBLISHERS';
