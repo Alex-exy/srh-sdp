@@ -60,13 +60,13 @@ CREATE TABLE borrows (
      user_id BIGINT not null,
      book_id BIGINT not null,
      borrow_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+     expected_return_date TIMESTAMP NOT NULL,
+     extensions int not null default 0,
      return_date TIMESTAMP,
      borrow_status CHAR(1) not null DEFAULT 'B',
      update_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 COMMENT ON COLUMN borrows.borrow_status IS 'B - Borrowed, R - Returned, D - Delayed';
-ALTER SEQUENCE public.borrows_borrow_id_seq RESTART WITH 1000;
-
 
 DROP TABLE IF EXISTS books;
 

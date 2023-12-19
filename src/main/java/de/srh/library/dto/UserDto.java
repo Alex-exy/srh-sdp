@@ -116,4 +116,8 @@ public class UserDto {
     public void setSchoolName(String schoolName) {
         this.schoolName = schoolName;
     }
+
+    public boolean isInvalid() {
+        return !userStatus.equals("A");
+    }
 }

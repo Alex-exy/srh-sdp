@@ -24,7 +24,7 @@ public class ValidatorUtils {
         "^.{1,50}$", name, "The length of name must be between 6 and 50 characters.");
     }
     public static void validateUsername(String username){
-        Validator.validateMatchRegex("^[\\p{L}0-9@.]{1,150}$",username,"Username field can not be empty");
+        Validator.validateMatchRegex("^[\\p{L}0-9@.-]{1,150}$",username,"Username field can not be empty");
     }
     public static void validateFirstName(String firstName){
         Validator.validateMatchRegex("^[\\p{L}]{1,60}$",firstName,"First Name field cannot be empty and should only contain alphabets");

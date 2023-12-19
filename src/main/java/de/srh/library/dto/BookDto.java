@@ -26,8 +26,10 @@ public class BookDto {
     private Date updateDate;
     private BookService bookService;
 
-
-
+    public String getFine(int overdueDays) {
+        Double price = Double.parseDouble(this.price);
+        return String.valueOf(overdueDays * 0.5 > price * 2 ? price * 2 : overdueDays * 0.5);
+    }
 
     public long getBookId() {
         return bookId;

@@ -9,7 +9,6 @@ import de.srh.library.service.book.BookService;
 import de.srh.library.service.book.BookServiceImpl;
 import de.srh.library.ui.addnewbook.AddNewBook;
 import de.srh.library.ui.editbookdata.EditBookData;
-import de.srh.library.ui.login.LoginWindow;
 import de.srh.library.ui.managementmenu.ManagementMenu;
 import de.srh.library.util.ValidatorUtils;
 import org.apache.poi.ss.usermodel.Row;
