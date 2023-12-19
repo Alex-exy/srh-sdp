@@ -147,7 +147,7 @@ public class InfosSettings extends JFrame {
         user.setSchoolId(schoolsMap.get(userSelectSchool.getSelectedItem().toString()));
         user.setFamilyName(userLastName.getText());
         user.setEmail(userEmail.getText());
-        user.setAddress(addressLabel.getText());
+        user.setAddress(userAddress.getText());
         user.setUserRole(
                 switch(userRole.getText().toString()){
                     case "Student" -> "S";
@@ -188,7 +188,7 @@ public class InfosSettings extends JFrame {
         ValidatorUtils.validateFirstName(userFirstName.getText());
         ValidatorUtils.validateLastName(userLastName.getText());
         ValidatorUtils.validateEmail(userEmail.getText());
-        ValidatorUtils.validateAddress(addressLabel.getText());
+        ValidatorUtils.validateAddress(userAddress.getText());
 
     }
 
