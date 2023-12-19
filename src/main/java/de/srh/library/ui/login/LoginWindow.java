@@ -79,29 +79,27 @@ public class LoginWindow extends JFrame {
                 char[] password = passwordField.getPassword();
 
                 try{
-                    ValidatorUtils.validateUsername(usernameField.getText());
+                    ValidatorUtils.validateEmail(usernameField.getText());
                 }catch (ValidateException ve ){
                     JOptionPane.showMessageDialog(null, ve.getMessage());
                     return;
                 }
 
+                ApiResponse<Long> loginResponse = userService.checkPassword(username, String.valueOf(password));
+                switch (ApiResponseCode.getByCode(loginResponse.getCode())) {
+                    case SUCCESS:
+                        Global.userLogin(loginResponse.getData());
+                        JOptionPane.showMessageDialog(null, "Welcome user " + username);
 
-                    ApiResponse<Long> loginResponse = userService.checkPassword(username, String.valueOf(password));
-                    switch (ApiResponseCode.getByCode(loginResponse.getCode())) {
-                        case SUCCESS:
-                            Global.userLogin(loginResponse.getData());
-                            JOptionPane.showMessageDialog(null, "Welcome user " + username);
-
-                            dispose();
-                            MainMenu mainMenu = new MainMenu();
-                            mainMenu.setVisible(true);
-                            break;
-                        default:
-                            JOptionPane.showMessageDialog(null,
-                                    loginResponse.getCode() + ": " + loginResponse.getMessage());
-                            break;
-                    }
-
+                        dispose();
+                        MainMenu mainMenu = new MainMenu();
+                        mainMenu.setVisible(true);
+                        break;
+                    default:
+                        JOptionPane.showMessageDialog(null,
+                                loginResponse.getCode() + ": " + loginResponse.getMessage());
+                        break;
+                }
             }
         });
         loginAdminButton.addActionListener(new ActionListener() {
