@@ -1,6 +1,6 @@
 package de.srh.library.ui.mainmenu;
 
-import de.srh.library.dto.Global;
+import de.srh.library.cache.Global;
 import de.srh.library.dto.UserDto;
 import de.srh.library.service.user.UserService;
 import de.srh.library.service.user.UserServiceImpl;

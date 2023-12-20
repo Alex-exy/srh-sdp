@@ -1,6 +1,6 @@
 package de.srh.library.ui.managementmenu;
 
-import de.srh.library.dto.Global;
+import de.srh.library.cache.Global;
 import de.srh.library.ui.ConfirmationRequest;
 import de.srh.library.ui.editbooks.EditBooks;
 import de.srh.library.ui.editusers.EditUsers;

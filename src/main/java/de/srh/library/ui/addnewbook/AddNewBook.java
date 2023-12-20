@@ -5,7 +5,6 @@ import cn.hutool.core.exceptions.ValidateException;
 import de.srh.library.dto.ApiResponse;
 import de.srh.library.dto.ApiResponseCode;
 import de.srh.library.dto.BookDto;
-import de.srh.library.dto.Global;
 import de.srh.library.service.book.BookService;
 import de.srh.library.service.book.BookServiceImpl;
 import de.srh.library.ui.ConfirmationRequest;

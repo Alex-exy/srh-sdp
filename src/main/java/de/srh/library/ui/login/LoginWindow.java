@@ -2,13 +2,12 @@ package de.srh.library.ui.login;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.util.Objects;
 import javax.swing.*;
 
 import cn.hutool.core.exceptions.ValidateException;
 import de.srh.library.dto.ApiResponse;
 import de.srh.library.dto.ApiResponseCode;
-import de.srh.library.dto.Global;
+import de.srh.library.cache.Global;
 import de.srh.library.service.admin.AdminService;
 import de.srh.library.service.admin.AdminServiceImpl;
 import de.srh.library.service.user.UserService;

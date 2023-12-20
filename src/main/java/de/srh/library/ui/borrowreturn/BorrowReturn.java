@@ -3,7 +3,7 @@ package de.srh.library.ui.borrowreturn;
 import de.srh.library.constant.UserRole;
 import de.srh.library.dto.ApiResponse;
 import de.srh.library.dto.BookDto;
-import de.srh.library.dto.Global;
+import de.srh.library.cache.Global;
 import de.srh.library.dto.UserDto;
 import de.srh.library.entity.Borrow;
 import de.srh.library.service.book.BookService;
