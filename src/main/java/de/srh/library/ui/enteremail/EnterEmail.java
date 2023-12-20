@@ -22,6 +22,7 @@ public class EnterEmail extends JFrame {
     private JPanel enterEmailWindow;
     private JTextField email;
     private JButton resetPasswordButton;
+    private JButton cancelButton;
     private JLabel pageTitle;
 
     private UserService userService;
@@ -57,6 +58,12 @@ public class EnterEmail extends JFrame {
                 resetPasswordButton.setEnabled(true);
             }
         });
+        cancelButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+            }
+        });
     }
 
     private void sendPasswordResetEmail(String emailAddress) {
@@ -70,11 +77,12 @@ public class EnterEmail extends JFrame {
 
     public boolean checkValidEmail(String email) {
         ApiResponse<UserDto> apiResponse = userService.getUserByEmail(email);
-        if (apiResponse.isSuccess() && apiResponse.getData() != null){
+        if (apiResponse.isSuccess() && apiResponse.getData() != null) {
             return true;
         }
         return false;
     }
+
     public static void main(String[] args) {
         EnterEmail enterEmail = new EnterEmail();
     }

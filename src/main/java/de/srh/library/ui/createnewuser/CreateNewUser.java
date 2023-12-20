@@ -6,7 +6,6 @@ import de.srh.library.constant.UserRole;
 import de.srh.library.constant.UserStatus;
 import de.srh.library.dto.ApiResponse;
 import de.srh.library.dto.ApiResponseCode;
-import de.srh.library.dto.Global;
 import de.srh.library.entity.User;
 import de.srh.library.service.user.UserService;
 import de.srh.library.service.user.UserServiceImpl;
@@ -46,12 +45,13 @@ public class CreateNewUser extends JFrame {
     private JButton buttonContinue;
     private JComboBox selectSchool;
     private JPasswordField enterPassword;
-    private JLabel lableEnterPassword;
-    private JLabel lableReenterPassword;
+    private JLabel labelEnterPassword;
+    private JLabel labelReenterPassword;
     private JPasswordField reenterPassword;
     private JCheckBox agreementCheckBox;
     private JButton getVerificationCodeButton;
     private JTextField verificationCode;
+    private JButton cancelButton;
 
     private UserService userService;
     private Map<String, Integer> schoolsMap;
@@ -73,8 +73,7 @@ public class CreateNewUser extends JFrame {
         setContentPane(createNewUser);
         setTitle("New User Registration");
         setSize(1280, 720);
-        setExtendedState(JFrame.MAXIMIZED_BOTH);
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setVisible(true);
         toFront();
         logger.info("Opening create new user window ...");
@@ -138,6 +137,12 @@ public class CreateNewUser extends JFrame {
                 JOptionPane.showMessageDialog(null, "Verification code sent successfully.");
             }
         });
+        cancelButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+            }
+        });
     }
 
     private void sendVerificationCodeEmail(String email,String verificationCode){
@@ -183,4 +188,5 @@ public class CreateNewUser extends JFrame {
     public static void main(String[] args) {
         CreateNewUser createNewUser = new CreateNewUser();
     }
+
 }

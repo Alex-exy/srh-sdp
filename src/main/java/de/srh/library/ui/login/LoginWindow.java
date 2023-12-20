@@ -118,7 +118,6 @@ public class LoginWindow extends JFrame {
         createNewAccountButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                dispose();
                 CreateNewUser createNewUser = new CreateNewUser();
                 createNewUser.setVisible(true);
             }
