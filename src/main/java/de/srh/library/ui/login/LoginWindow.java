@@ -48,6 +48,7 @@ public class LoginWindow extends JFrame {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
+        toFront();
         logger.info("Opening login window ...");
 
         userService = UserServiceImpl.createInstance();

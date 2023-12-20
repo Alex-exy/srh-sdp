@@ -58,6 +58,7 @@ public class InfosSettings extends JFrame {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
+        toFront();
         logger.info("Opening infos and settings window ...");
 
         changeInformationButton.addActionListener(new ActionListener() {

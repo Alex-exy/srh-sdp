@@ -23,6 +23,7 @@ public class FAQ extends JFrame {
         setSize(720, 1000);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setVisible(true);
+        toFront();
         logger.info("Displaying FAQs ...");
 
         returnButton.addActionListener(new ActionListener() {

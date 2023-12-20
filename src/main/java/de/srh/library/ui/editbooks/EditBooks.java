@@ -50,6 +50,7 @@ public class EditBooks extends JFrame {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setVisible(true);
+        toFront();
         logger.info("Opening edit books window ...");
 
         bookService = BookServiceImpl.createInstance();

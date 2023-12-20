@@ -30,6 +30,7 @@ public class ManagementMenu extends JFrame {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setVisible(true);
+        toFront();
         logger.info("Opening manage menu window ...");
         userManagementButton.addActionListener(new ActionListener() {
             @Override

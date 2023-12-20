@@ -34,6 +34,7 @@ public class EnterEmail extends JFrame {
         setSize(600, 400);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setVisible(true);
+        toFront();
         logger.info("Request password reset via email ...");
         userService = UserServiceImpl.createInstance();
         resetPasswordButton.addActionListener(new ActionListener() {

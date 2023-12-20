@@ -38,6 +38,7 @@ public class ResetPassword extends JFrame {
         setSize(800, 600);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setVisible(true);
+        toFront();
         logger.info("Requesting password reset ...");
         userService = UserServiceImpl.createInstance();
 

@@ -76,6 +76,7 @@ public class CreateNewUser extends JFrame {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
+        toFront();
         logger.info("Opening create new user window ...");
 
         buttonContinue.addActionListener(new ActionListener() {

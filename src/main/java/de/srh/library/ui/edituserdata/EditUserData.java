@@ -69,6 +69,7 @@ public class EditUserData extends JFrame {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setVisible(true);
+        toFront();
         logger.info("Opening edit user data window ...");
         long userId = user.getUserId();
         loadCurrentUserData(user);

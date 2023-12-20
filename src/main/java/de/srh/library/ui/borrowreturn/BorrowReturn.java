@@ -62,6 +62,7 @@ public class BorrowReturn extends JFrame {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
+        toFront();
         logger.info("Opening borrow and return window ...");
 
         borrowService = BorrowServiceImpl.createInstance();

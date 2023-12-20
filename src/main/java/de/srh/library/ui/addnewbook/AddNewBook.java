@@ -58,6 +58,7 @@ public class AddNewBook extends JFrame {
         setSize(720, 1000);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setVisible(true);
+        toFront();
         logger.info("Opening add new book window ...");
 
 

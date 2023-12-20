@@ -37,6 +37,7 @@ public class MainMenu extends JFrame {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setVisible(true);
+        toFront();
         logger.info("Opening main menu window ...");
         browseLibraries.addActionListener(new ActionListener() {
             @Override

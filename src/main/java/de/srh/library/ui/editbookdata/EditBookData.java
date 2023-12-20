@@ -61,6 +61,7 @@ public class EditBookData extends JFrame {
         setSize(720, 1000);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setVisible(true);
+        toFront();
         logger.info("Opening edit book data window ...");
         loadCurrentBookData(bookId);
 

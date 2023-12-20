@@ -39,6 +39,7 @@ public class EditUsers extends JFrame {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setVisible(true);
+        toFront();
         logger.info("Opening edit user window ...");
 
         searchUserButton.addActionListener(new ActionListener() {
