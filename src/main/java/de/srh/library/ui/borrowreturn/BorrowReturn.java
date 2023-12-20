@@ -59,6 +59,7 @@ public class BorrowReturn extends JFrame {
         setContentPane(borrowReturnWindow);
         setTitle("Borrow and Return");
         setSize(1280, 720);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
         logger.info("Opening borrow and return window ...");

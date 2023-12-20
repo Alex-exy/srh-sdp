@@ -45,6 +45,7 @@ public class LoginWindow extends JFrame {
         setContentPane(loginWindow);
         setTitle("Login Page");
         setSize(1280, 720);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
         logger.info("Opening login window ...");

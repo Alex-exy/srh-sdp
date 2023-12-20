@@ -65,6 +65,7 @@ public class BrowseLibrary extends JFrame {
         setContentPane(browseLibrary);
         setTitle("Browse Library");
         setSize(1280, 720);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
         logger.info("Opening create browse library window ...");

@@ -27,6 +27,7 @@ public class ManagementMenu extends JFrame {
         setContentPane(managementWindow);
         setTitle("Management Menu");
         setSize(1280, 720);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setVisible(true);
         logger.info("Opening manage menu window ...");

@@ -55,6 +55,7 @@ public class InfosSettings extends JFrame {
         setContentPane(infosSettingsWindow);
         setTitle("Infos and Settings");
         setSize(1280, 720);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
         logger.info("Opening infos and settings window ...");

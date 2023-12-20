@@ -36,6 +36,7 @@ public class EditUsers extends JFrame {
         setContentPane(editUsersWindow);
         setTitle("Edit User Menu");
         setSize(1280, 720);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setVisible(true);
         logger.info("Opening edit user window ...");

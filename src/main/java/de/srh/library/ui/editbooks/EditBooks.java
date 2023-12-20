@@ -47,6 +47,7 @@ public class EditBooks extends JFrame {
         setContentPane(editBooksWindow);
         setTitle("Edit Book Menu");
         setSize(1280, 720);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setVisible(true);
         logger.info("Opening edit books window ...");

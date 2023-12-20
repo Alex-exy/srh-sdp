@@ -73,6 +73,7 @@ public class CreateNewUser extends JFrame {
         setContentPane(createNewUser);
         setTitle("New User Registration");
         setSize(1280, 720);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
         logger.info("Opening create new user window ...");
