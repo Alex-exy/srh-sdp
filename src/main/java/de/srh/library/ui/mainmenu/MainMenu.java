@@ -66,8 +66,6 @@ public class MainMenu extends JFrame {
         logOut.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                // CONFIRMATION TESTING
                 ConfirmationRequest confirmation = new ConfirmationRequest();
                 if(confirmation.userDecision) {
                     JOptionPane.showMessageDialog(null, "Logged out!");

@@ -29,7 +29,6 @@ public class EditUsers extends JFrame {
     private UserService userService;
 
 
-
     public EditUsers() {
 
 
@@ -47,42 +46,41 @@ public class EditUsers extends JFrame {
                 searchUserButton.setEnabled(false);
                 userService = UserServiceImpl.createInstance();
 
-                if(searchByUserEmailTextField.getText().trim().isEmpty() && !searchByUserIDTextField.getText().trim().isEmpty()){
-                    try{
+                if (searchByUserEmailTextField.getText().trim().isEmpty() && !searchByUserIDTextField.getText().trim().isEmpty()) {
+                    try {
                         ValidatorUtils.validateUserId(searchByUserIDTextField.getText());
-                    }catch (ValidateException ve ){
+                    } catch (ValidateException ve) {
                         JOptionPane.showMessageDialog(null, ve.getMessage());
                         return;
                     }
                     long userId = Long.parseLong(searchByUserIDTextField.getText().trim());
                     UserDto userById = userService.getUserById(userId).getData();
-                    if(userFoundId(userId)){
-                    EditUserData editUserData = new EditUserData(userById);
-                    editUserData.setVisible(true);}
-                    else {
+                    if (userFoundId(userId)) {
+                        dispose();
+                        EditUserData editUserData = new EditUserData(userById);
+                        editUserData.setVisible(true);
+                    } else {
                         JOptionPane.showMessageDialog(null, "User does not exist! \nPlease try again!");
                     }
-                }
-                else if(searchByUserIDTextField.getText().trim().isEmpty() && !searchByUserEmailTextField.getText().trim().isEmpty()){
-                    try{
+                } else if (searchByUserIDTextField.getText().trim().isEmpty() && !searchByUserEmailTextField.getText().trim().isEmpty()) {
+                    try {
                         ValidatorUtils.validateEmail(searchByUserEmailTextField.getText());
-                    }catch (ValidateException ve ){
+                    } catch (ValidateException ve) {
                         JOptionPane.showMessageDialog(null, ve.getMessage());
                         return;
                     }
                     String userEmailText = searchByUserEmailTextField.getText().trim();
                     UserDto userByEmail = userService.getUserByEmail(userEmailText).getData();
-                    if(userFoundEmail(userEmailText)){
-                    EditUserData editUserData = new EditUserData(userByEmail);
-                    editUserData.setVisible(true);}
-                    else {
+                    if (userFoundEmail(userEmailText)) {
+                        dispose();
+                        EditUserData editUserData = new EditUserData(userByEmail);
+                        editUserData.setVisible(true);
+                    } else {
                         JOptionPane.showMessageDialog(null, "User does not exist! \nPlease try again!");
                     }
-                }
-                else if (searchByUserIDTextField.getText().trim().isEmpty() && searchByUserEmailTextField.getText().trim().isEmpty()){
+                } else if (searchByUserIDTextField.getText().trim().isEmpty() && searchByUserEmailTextField.getText().trim().isEmpty()) {
                     JOptionPane.showMessageDialog(null, "Fields can not be empty!");
-                 }
-                else {
+                } else {
                     System.out.println("Failed");
                 }
 
@@ -124,10 +122,12 @@ public class EditUsers extends JFrame {
             }
         });
     }
-    public boolean userFoundId(long userId){
+
+    public boolean userFoundId(long userId) {
         return userService.userFoundId(Long.parseLong(searchByUserIDTextField.getText())).getData() == 1;
     }
-    public boolean userFoundEmail(String email){
+
+    public boolean userFoundEmail(String email) {
         return userService.userFoundEmail(searchByUserEmailTextField.getText()).getData() == 1;
     }
 

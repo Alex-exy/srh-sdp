@@ -1,6 +1,7 @@
 package de.srh.library.ui.managementmenu;
 
 import de.srh.library.dto.Global;
+import de.srh.library.ui.ConfirmationRequest;
 import de.srh.library.ui.editbooks.EditBooks;
 import de.srh.library.ui.editusers.EditUsers;
 import de.srh.library.ui.login.LoginWindow;
@@ -48,10 +49,17 @@ public class ManagementMenu extends JFrame {
         logOut.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Global.userLogOut();
-                dispose();
-                LoginWindow loginWindow = new LoginWindow();
-                loginWindow.setVisible(true);
+                ConfirmationRequest confirmation = new ConfirmationRequest();
+                if(confirmation.userDecision) {
+                    Global.userLogOut();
+                    dispose();
+                    LoginWindow loginWindow = new LoginWindow();
+                    loginWindow.setVisible(true);
+                    JOptionPane.showMessageDialog(null, "Logged out!");
+                }
+                else {
+                    JOptionPane.showMessageDialog(null, "Logout canceled!");
+                }
             }
         });
     }
