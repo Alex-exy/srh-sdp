@@ -40,8 +40,6 @@ public class BrowseLibrary extends JFrame {
     private JComboBox searchGenre;
     private JScrollPane resultScrollPane;
     private JPanel resultPanel;
-    private JButton previousButton;
-    private JButton nextButton;
     private BookService bookService;
     private Map<String, Integer> genresMap;
     private Map<String,Integer> libraryMap;

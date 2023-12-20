@@ -241,7 +241,7 @@
                 </constraints>
                 <properties>
                   <font name="Roboto" size="16" style="0"/>
-                  <text value="Reenter Password"/>
+                  <text value="Re-enter Password"/>
                 </properties>
               </component>
               <vspacer id="a4237">

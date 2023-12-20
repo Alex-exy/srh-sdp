@@ -94,8 +94,8 @@ public class CreateNewUser extends JFrame {
                     if (ApiResponseCode.SUCCESS.getCode() == response.getCode()){
                         JOptionPane.showMessageDialog(null, "Success!");
                         dispose();
-                        LoginWindow loginWindow = new LoginWindow();
-                        loginWindow.setVisible(true);
+//                        LoginWindow loginWindow = new LoginWindow();
+//                        loginWindow.setVisible(true);
                         JOptionPane.showMessageDialog(null, "New user created!");
                     }else {
                         JOptionPane.showMessageDialog(null, response.getCode() + response.getMessage());

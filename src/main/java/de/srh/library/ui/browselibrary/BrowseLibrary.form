@@ -3,7 +3,7 @@
   <grid id="27dc6" binding="browseLibrary" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="20" y="20" width="597" height="752"/>
+      <xy x="20" y="20" width="660" height="752"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -233,7 +233,7 @@
                   <color color="-16777216"/>
                 </border>
                 <children>
-                  <grid id="fa77e" layout-manager="GridLayoutManager" row-count="3" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                  <grid id="fa77e" layout-manager="GridLayoutManager" row-count="2" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                     <margin top="10" left="10" bottom="10" right="10"/>
                     <constraints>
                       <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -293,32 +293,6 @@
                           </scrollpane>
                         </children>
                       </grid>
-                      <component id="bd817" class="javax.swing.JButton" binding="nextButton">
-                        <constraints>
-                          <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false">
-                            <minimum-size width="150" height="-1"/>
-                            <maximum-size width="150" height="-1"/>
-                          </grid>
-                        </constraints>
-                        <properties>
-                          <font size="16" style="0"/>
-                          <horizontalTextPosition value="0"/>
-                          <text value="Next"/>
-                        </properties>
-                      </component>
-                      <component id="714ff" class="javax.swing.JButton" binding="previousButton">
-                        <constraints>
-                          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false">
-                            <minimum-size width="150" height="-1"/>
-                            <maximum-size width="150" height="-1"/>
-                          </grid>
-                        </constraints>
-                        <properties>
-                          <font size="16" style="0"/>
-                          <horizontalTextPosition value="0"/>
-                          <text value="Previous"/>
-                        </properties>
-                      </component>
                     </children>
                   </grid>
                 </children>
