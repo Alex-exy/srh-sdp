@@ -58,6 +58,17 @@ public class BorrowServiceImpl implements BorrowService{
     }
 
     @Override
+    public ApiResponse<Integer> userBorrowCount(long bookId) {
+        try{
+            int result = borrowsDao.userBorrowCount(bookId);
+            return ApiResponse.success(result);
+        }catch (Exception e){
+            logger.error("User borrow count query failed ", e);
+            return ApiResponse.error(ApiResponseCode.ERROR_DATABASE);
+        }
+    }
+
+    @Override
     public ApiResponse updateBorrowStatus(Long borrowId, char borrowStatus) {
         try{
             Borrow borrow = new Borrow();

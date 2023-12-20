@@ -7,6 +7,8 @@ import de.srh.library.dto.ApiResponse;
 import de.srh.library.dto.ApiResponseCode;
 import de.srh.library.dto.UserDto;
 import de.srh.library.entity.User;
+import de.srh.library.service.borrow.BorrowService;
+import de.srh.library.service.borrow.BorrowServiceImpl;
 import de.srh.library.service.user.UserService;
 import de.srh.library.service.user.UserServiceImpl;
 import de.srh.library.ui.ConfirmationRequest;
@@ -55,6 +57,7 @@ public class EditUserData extends JFrame {
     private JButton saveButton;
     private static UserService userService;
     private Map<String, Integer> schoolsMap;
+    private static BorrowService borrowService;
 
 
     public EditUserData(UserDto user) {
@@ -101,13 +104,16 @@ public class EditUserData extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 ConfirmationRequest confirmation = new ConfirmationRequest();
-                if(confirmation.userDecision) {
-                    userService = UserServiceImpl.createInstance();
-                    userService.removeUser(userId);
-                    JOptionPane.showMessageDialog(null, "User deleted!");
-                }
-                else {
-                    JOptionPane.showMessageDialog(null, "Deletion canceled!");
+                if(userBorrowCount(userId)) {
+                    if (confirmation.userDecision) {
+                        userService = UserServiceImpl.createInstance();
+                        userService.removeUser(userId);
+                        JOptionPane.showMessageDialog(null, "User deleted!");
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Deletion canceled!");
+                    }
+                }else {
+                    JOptionPane.showMessageDialog(null, "User has not returned borrowed books yet! Cancelling deletion.");
                 }
             }
         });
@@ -210,6 +216,11 @@ public class EditUserData extends JFrame {
         ValidatorUtils.validateLastName(lastName.getText());
         ValidatorUtils.validateEmail(userEmail.getText());
         ValidatorUtils.validateAddress(userAddress.getText());
+
+    }
+    public boolean userBorrowCount(long userId){
+        borrowService = BorrowServiceImpl.createInstance();
+       return borrowService.userBorrowCount(userId).getData() == 0;
 
     }
 

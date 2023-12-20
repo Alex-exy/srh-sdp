@@ -40,6 +40,7 @@ public class BrowseLibrary extends JFrame {
     private JComboBox searchGenre;
     private JScrollPane resultScrollPane;
     private JPanel resultPanel;
+    private JButton previousButton;
     private JButton nextButton;
     private BookService bookService;
     private Map<String, Integer> genresMap;
@@ -48,6 +49,7 @@ public class BrowseLibrary extends JFrame {
     private Map<Long,List<String>> findBooks;
     private int currentPage = 1;
     private int itemsPerPage = 10;
+    private int totalRows;
     public BrowseLibrary() {
 
         bookService = BookServiceImpl.createInstance();
@@ -110,11 +112,13 @@ public class BrowseLibrary extends JFrame {
 
     }
 
+
     private  TableModel findBooksJTable() {
         DefaultTableModel tableModel = createTableModel();
 
-
         bookService = BookServiceImpl.createInstance();
+
+
         ApiResponse<Map<Long,List<String>>> apiResponseFind = bookService.findBooks(
                 (bookTitleTextField.getText().trim().isEmpty() ? null : bookTitleTextField.getText().trim()),
                 (bookAuthorTextField.getText().trim().isEmpty() ? null : bookAuthorTextField.getText().trim()),
@@ -122,13 +126,15 @@ public class BrowseLibrary extends JFrame {
                 (enterISBN.getText().trim().isEmpty() ? null : enterISBN.getText().trim()),
                 (doiTextField.getText().trim().isEmpty() ? null : doiTextField.getText().trim()),
                 (parseBookID(bookIDTextField.getText().trim())),
-                libraryMap.get(Objects.requireNonNull(searchLibrary.getSelectedItem()).toString()) == null ? 0: libraryMap.get(searchLibrary.getSelectedItem().toString()));
+                libraryMap.get(Objects.requireNonNull(searchLibrary.getSelectedItem()).toString()) == null ? 0: libraryMap.get(searchLibrary.getSelectedItem().toString()
+                ));
 
         if(ApiResponseCode.SUCCESS.getCode() == apiResponseFind.getCode()){
             findBooks = apiResponseFind.getData();
             for(Map.Entry<Long,List<String>> entry : findBooks.entrySet()) {
                 List<String> values = entry.getValue();
-                Object[] rowData = new Object[7];
+
+                Object[] rowData = new Object[8];
                 rowData[0] = entry.getKey();
                 for (int i = 0; i < values.size(); i++) {
                     rowData[i + 1] = values.get(i);

@@ -13,6 +13,7 @@ public interface BorrowsMapper {
     List<Borrow> getOngoingBorrows(Long userID);
 
     int insertBorrow(Borrow borrow);
+    int userBorrowCount(long userId);
 
     Borrow getByBookId(Long bookId);
 

@@ -10,10 +10,47 @@
 
     <select id="findBooks" resultType="de.srh.library.dto.BookDto">
 
+            SELECT * FROM books
+
+            <where>
+                <if test="bookId != null and bookId != 0">
+                    AND CAST(books.book_id AS INT)  = #{bookId}
+                </if>
+                <if test="bookName != null ">
+                    AND CAST(book_name AS VARCHAR) LIKE '%' || #{bookName} || '%'
+                </if>
+                <if test="bookAuthor != null ">
+                    AND CAST(book_author AS VARCHAR) LIKE '%' || #{bookAuthor} || '%'
+                </if>
+                <if test="genreId != null and genreId != 0">
+                    AND CAST(genre_id AS INT) = #{genreId}
+                </if>
+                <if test="libraryId != null and libraryId != 0">
+                    AND CAST(library_id AS INT) = #{libraryId}
+                </if>
+                <if test="doi != null ">
+                    AND CAST(doi AS VARCHAR) = #{doi}
+                </if>
+                <if test="isbn != null ">
+                    AND CAST(isbn AS VARCHAR) = #{isbn}
+                </if>
+            </where>
+                AND book_id not in (select book_id from borrows where borrow_status = 'B')
+
+    </select>
+
+
+    <select id="getBookByDoi" resultType="de.srh.library.dto.BookDto">
         SELECT * FROM books
+        WHERE books.doi = #{doi}
+    </select>
+
+    <select id="bookFound" resultType="int">
+        SELECT COUNT (books.book_id)
+        FROM books
         <where>
             <if test="bookId != null and bookId != 0">
-                AND CAST(book_id AS INT)  = #{bookId}
+                AND CAST(books.book_id AS INT)  = #{bookId}
             </if>
             <if test="bookName != null ">
                 AND CAST(book_name AS VARCHAR) LIKE '%' || #{bookName} || '%'
@@ -34,43 +71,6 @@
                 AND CAST(isbn AS VARCHAR) = #{isbn}
             </if>
         </where>
-
-
-
-    </select>
-
-
-    <select id="getBookByDoi" resultType="de.srh.library.dto.BookDto">
-        SELECT * FROM books
-        WHERE books.doi = #{doi}
-    </select>
-
-    <select id="bookFound" resultType="int">
-        SELECT COUNT (book_id)
-        FROM books
-        <where>
-            <if test="bookId != null and bookId != 0">
-                AND CAST(book_id AS INT)  = #{bookId}
-            </if>
-            <if test="bookName != null ">
-                AND CAST(book_name AS VARCHAR) LIKE '%' || #{bookName} || '%'
-            </if>
-            <if test="bookAuthor != null ">
-                AND CAST(book_author AS VARCHAR) LIKE '%' || #{bookAuthor} || '%'
-            </if>
-            <if test="genreId != null and genreId != 0">
-                AND CAST(genre_id AS INT) = #{genreId}
-            </if>
-            <if test="libraryId != null and libraryId != 0">
-                AND CAST(library_id AS INT) = #{libraryId}
-            </if>
-            <if test="doi != null ">
-                AND CAST(doi AS VARCHAR) = #{doi}
-            </if>
-            <if test="isbn != null ">
-                AND CAST(isbn AS VARCHAR) = #{isbn}
-            </if>
-        </where>;
     </select>
 
     <select id="searchBooks" resultType="de.srh.library.dto.BookDto">
@@ -83,6 +83,7 @@
                  INNER JOIN genres g ON b.genre_id = g.genre_id
         WHERE b.book_id = #{bookId};
     </select>
+
 
     <select id="bookByGenre" resultType="de.srh.library.dto.BookDto">
         SELECT * FROM books

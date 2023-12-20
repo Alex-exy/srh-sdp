@@ -2,7 +2,6 @@ package de.srh.library.util;
 
 import cn.hutool.core.lang.Validator;
 
-import javax.swing.*;
 
 public class ValidatorUtils {
 
@@ -41,7 +40,7 @@ public class ValidatorUtils {
 
     }
     public static void validateAuthor(String author){
-        Validator.validateMatchRegex("^[\\p{L}\\s-]{1,255}$",author,"Author field cannot be empty and should only contain alphabets");
+        Validator.validateMatchRegex("^[\\p{L}\\s-]{1,255}$",author,"Author field cannot be empty and/or should only contain alphabets");
     }
     public  static void validateIsbn(String isbn){
         Validator.validateMatchRegex("^[0-9-]{1,100}$",isbn,"ISBN field cannot be empty and/or should only contain numbers and \"-\"");

@@ -10,10 +10,16 @@ import java.util.List;
 
 public class BorrowsDao {
 
-    public List<Borrow> getOngoingBorrows(Long userID) {
+    public List<Borrow> getOngoingBorrows(long userID) {
         try (SqlSession session = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession()) {
             BorrowsMapper mapper = session.getMapper(BorrowsMapper.class);
             return mapper.getOngoingBorrows(userID);
+        }
+    }
+    public int userBorrowCount(long userID) {
+        try (SqlSession session = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession()) {
+            BorrowsMapper mapper = session.getMapper(BorrowsMapper.class);
+            return mapper.userBorrowCount(userID);
         }
     }
 

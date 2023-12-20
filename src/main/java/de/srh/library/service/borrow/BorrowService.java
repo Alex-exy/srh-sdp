@@ -12,7 +12,7 @@ public interface BorrowService {
     ApiResponse<Borrow> getByBookId(Long bookId);
 
     ApiResponse<Integer> insertBorrow(Borrow borrow);
-
+    ApiResponse<Integer> userBorrowCount(long bookId);
     ApiResponse updateBorrowStatus(Long borrowId, char borrowStatus);
 
     ApiResponse updateExtensionsAndExpectedReturnDate(Long borrowId, int extensionCount, Date expectedReturnDate);

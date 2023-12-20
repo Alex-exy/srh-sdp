@@ -31,6 +31,10 @@
         select * from borrows where book_id = #{bookId}
     </select>
 
+    <select id="userBorrowCount" resultType="int">
+        select count(1) from borrows where user_id = #{userId}
+    </select>
+
     <update id="updateBorrowStatus">
         update borrows
         set borrow_status = #{borrowStatus}, return_date = CURRENT_TIMESTAMP, update_time = CURRENT_TIMESTAMP
