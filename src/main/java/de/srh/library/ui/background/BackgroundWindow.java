@@ -26,11 +26,14 @@ public class BackgroundWindow extends JFrame {
         setVisible(true);
         logger.info("Opening background ...");
 
+
         //JLayeredPane layeredPane =new JLayeredPane();
         layeredPane.setBounds(0,0,1280,720);
         JFrame frame = new JFrame("JLayerdPane");
         frame.add(layeredPane);
         layeredPane.add(backgroundImage, JLayeredPane.DEFAULT_LAYER);
+        setContentPane(frame);
+
 
     }
 
