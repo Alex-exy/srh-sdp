@@ -51,4 +51,25 @@ public class BorrowsDao {
             mapper.updateExtensionsAndExpectedReturnDate(borrowId, extensionCount, expectedReturnDate);
         }
     }
+
+    public void updateBorrowStatusWhenDelayed() {
+        try (SqlSession session = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession(true)) {
+            BorrowsMapper mapper = session.getMapper(BorrowsMapper.class);
+            mapper.updateBorrowStatusWhenDelayed();
+        }
+    }
+
+    public List<Long> findDelayedUserIds() {
+        try (SqlSession session = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession()) {
+            BorrowsMapper mapper = session.getMapper(BorrowsMapper.class);
+            return mapper.findDelayedUserIds();
+        }
+    }
+
+    public List<Borrow> findOverdueBooksByUserId(Long userId) {
+        try (SqlSession session = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession()) {
+            BorrowsMapper mapper = session.getMapper(BorrowsMapper.class);
+            return mapper.findOverdueBooksByUserId(userId);
+        }
+    }
 }

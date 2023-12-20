@@ -21,10 +21,6 @@ COMMENT ON COLUMN users.user_status IS 'A - Active, O - Overdue, F - Frozen, I -
 
 ALTER SEQUENCE public.users_user_id_seq RESTART WITH 1000;
 
--- Test users, password: 123456
-INSERT INTO users(email, user_role, first_name, family_name, address, user_status, password_hash, school_id)
-VALUES('jack.muller@stud.hochschule-heidelberg.de', 'S', 'a', 'b', 'Germany', 'A', '$2a$10$EZAvbMiNBodibBxH3i2BRuHcehAngMJ6pbLhP6b5SFAEpIdU/qIZS', 1000);
-
 drop table if exists schools;
 
 CREATE TABLE schools
@@ -52,21 +48,6 @@ CREATE TABLE admins
 -- default administrator: admin 123456
 insert into admins(admin_user_name, admin_password_hash)
 values ('admin','$2a$10$EZAvbMiNBodibBxH3i2BRuHcehAngMJ6pbLhP6b5SFAEpIdU/qIZS');
-
-DROP TABLE IF EXISTS borrows;
-
-CREATE TABLE borrows (
-     borrow_id BIGSERIAL PRIMARY KEY,
-     user_id BIGINT not null,
-     book_id BIGINT not null,
-     borrow_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-     expected_return_date TIMESTAMP NOT NULL,
-     extensions int not null default 0,
-     return_date TIMESTAMP,
-     borrow_status CHAR(1) not null DEFAULT 'B',
-     update_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-COMMENT ON COLUMN borrows.borrow_status IS 'B - Borrowed, R - Returned, D - Delayed';
 
 DROP TABLE IF EXISTS books;
 
@@ -182,3 +163,22 @@ CREATE TABLE libraries
 insert into libraries(library_id, library_name)
 values (10, 'SRH University Heidelberg Library'),
        (11, 'Heidelberg Library');
+
+DROP TABLE IF EXISTS borrows;
+
+CREATE TABLE borrows (
+     borrow_id BIGSERIAL PRIMARY KEY,
+     user_id BIGINT not null,
+     book_id BIGINT not null,
+     borrow_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+     expected_return_date TIMESTAMP NOT NULL,
+     extensions int not null default 0,
+     return_date TIMESTAMP,
+     borrow_status CHAR(1) not null DEFAULT 'B',
+     update_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+COMMENT ON COLUMN borrows.borrow_status IS 'B - Borrowed, R - Returned, D - Delayed';
+ALTER TABLE borrows ADD FOREIGN KEY (user_id) REFERENCES users (user_id) ON UPDATE CASCADE ON DELETE CASCADE ;
+ALTER TABLE borrows ADD FOREIGN KEY (book_id) REFERENCES books (book_id) ON UPDATE CASCADE ON DELETE CASCADE ;
+create index idx_borrows_expected_return_date on borrows (expected_return_date);
+create index idx_borrows_user_id on borrows (user_id);

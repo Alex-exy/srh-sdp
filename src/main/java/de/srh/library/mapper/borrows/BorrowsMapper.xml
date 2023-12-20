@@ -33,13 +33,29 @@
 
     <update id="updateBorrowStatus">
         update borrows
-        set borrow_status = #{borrowStatus}, return_date = CURRENT_TIMESTAMP
+        set borrow_status = #{borrowStatus}, return_date = CURRENT_TIMESTAMP, update_time = CURRENT_TIMESTAMP
         where borrow_id = #{borrowId}
     </update>
 
     <update id="updateExtensionsAndExpectedReturnDate">
         update borrows
-        set extensions = #{extensions}, expected_return_date = #{expectedReturnDate}
+        set extensions = #{extensions}, expected_return_date = #{expectedReturnDate}, update_time = CURRENT_TIMESTAMP
         where borrow_id = #{borrowId}
     </update>
+
+    <update id="updateBorrowStatusWhenDelayed">
+        update borrows
+        set borrow_status = 'D', update_time = CURRENT_TIMESTAMP
+        where borrow_status != 'D' and expected_return_date &lt; CURRENT_TIMESTAMP
+   </update>
+
+    <select id="findDelayedUserIds" resultType="long">
+        select user_id from borrows where borrow_status = 'D' and expected_return_date &lt; CURRENT_TIMESTAMP
+    </select>
+
+    <select id="findOverdueBooksByUserId" resultType="de.srh.library.entity.Borrow">
+        select * from borrows
+        where borrows.user_id = #{userId}
+        and borrows.borrow_status = 'D'
+    </select>
 </mapper>

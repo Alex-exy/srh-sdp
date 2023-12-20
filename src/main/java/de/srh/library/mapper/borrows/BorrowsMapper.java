@@ -21,4 +21,10 @@ public interface BorrowsMapper {
     void updateExtensionsAndExpectedReturnDate(@Param("borrowId") Long borrowId,
                                                @Param("extensions")int extensions,
                                                @Param("expectedReturnDate")Date expectedReturnDate);
+
+    void updateBorrowStatusWhenDelayed();
+
+    List<Long> findDelayedUserIds();
+
+    List<Borrow> findOverdueBooksByUserId(Long userId);
 }
