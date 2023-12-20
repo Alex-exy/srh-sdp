@@ -32,7 +32,7 @@ public class EnterEmail extends JFrame {
         setAutoRequestFocus(false);
         setContentPane(enterEmailWindow);
         setTitle("Reset Password");
-        setSize(600, 400);
+        setSize(600, 550);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setVisible(true);
         toFront();
