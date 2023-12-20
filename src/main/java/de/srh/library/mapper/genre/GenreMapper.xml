@@ -2,26 +2,32 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="de.srh.library.mapper.genre.GenreMapper">
+
+    <select id="getAllGenres" resultType="de.srh.library.entity.Genre">
+      select * from genres
+      order by genre_name asc;
+    </select>
+
     <select id="getGenreById" resultType="de.srh.library.entity.Genre">
-        select * from genre where genre_id = #{genreId}
+        select * from genres where genre_id = #{genreId}
     </select>
 
     <select id="getGenreByName" resultType="de.srh.library.entity.Genre">
-        select * from genre where genre_name  = #{genreName}
+        select * from genres where genre_name  = #{genreName}
     </select>
 
 
     <insert id="insertGenre" parameterType="de.srh.library.entity.Genre">
         <selectKey keyProperty="genreId" resultType="java.lang.Long" order="AFTER">
-            select currval(pg_get_serial_sequence('genre', 'genre_id')) AS genre_id
+            select currval(pg_get_serial_sequence('genres', 'genre_id')) AS genre_id
         </selectKey>
 
-        insert INTO genre (
+        insert INTO genres (
         genre_name
         )
 
         VALUES (
-       #{genre_name}
+       #{genreName}
         )
     </insert>
 </mapper>

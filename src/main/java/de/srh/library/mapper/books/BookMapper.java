@@ -1,13 +1,25 @@
 package de.srh.library.mapper.books;
 
-import de.srh.library.entity.Book;
+import de.srh.library.dto.BookDto;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 
 public interface BookMapper {
-    Book getBookById(Long bookId);
+    BookDto getBookById(long bookId);
 
-    Book getBookByAuthor(String author);
+    List<BookDto> findBooks(@Param("bookName")String bookName, @Param("bookAuthor")String bookAuthor,
+                            @Param("genreId")int genreId,
+                            @Param("isbn")String isbn, @Param("doi")String doi,
+                            @Param("bookId")long bookId, @Param("libraryId")int libraryId);
 
-    int insertBook(Book book);
-    int removeBook(Long bookId);
+
+    int insertBook(BookDto bookDto);
+    int removeBook(long bookId);
+    int bookFound(BookDto bookDto);
+    int updateBookInfo(BookDto bookDto);
+    String bookGenreName(long bookId);
+    String bookLibraryName(long bookId);
+
 }

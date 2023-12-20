@@ -1,14 +1,14 @@
 package de.srh.library.entity;
 
 public class Genre {
-    private long genreId;
+    private int genreId;
     private String genreName;
 
-    public long getGenreId() {
+    public int getGenreId() {
         return genreId;
     }
 
-    public void setGenreId(long genreId) {
+    public void setGenreId(int genreId) {
         this.genreId = genreId;
     }
 

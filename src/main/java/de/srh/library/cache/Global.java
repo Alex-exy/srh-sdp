@@ -1,4 +1,4 @@
-package de.srh.library.dto;
+package de.srh.library.cache;
 
 public final class Global {
 

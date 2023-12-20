@@ -13,16 +13,17 @@ public class FAQ extends JFrame {
     private JPanel faqWindow;
     private JLabel pageTitle;
     private JButton returnButton;
-    private JList questionList;
+    private JTextArea faqTextBox;
 
     public FAQ() {
 
         setAutoRequestFocus(false);
         setContentPane(faqWindow);
         setTitle("FAQ");
-        setSize(800, 600);
+        setSize(720, 1000);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setVisible(true);
+        toFront();
         logger.info("Displaying FAQs ...");
 
         returnButton.addActionListener(new ActionListener() {

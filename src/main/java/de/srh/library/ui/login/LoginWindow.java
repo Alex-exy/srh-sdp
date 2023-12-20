@@ -2,12 +2,12 @@ package de.srh.library.ui.login;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.util.Objects;
 import javax.swing.*;
 
+import cn.hutool.core.exceptions.ValidateException;
 import de.srh.library.dto.ApiResponse;
 import de.srh.library.dto.ApiResponseCode;
-import de.srh.library.dto.Global;
+import de.srh.library.cache.Global;
 import de.srh.library.service.admin.AdminService;
 import de.srh.library.service.admin.AdminServiceImpl;
 import de.srh.library.service.user.UserService;
@@ -17,6 +17,7 @@ import de.srh.library.ui.enteremail.EnterEmail;
 import de.srh.library.ui.faq.FAQ;
 import de.srh.library.ui.mainmenu.MainMenu;
 import de.srh.library.ui.managementmenu.ManagementMenu;
+import de.srh.library.util.ValidatorUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,30 +44,14 @@ public class LoginWindow extends JFrame {
         setContentPane(loginWindow);
         setTitle("Login Page");
         setSize(1280, 720);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
+        toFront();
         logger.info("Opening login window ...");
 
         userService = UserServiceImpl.createInstance();
         adminService = AdminServiceImpl.createInstance();
-
-        //Clear field description of focus
-        usernameField.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (usernameField.getText().equals("username")) {
-                    usernameField.setText("");
-                }
-            }
-        });
-        passwordField.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (Objects.equals(String.valueOf(passwordField.getPassword()), "password")) {
-                    passwordField.setText("");
-                }
-            }
-        });
 
         //Login button action
         loginButton.addActionListener(new ActionListener() {
@@ -75,6 +60,13 @@ public class LoginWindow extends JFrame {
                 String username = usernameField.getText();
                 logger.debug("username: " + username);
                 char[] password = passwordField.getPassword();
+
+                try{
+                    ValidatorUtils.validateEmail(usernameField.getText());
+                }catch (ValidateException ve ){
+                    JOptionPane.showMessageDialog(null, ve.getMessage());
+                    return;
+                }
 
                 ApiResponse<Long> loginResponse = userService.checkPassword(username, String.valueOf(password));
                 switch (ApiResponseCode.getByCode(loginResponse.getCode())) {
@@ -96,8 +88,15 @@ public class LoginWindow extends JFrame {
         loginAdminButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                try{
+                    ValidatorUtils.validateAdmin(usernameField.getText());
+                }catch (ValidateException ve ){
+                    JOptionPane.showMessageDialog(null, ve.getMessage());
+                    return;
+                }
                 String adminUserName = usernameField.getText();
                 String adminPassword = String.valueOf(passwordField.getPassword());
+
                 ApiResponse loginResponse = adminService.checkPassword(adminUserName,adminPassword);
 
                 switch (ApiResponseCode.getByCode(loginResponse.getCode())) {
@@ -118,7 +117,6 @@ public class LoginWindow extends JFrame {
         createNewAccountButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                dispose();
                 CreateNewUser createNewUser = new CreateNewUser();
                 createNewUser.setVisible(true);
             }

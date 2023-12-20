@@ -1,16 +1,25 @@
 package de.srh.library.ui.infossettings;
 
-import de.srh.library.dao.UserDao;
-import de.srh.library.dto.Global;
+import cn.hutool.core.exceptions.ValidateException;
+import de.srh.library.cache.Global;
+import de.srh.library.constant.UserRole;
+import de.srh.library.dto.*;
+import de.srh.library.entity.User;
+import de.srh.library.service.user.UserService;
+import de.srh.library.service.user.UserServiceImpl;
 import de.srh.library.ui.login.LoginWindow;
 import de.srh.library.ui.mainmenu.MainMenu;
 import de.srh.library.ui.resetpassword.ResetPassword;
+import de.srh.library.util.ValidatorUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class InfosSettings extends JFrame {
 
@@ -32,20 +41,14 @@ public class InfosSettings extends JFrame {
     private JTextField userLastName;
     private JTextField userFirstName;
     private JComboBox userSelectSchool;
+    private JLabel accountStatus;
+    private JTextField accountStatusField;
     private long userId = Global.loggedInUserId;
+    private UserService userService;
+    Map<String, Integer> schoolsMap;
 
-    //Testing only
-    private String testfirstname = "shiti";
-    private String testlastname = "deshi";
-    private String testschoolname = "srh";
-    private String testemail = "test.test@gmail.com";
-    private String testaddress = "hauptstraße 3";
-    private long testid = 110110110;
-    private String testrole = "gigachad";
 
-    // Testing schools
-    private String schule1 = "SRH University TEST";
-    private String schule2 = "Heidelberg University TEST";
+
 
     public InfosSettings() {
 
@@ -53,14 +56,11 @@ public class InfosSettings extends JFrame {
         setContentPane(infosSettingsWindow);
         setTitle("Infos and Settings");
         setSize(1280, 720);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
+        toFront();
         logger.info("Opening infos and settings window ...");
-
-        // ! Fill with correct user data from saved users in database
-        initUserInformation(testfirstname, testlastname, testemail, testaddress, testid, testrole);
-        // ! Fill with school data string from database
-        initSchools(schule1, schule2);
 
         changeInformationButton.addActionListener(new ActionListener() {
             @Override
@@ -76,16 +76,16 @@ public class InfosSettings extends JFrame {
         saveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent safe) {
+                try{
+                    inputValidation();
+                }catch (ValidateException ve ){
+                    JOptionPane.showMessageDialog(null, ve.getMessage());
+                    return;
+                }
+                userService = UserServiceImpl.createInstance();
+                updateUserInfo(userId);
+                JOptionPane.showMessageDialog(null, "User data changed!");
                 saveButton.setEnabled(false);
-                userFirstName.setEditable(false);
-                userLastName.setEditable(false);
-                userEmail.setEditable(false);
-                userAddress.setEditable(false);
-                userSelectSchool.setEnabled(false);
-                //Save new user data, overwrite old user data from database
-                // ! Check for valid data input !
-                updateUserInformation(userFirstName.getText(), userLastName.getText(), userEmail.getText(), userAddress.getText(), Long.parseLong(userID.getText()), userRole.getText());
-                updateUserInfo(userFirstName.getText(),userLastName.getText(),userEmail.getText(), userAddress.getText(),userId);
             }
         });
         changePasswordButton.addActionListener(new ActionListener() {
@@ -104,42 +104,96 @@ public class InfosSettings extends JFrame {
             }
         });
     }
-    public void initSchools(String...school) {
-        for (Object s : school) {
-            userSelectSchool.addItem(s);
+
+
+    public void loadUserInformation(UserDto userDto) {
+
+        userService = UserServiceImpl.createInstance();
+        getSchools();
+
+        for (UserRole role : UserRole.values()) {
+            userRole.setText(role.getRoleName());
+        }
+
+        UserDto userDtoNew = userService.getUserById(userDto.getUserId()).getData();
+        userFirstName.setText(userDto.getFirstName());
+        userLastName.setText(userDto.getFamilyName());
+        accountStatusField.setText(
+                switch (userDto.getUserStatus()){
+                    case "F" -> "Frozen";
+                    case "A" -> "Active";
+                    case "O" -> "Overdue";
+                    case "I" -> "Inactive";
+                    default -> "None";
+                });
+        userRole.setText(
+                switch (userDto.getUserRole()) {
+                    case "S" -> "Student";
+                    case "T" -> "Teacher";
+                    default -> "None";
+                });
+        userEmail.setText(userDto.getEmail());
+        userSelectSchool.setSelectedItem(userSchoolName(userDtoNew.getUserId()));
+        userAddress.setText(userDto.getAddress());
+        userID.setText(String.valueOf(userDto.getUserId()));
+
+    }
+
+
+
+
+    private ApiResponse updateUserInfo(Long userId) {
+        User user = new User();
+
+        user.setUserId(userId);
+        user.setFirstName(userFirstName.getText());
+        user.setSchoolId(schoolsMap.get(userSelectSchool.getSelectedItem().toString()));
+        user.setFamilyName(userLastName.getText());
+        user.setEmail(userEmail.getText());
+        user.setAddress(userAddress.getText());
+        user.setUserRole(
+                switch(userRole.getText().toString()){
+                    case "Student" -> "S";
+                    case "Teacher" -> "T";
+                    default -> "None";
+                });
+        user.setUserStatus(
+        switch (accountStatusField.getText().toString()){
+            case "Frozen"   -> "F";
+            case "Active"   -> "A";
+            case "Overdue"  -> "O";
+            case "Inactive" -> "I";
+            default -> "None";
+        });
+        user.setUpdateDate(new Date());
+        return userService.updateUserData(user);
+
+    }
+
+
+    private String userSchoolName(long userId){
+        userService = UserServiceImpl.createInstance();
+        UserDto userDto = new UserDto();
+        return userDto.getSchoolName(userId);
+    }
+    public void getSchools(){
+        userService = UserServiceImpl.createInstance();
+        ApiResponse<Map<String, Integer>> apiResponseLibrary = userService.getAllSchools();
+        if (ApiResponseCode.SUCCESS.getCode() == apiResponseLibrary.getCode()) {
+            schoolsMap = apiResponseLibrary.getData();
+
+            TreeMap<String, Integer> sortedLibrariesMap = new TreeMap<>(schoolsMap);
+            userSelectSchool.removeAllItems();
+            sortedLibrariesMap.forEach((s, i) -> userSelectSchool.addItem(s));
         }
     }
-
-    public void initUserInformation(String currentFirstName, String currentLastName, String currentUserEmail, String currentUserAddress, long currentUserNumber, String currentUserRole) {
-
-        userFirstName.setText(currentFirstName);
-        userLastName.setText(currentLastName);
-        userEmail.setText(currentUserEmail);
-        userAddress.setText(currentUserAddress);
-        userID.setText(String.valueOf(currentUserNumber));
-        userRole.setText(currentUserRole);
-    }
-
-    ;
-
-    public void updateUserInformation(String newFirstName, String newLastName, String newUserEmail, String newUserAddress, long newUserNumber, String newUserRole) {
-        userFirstName.setText(newFirstName);
-        userLastName.setText(newLastName);
-        userEmail.setText(newUserEmail);
-        userAddress.setText(newUserAddress);
-        userID.setText(String.valueOf(newUserNumber));
-        userRole.setText(newUserRole);
-    }
-    public void updateUserInfo(String firstName,String lastName,String email, String address, long userId) {
-        email = userEmail.getText();
-        address = userAddress.getText();
-
-        UserDao userDao = new UserDao();
-        userDao.updateUserInfo(firstName,lastName,email, address, userId);
+    public void inputValidation(){
+        ValidatorUtils.validateFirstName(userFirstName.getText());
+        ValidatorUtils.validateLastName(userLastName.getText());
+        ValidatorUtils.validateEmail(userEmail.getText());
+        ValidatorUtils.validateAddress(userAddress.getText());
 
     }
-
-    ;
 
     //Testing Only
     public static void main(String[] args) {

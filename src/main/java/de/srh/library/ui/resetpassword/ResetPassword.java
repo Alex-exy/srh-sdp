@@ -2,7 +2,7 @@ package de.srh.library.ui.resetpassword;
 
 import de.srh.library.dto.ApiResponse;
 import de.srh.library.dto.ApiResponseCode;
-import de.srh.library.entity.User;
+import de.srh.library.dto.UserDto;
 import de.srh.library.service.user.UserService;
 import de.srh.library.service.user.UserServiceImpl;
 import de.srh.library.util.PasswordUtils;
@@ -38,6 +38,7 @@ public class ResetPassword extends JFrame {
         setSize(800, 600);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setVisible(true);
+        toFront();
         logger.info("Requesting password reset ...");
         userService = UserServiceImpl.createInstance();
 
@@ -65,7 +66,7 @@ public class ResetPassword extends JFrame {
     }
 
     public boolean checkValidEmail(String email) {
-        ApiResponse<User> apiResponse = userService.getUserByEmail(email);
+        ApiResponse<UserDto> apiResponse = userService.getUserByEmail(email);
         return apiResponse.getCode() == ApiResponseCode.SUCCESS.getCode()
                 && apiResponse.getData() != null;
     }

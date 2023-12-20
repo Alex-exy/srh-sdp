@@ -1,7 +1,20 @@
 package de.srh.library.ui.borrowreturn;
 
-import de.srh.library.ui.login.LoginWindow;
+import de.srh.library.constant.UserRole;
+import de.srh.library.dto.ApiResponse;
+import de.srh.library.dto.BookDto;
+import de.srh.library.cache.Global;
+import de.srh.library.dto.UserDto;
+import de.srh.library.entity.Borrow;
+import de.srh.library.service.book.BookService;
+import de.srh.library.service.book.BookServiceImpl;
+import de.srh.library.service.borrow.BorrowService;
+import de.srh.library.service.borrow.BorrowServiceImpl;
+import de.srh.library.service.user.UserService;
+import de.srh.library.service.user.UserServiceImpl;
 import de.srh.library.ui.mainmenu.MainMenu;
+import de.srh.library.util.DateUtil;
+import de.srh.library.util.ValidatorUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,28 +23,35 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.sql.Date;
+import java.util.List;
 
 public class BorrowReturn extends JFrame {
 
-    private static final Logger logger = LoggerFactory.getLogger(LoginWindow.class);
+    private static final Logger logger = LoggerFactory.getLogger(BorrowReturn.class);
     private JPanel borrowReturnWindow;
     private JLabel pageTitle;
     private JList borrowedBookList;
     private JTextField borrowBookID;
     private JButton borrowButton;
     private JComboBox borrowDurationBox;
-    private JTextField returnBookID;
-    private JComboBox selectBorrowedBook;
+    private JTextField returnBookName;
     private JButton returnButton;
     private JButton extendButton;
     private JButton goBack;
+    private JComboBox extendDurationBox;
+    private JLabel selectedBook;
 
-    private String enteredBookID;
+    private BorrowService borrowService;
+    private UserService userService;
 
-    //Testing content - book list
-    ArrayList<String> borrowedBooks = new ArrayList<String>(Arrays.asList("Harry Potter", "The Lord of the Rings", "A Song of Fire and Ice", "The  Hunger Games", "The Art of War"));
+    private BookService bookService;
+    private UserRole userRole;
+    private UserDto userDto;
+
+    private List<Borrow> borrowedBooks = new ArrayList<>();
 
     public BorrowReturn() {
 
@@ -39,51 +59,141 @@ public class BorrowReturn extends JFrame {
         setContentPane(borrowReturnWindow);
         setTitle("Borrow and Return");
         setSize(1280, 720);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
+        toFront();
         logger.info("Opening borrow and return window ...");
 
-        initializeBorrowedUserBooks();
-        //Not necessary HERE if init func working
-        updateBorrowedBookList();
+        borrowService = BorrowServiceImpl.createInstance();
+        userService = UserServiceImpl.createInstance();
+        bookService = BookServiceImpl.createInstance();
+        userDto = userService.getUserById(Global.loggedInUserId).getData();
+        userRole = UserRole.getByRoleCode(userDto.getUserRole());
+
+        refreshBorrowedBookList();
         setDurationListContent();
 
         borrowedBookList.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                returnBookID.setText(borrowedBookList.getSelectedValue().toString());
-                System.out.println(borrowedBookList.getSelectedValue().toString());
-                returnButton.setEnabled(true);
+                super.mouseClicked(e);
+                Borrow borrowSelected =  (Borrow) borrowedBookList.getSelectedValue();
+                String paneMessage = borrowSelected.toPaneMessage();
+                if (e.getClickCount() == 2){
+                    if (borrowSelected.getBorrowStatus() == 'D'){
+                        BookDto bookDto = bookService.getBookById(borrowSelected.getBookId()).getData();
+                        long overdueDays = DateUtil.daysToToday(borrowSelected.getExpectedReturnDate());
+                        String fine = bookDto.getFine((int) overdueDays);
+                        if ((Double.parseDouble(fine) > 0)){
+                            paneMessage = paneMessage.substring(0, paneMessage.length() - 7);
+                            paneMessage += "<br><br><font color='red'>Delayed Days: " + overdueDays + "</font>";
+                            paneMessage += "<br><font color='red'>Fine: " + fine + "</font></html>";
+                        }
+                    }
+                    JOptionPane.showMessageDialog(null,
+                            paneMessage, "Borrow Details", JOptionPane.INFORMATION_MESSAGE);
+                }else if (e.getClickCount() == 1){
+                    returnBookName.setText(borrowSelected.getBookName());
+                    returnButton.setEnabled(true);
+                    extendButton.setEnabled(true);
+                    extendDurationBox.setEnabled(true);
+                }
             }
         });
         borrowButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Database logic
-                // Check if valid input
-                // Check entered duration valid and safe book + duration in database
 
-                if (borrowedBooks.contains(borrowBookID.getText().toString())) {
-                    JOptionPane.showMessageDialog(null, "Book already borrowed!");
-                } else {
-                    enteredBookID = borrowBookID.getText().toString();
-                    borrowedBooks.add(enteredBookID);
-                    updateBorrowedBookList();
+                if (userDto.isInvalid()) {
+                    JOptionPane.showMessageDialog(null, "Your account is invalid!");
+                    return;
                 }
+
+                if (borrowedBooks.size() >= userRole.getMaxBorrowCount()) {
+                    JOptionPane.showMessageDialog(null, "You have reached your maximum borrow limit!");
+                    return;
+                }
+                String enteredBookID = borrowBookID.getText();
+                try {
+                    ValidatorUtils.validateBookId(enteredBookID);
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
+                    return;
+                }
+                BookDto bookDto = bookService.getBookById(Long.valueOf(enteredBookID)).getData();
+                if (bookDto == null) {
+                    JOptionPane.showMessageDialog(null, "Book not found!");
+                    return;
+                }
+                Borrow currentBorrow = borrowService.getByBookId(Long.valueOf(enteredBookID)).getData();
+                if (currentBorrow != null && currentBorrow.getBorrowStatus() != 'R') {
+                    JOptionPane.showMessageDialog(null, "Book already borrowed!");
+                    return;
+                }
+                Borrow borrow = new Borrow();
+                borrow.setBookId(bookDto.getBookId());
+                borrow.setUserId(Global.loggedInUserId);
+                borrow.setBorrowStatus('B');
+                int monthsToBorrow = Integer.parseInt(borrowDurationBox.getSelectedItem().toString().split(" ")[0]);
+                borrow.setExpectedReturnDate(Date.valueOf(LocalDate.now().plusMonths(monthsToBorrow)));
+                ApiResponse apiResponse =  borrowService.insertBorrow(borrow);
+                if (!apiResponse.isSuccess()) {
+                    JOptionPane.showMessageDialog(null, apiResponse.getMessage());
+                    return;
+                }
+                JOptionPane.showMessageDialog(null, "Book borrowed successfully!");
+
+                refreshBorrowedBookList();
             }
         });
         returnButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //Database logic + remove from borrowed list
-                removeSelectedBook(returnBookID.getText().toString());
-                updateBorrowedBookList();
+                Borrow borrowSelected =  (Borrow) borrowedBookList.getSelectedValue();
+                if (borrowSelected == null){
+                    JOptionPane.showMessageDialog(null, "Please select a book to return!");
+                    return;
+                }
+
+                returnABook(borrowSelected.getBorrowId());
+
+                refreshBorrowedBookList();
+
+                returnBookName.setText("");
+                returnButton.setEnabled(false);
             }
         });
         extendButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //Database Logic + update book borrow data
+                if (userDto.isInvalid()) {
+                    JOptionPane.showMessageDialog(null, "Your account is invalid!");
+                    return;
+                }
+                Borrow borrowSelected =  (Borrow) borrowedBookList.getSelectedValue();
+                if (borrowSelected == null){
+                    JOptionPane.showMessageDialog(null, "Please select a book to extend!");
+                    return;
+                }
+                if (borrowSelected.getExtensions() >= userRole.getMaxExtensionCount()) {
+                    JOptionPane.showMessageDialog(null, "You have reached your maximum extension limit!");
+                    return;
+                }
+                int monthsToExtend = Integer.parseInt(extendDurationBox.getSelectedItem().toString().split(" ")[0]);
+                Date expectedReturnDate =
+                        Date.valueOf(new Date(borrowSelected.getExpectedReturnDate().getTime()).toLocalDate().plusMonths(monthsToExtend));
+                ApiResponse apiResponse = borrowService.updateExtensionsAndExpectedReturnDate(borrowSelected.getBorrowId(),
+                        borrowSelected.getExtensions() + 1, expectedReturnDate);
+                if (!apiResponse.isSuccess()) {
+                    JOptionPane.showMessageDialog(null, apiResponse.getMessage());
+                    return;
+                }
+                JOptionPane.showMessageDialog(null, "Book extended successfully!");
+                refreshBorrowedBookList();
+                returnBookName.setText("");
+                extendButton.setEnabled(false);
+                extendDurationBox.setEnabled(false);
             }
         });
         goBack.addActionListener(new ActionListener() {
@@ -96,32 +206,31 @@ public class BorrowReturn extends JFrame {
         });
     }
 
-    public void updateBorrowedBookList() {
-        //Get database data from current borrowed books from the user
-        borrowedBookList.setListData(borrowedBooks.toArray());
-        System.out.println(borrowedBooks);
+    private void returnABook(long borrowId) {
+        borrowService.updateBorrowStatus(borrowId, 'R');
+        JOptionPane.showMessageDialog(null, "Book returned successfully!");
     }
+
+    private List<Borrow> refreshBorrowedBookList() {
+        List<Borrow> currentBorrowedBooks = new ArrayList<>();
+        ApiResponse<List<Borrow>> response = borrowService.getOngoingBorrows(Global.loggedInUserId);
+        if (response.isSuccess() && response.getData() != null){
+            currentBorrowedBooks = response.getData();
+        }
+        borrowedBookList.setListData(currentBorrowedBooks.toArray(new Borrow[0]));
+        borrowedBookList.setCellRenderer(new BorrowListCellRenderer());
+        borrowedBooks = currentBorrowedBooks;
+        return currentBorrowedBooks;
+    }
+
     public void setDurationListContent() {
-        for (String s : Arrays.asList("One Week", "Two Weeks", "Three Weeks")) {
-            borrowDurationBox.addItem(s);
+        int durationMonth = userRole.getMaxBorrowAndExtendMonths();
+        for (int i = 1; i <= durationMonth; i++) {
+            borrowDurationBox.addItem(i + " month");
+            extendDurationBox.addItem(i + " month");
         }
     }
-    public void removeSelectedBook(String selectedBook) {
-        System.out.println(selectedBook);
-        if (borrowedBooks.contains(selectedBook)) {
-            borrowedBooks.remove(selectedBook);
-        } else {
-            JOptionPane.showMessageDialog(null, "Book not found!");
-        }
-    }
-    public void initializeBorrowedUserBooks() {
-        //Database logic get books borrowed by user and fill displayed list
-        //Print testing borrowed books
-        System.out.println(borrowedBooks);
-    }
-    public void confirmBorrowRequest() {
-        //Confirmation for borrowing book request
-    }
+
     public static void main(String[] args) {
         BorrowReturn borrowReturn = new BorrowReturn();
     }

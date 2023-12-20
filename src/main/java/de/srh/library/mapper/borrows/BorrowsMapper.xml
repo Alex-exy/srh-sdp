@@ -3,9 +3,63 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="de.srh.library.mapper.borrows.BorrowsMapper">
 
-    <select id="listOfBorrowedBooks" resultType="de.srh.library.entity.Book">
+    <select id="listOfBorrowedBooks" resultType="de.srh.library.entity.Borrow">
         select * from borrows where borrow_status = #{borrowStatus}
     </select>
 
+    <select id="getOngoingBorrows" resultType="de.srh.library.entity.Borrow">
+        select borrows.*, books.book_name from borrows
+        left join books on borrows.book_id = books.book_id
+        where borrows.user_id = #{userId}
+        and borrows.borrow_status not in ('R')
+        order by borrows.expected_return_date asc limit 10;
+    </select>
 
+
+    <insert id="insertBorrow" parameterType="de.srh.library.entity.Borrow">
+        <selectKey keyProperty="borrowId" order="AFTER" resultType="long">
+            SELECT lastval() AS borrowId
+        </selectKey>
+
+        INSERT INTO borrows
+        (user_id, book_id, borrow_status, expected_return_date)
+        VALUES
+        (#{userId}, #{bookId}, #{borrowStatus}, #{expectedReturnDate})
+    </insert>
+
+    <select id="getByBookId" resultType="de.srh.library.entity.Borrow">
+        select * from borrows where book_id = #{bookId}
+    </select>
+
+    <select id="userBorrowCount" resultType="int">
+        select count(1) from borrows where user_id = #{userId}
+    </select>
+
+    <update id="updateBorrowStatus">
+        update borrows
+        set borrow_status = #{borrowStatus}, return_date = CURRENT_TIMESTAMP, update_time = CURRENT_TIMESTAMP
+        where borrow_id = #{borrowId}
+    </update>
+
+    <update id="updateExtensionsAndExpectedReturnDate">
+        update borrows
+        set extensions = #{extensions}, expected_return_date = #{expectedReturnDate}, update_time = CURRENT_TIMESTAMP
+        where borrow_id = #{borrowId}
+    </update>
+
+    <update id="updateBorrowStatusWhenDelayed">
+        update borrows
+        set borrow_status = 'D', update_time = CURRENT_TIMESTAMP
+        where borrow_status != 'D' and expected_return_date &lt; CURRENT_TIMESTAMP
+   </update>
+
+    <select id="findDelayedUserIds" resultType="long">
+        select user_id from borrows where borrow_status = 'D' and expected_return_date &lt; CURRENT_TIMESTAMP
+    </select>
+
+    <select id="findOverdueBooksByUserId" resultType="de.srh.library.entity.Borrow">
+        select * from borrows
+        where borrows.user_id = #{userId}
+        and borrows.borrow_status = 'D'
+    </select>
 </mapper>

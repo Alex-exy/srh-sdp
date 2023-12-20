@@ -26,6 +26,7 @@ class UsersDaoTest {
     initUser.setFamilyName("Swift");
     initUser.setAddress("Heidelberg");
     initUser.setUserStatus("A");
+    initUser.setSchoolId(1001);
     initUser.setPasswordHash(PasswordUtils.hashPw("000000"));
   }
 
@@ -33,7 +34,7 @@ class UsersDaoTest {
   @Order(1)
   void insertUser(){
       assertNull(initUser.getUserId());
-    assertEquals(1, usersDao.insertUser(initUser));
+      assertEquals(1, usersDao.insertUser(initUser));
       assertNotNull(initUser.getUserId());
   }
   @Test
