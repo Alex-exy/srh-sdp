@@ -141,5 +141,10 @@ public class LoginWindow extends JFrame {
     public static void main(String[] args) {
         new LoginWindow();
     }
+
+    private void createUIComponents() {
+        // TODO: place custom component creation code here
+        pageTitle = new JLabel(new ImageIcon("images/HLSLogo.png"));
+    }
 }
 

@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="de.srh.library.ui.createnewuser.CreateNewUser">
   <grid id="27dc6" binding="createNewUser" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-    <margin top="0" left="0" bottom="0" right="0"/>
+    <margin top="20" left="20" bottom="20" right="20"/>
     <constraints>
-      <xy x="20" y="20" width="1421" height="797"/>
+      <xy x="20" y="20" width="1421" height="820"/>
     </constraints>
-    <properties/>
+    <properties>
+      <background color="-15981000"/>
+    </properties>
     <border type="none"/>
     <children>
       <grid id="b8bcd" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -13,41 +15,93 @@
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
-        <properties/>
+        <properties>
+          <background color="-15981000"/>
+        </properties>
         <border type="none"/>
         <children>
-          <component id="85a68" class="javax.swing.JLabel" binding="pageTitle">
+          <grid id="84d9e" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
-              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <enabled value="true"/>
-              <font name="Roboto" size="24" style="1"/>
-              <text value="- - - Create New User Account - - -"/>
+              <background color="-16739636"/>
             </properties>
-          </component>
+            <border type="none"/>
+            <children>
+              <component id="85a68" class="javax.swing.JLabel" binding="pageTitle">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <enabled value="true"/>
+                  <font name="Roboto" size="24" style="1"/>
+                  <foreground color="-16315349"/>
+                  <text value="Create New User Account"/>
+                </properties>
+              </component>
+            </children>
+          </grid>
         </children>
       </grid>
-      <grid id="1602e" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+      <grid id="1602e" layout-manager="GridLayoutManager" row-count="1" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="20" left="20" bottom="20" right="20"/>
         <constraints>
           <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
-        <properties/>
+        <properties>
+          <background color="-15981000"/>
+        </properties>
         <border type="none"/>
         <children>
           <component id="5afc4" class="javax.swing.JButton" binding="buttonContinue">
             <constraints>
-              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="4" fill="0" indent="0" use-parent-layout="false">
+              <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="4" fill="0" indent="0" use-parent-layout="false">
                 <minimum-size width="100" height="-1"/>
               </grid>
             </constraints>
             <properties>
+              <background color="-15981000"/>
               <enabled value="false"/>
               <font name="Roboto" size="12" style="0"/>
+              <foreground color="-9519924"/>
               <text value="Save and Continue"/>
             </properties>
           </component>
+          <grid id="e7659" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-16315349"/>
+            </properties>
+            <border type="none"/>
+            <children/>
+          </grid>
+          <grid id="cc0cb" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-14868532"/>
+            </properties>
+            <border type="none"/>
+            <children/>
+          </grid>
+          <grid id="638ab" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-2029824"/>
+            </properties>
+            <border type="none"/>
+            <children/>
+          </grid>
         </children>
       </grid>
       <grid id="6d146" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -55,7 +109,9 @@
         <constraints>
           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
-        <properties/>
+        <properties>
+          <background color="-16315349"/>
+        </properties>
         <border type="none"/>
         <children>
           <grid id="65e6f" layout-manager="GridLayoutManager" row-count="18" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -64,9 +120,9 @@
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <background color="-6562817"/>
+              <background color="-15981000"/>
               <enabled value="true"/>
-              <foreground color="-6562817"/>
+              <foreground color="-15981000"/>
             </properties>
             <border type="line"/>
             <children>
@@ -78,7 +134,9 @@
                   </grid>
                 </constraints>
                 <properties>
+                  <background color="-15981000"/>
                   <font name="Roboto" size="14" style="0"/>
+                  <foreground color="-1"/>
                 </properties>
               </component>
               <component id="bb8fa" class="javax.swing.JTextField" binding="enterEmail">
@@ -89,7 +147,9 @@
                   </grid>
                 </constraints>
                 <properties>
+                  <background color="-15981000"/>
                   <font name="Roboto" size="14" style="0"/>
+                  <foreground color="-1"/>
                   <text value=""/>
                 </properties>
               </component>
@@ -101,7 +161,9 @@
                   </grid>
                 </constraints>
                 <properties>
+                  <background color="-15981000"/>
                   <font name="Roboto" size="14" style="0"/>
+                  <foreground color="-1"/>
                   <text value=""/>
                 </properties>
               </component>
@@ -112,7 +174,9 @@
                   </grid>
                 </constraints>
                 <properties>
+                  <background color="-15981000"/>
                   <font name="Roboto" size="14" style="0"/>
+                  <foreground color="-1"/>
                 </properties>
               </component>
               <component id="59afa" class="javax.swing.JTextField" binding="enterLastName">
@@ -123,7 +187,9 @@
                   </grid>
                 </constraints>
                 <properties>
+                  <background color="-15981000"/>
                   <font name="Roboto" size="14" style="0"/>
+                  <foreground color="-1"/>
                   <text value=""/>
                 </properties>
               </component>
@@ -133,6 +199,7 @@
                 </constraints>
                 <properties>
                   <font name="Roboto" size="16" style="0"/>
+                  <foreground color="-16739636"/>
                   <text value="Enter First Name"/>
                 </properties>
               </component>
@@ -142,6 +209,7 @@
                 </constraints>
                 <properties>
                   <font name="Roboto" size="16" style="0"/>
+                  <foreground color="-16739636"/>
                   <text value="Enter Last Name"/>
                 </properties>
               </component>
@@ -151,6 +219,7 @@
                 </constraints>
                 <properties>
                   <font name="Roboto" size="16" style="0"/>
+                  <foreground color="-16739636"/>
                   <text value="Enter E-Mail"/>
                 </properties>
               </component>
@@ -160,6 +229,7 @@
                 </constraints>
                 <properties>
                   <font name="Roboto" size="16" style="0"/>
+                  <foreground color="-16739636"/>
                   <text value="Enter Address"/>
                 </properties>
               </component>
@@ -169,6 +239,7 @@
                 </constraints>
                 <properties>
                   <font name="Roboto" size="16" style="0"/>
+                  <foreground color="-16739636"/>
                   <text value="Select School"/>
                 </properties>
               </component>
@@ -178,6 +249,7 @@
                 </constraints>
                 <properties>
                   <font name="Roboto" size="16" style="0"/>
+                  <foreground color="-16739636"/>
                   <text value="Select Role (Teachers must sent proof for verification)"/>
                 </properties>
               </component>
@@ -187,6 +259,7 @@
                 </constraints>
                 <properties>
                   <font name="Roboto" size="16" style="0"/>
+                  <foreground color="-16739636"/>
                   <text value="Enter Password"/>
                 </properties>
               </component>
@@ -198,6 +271,8 @@
                   </grid>
                 </constraints>
                 <properties>
+                  <background color="-15981000"/>
+                  <foreground color="-1"/>
                   <text value=""/>
                 </properties>
               </component>
@@ -209,7 +284,9 @@
                   </grid>
                 </constraints>
                 <properties>
+                  <background color="-15981000"/>
                   <font name="Roboto" size="14" style="0"/>
+                  <foreground color="-1"/>
                   <text value=""/>
                 </properties>
               </component>
@@ -221,6 +298,8 @@
                   </grid>
                 </constraints>
                 <properties>
+                  <background color="-15981000"/>
+                  <foreground color="-1"/>
                   <text value=""/>
                 </properties>
               </component>
@@ -230,6 +309,7 @@
                 </constraints>
                 <properties>
                   <font name="Roboto" size="16" style="0"/>
+                  <foreground color="-16739636"/>
                   <text value="Reenter Password"/>
                 </properties>
               </component>
@@ -260,6 +340,8 @@
                   </grid>
                 </constraints>
                 <properties>
+                  <background color="-15981000"/>
+                  <foreground color="-16739636"/>
                   <text value="Get Verification Code"/>
                 </properties>
               </component>
@@ -269,7 +351,10 @@
                     <preferred-size width="150" height="-1"/>
                   </grid>
                 </constraints>
-                <properties/>
+                <properties>
+                  <background color="-15981000"/>
+                  <foreground color="-1"/>
+                </properties>
               </component>
               <component id="bf17d" class="javax.swing.JLabel">
                 <constraints>
@@ -277,6 +362,7 @@
                 </constraints>
                 <properties>
                   <font name="Roboto" size="16" style="0"/>
+                  <foreground color="-16739636"/>
                   <text value="Enter Verification Code"/>
                 </properties>
               </component>

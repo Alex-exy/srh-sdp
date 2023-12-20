@@ -1,35 +1,74 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="de.srh.library.ui.addnewbook.AddNewBook">
-  <grid id="27dc6" binding="addNewBookWindow" layout-manager="GridLayoutManager" row-count="4" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-    <margin top="0" left="0" bottom="0" right="0"/>
+  <grid id="27dc6" binding="addNewBookWindow" layout-manager="GridLayoutManager" row-count="5" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="20" left="20" bottom="20" right="20"/>
     <constraints>
-      <xy x="20" y="20" width="648" height="1041"/>
+      <xy x="20" y="20" width="706" height="1030"/>
     </constraints>
-    <properties/>
+    <properties>
+      <background color="-15981000"/>
+    </properties>
     <border type="none"/>
     <children>
-      <grid id="3edf6" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+      <grid id="3edf6" layout-manager="GridLayoutManager" row-count="1" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="40"/>
         <constraints>
-          <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
+          <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
             <maximum-size width="-1" height="100"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <background color="-15981000"/>
+        </properties>
         <border type="none"/>
         <children>
           <component id="189d2" class="javax.swing.JButton" binding="cancelButton">
             <constraints>
-              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="4" fill="0" indent="0" use-parent-layout="false">
+              <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="4" fill="0" indent="0" use-parent-layout="false">
                 <minimum-size width="100" height="-1"/>
               </grid>
             </constraints>
             <properties>
+              <background color="-15981000"/>
               <font name="Roboto" size="12" style="0"/>
+              <foreground color="-16739636"/>
               <horizontalTextPosition value="0"/>
               <text value="Cancel"/>
             </properties>
           </component>
+          <grid id="d866b" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-16315349"/>
+            </properties>
+            <border type="none"/>
+            <children/>
+          </grid>
+          <grid id="7c7cc" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-14868532"/>
+            </properties>
+            <border type="none"/>
+            <children/>
+          </grid>
+          <grid id="1e6a4" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-2029824"/>
+            </properties>
+            <border type="none"/>
+            <children/>
+          </grid>
         </children>
       </grid>
       <grid id="784cb" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -37,27 +76,44 @@
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
-        <properties/>
+        <properties>
+          <background color="-15981000"/>
+        </properties>
         <border type="none"/>
         <children>
-          <component id="4043c" class="javax.swing.JLabel" binding="pageTitle">
+          <grid id="fa24a" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
-              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <font name="Roboto" size="24" style="1"/>
-              <text value="- - - Add New Book - - -"/>
-              <toolTipText value=""/>
+              <background color="-16739636"/>
             </properties>
-          </component>
+            <border type="none"/>
+            <children>
+              <component id="4043c" class="javax.swing.JLabel" binding="pageTitle">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <font name="Roboto" size="24" style="1"/>
+                  <foreground color="-15981000"/>
+                  <text value="Add New Book"/>
+                  <toolTipText value=""/>
+                </properties>
+              </component>
+            </children>
+          </grid>
         </children>
       </grid>
-      <grid id="4a160" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+      <grid id="4a160" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="20" left="20" bottom="20" right="20"/>
         <constraints>
           <grid row="1" column="0" row-span="2" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
-        <properties/>
+        <properties>
+          <background color="-16446421"/>
+        </properties>
         <border type="none"/>
         <children>
           <grid id="1bd33" layout-manager="GridLayoutManager" row-count="24" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -80,7 +136,9 @@
                   <grid row="23" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
+                  <background color="-15981000"/>
                   <font name="Roboto" size="14" style="0"/>
+                  <foreground color="-9519924"/>
                   <text value="Save and Add Book to Database"/>
                 </properties>
               </component>
@@ -91,7 +149,9 @@
                   </grid>
                 </constraints>
                 <properties>
+                  <background color="-15981000"/>
                   <font name="Roboto" size="14" style="0"/>
+                  <foreground color="-1"/>
                 </properties>
               </component>
               <component id="59c3b" class="javax.swing.JLabel">
@@ -100,6 +160,7 @@
                 </constraints>
                 <properties>
                   <font name="Roboto" size="14" style="0"/>
+                  <foreground color="-16739636"/>
                   <text value="DOI"/>
                 </properties>
               </component>
@@ -109,6 +170,7 @@
                 </constraints>
                 <properties>
                   <font name="Roboto" size="14" style="0"/>
+                  <foreground color="-16739636"/>
                   <text value="Library"/>
                 </properties>
               </component>
@@ -119,7 +181,9 @@
                   </grid>
                 </constraints>
                 <properties>
+                  <background color="-15981000"/>
                   <font name="Roboto" size="14" style="0"/>
+                  <foreground color="-1"/>
                   <text value=""/>
                 </properties>
               </component>
@@ -130,7 +194,9 @@
                   </grid>
                 </constraints>
                 <properties>
+                  <background color="-15981000"/>
                   <font name="Roboto" size="14" style="0"/>
+                  <foreground color="-1"/>
                 </properties>
               </component>
               <component id="1e774" class="javax.swing.JTextField" binding="authorField">
@@ -140,7 +206,9 @@
                   </grid>
                 </constraints>
                 <properties>
+                  <background color="-15981000"/>
                   <font name="Roboto" size="14" style="0"/>
+                  <foreground color="-1"/>
                 </properties>
               </component>
               <component id="f9900" class="javax.swing.JTextField" binding="publishDateField">
@@ -150,7 +218,9 @@
                   </grid>
                 </constraints>
                 <properties>
+                  <background color="-15981000"/>
                   <font name="Roboto" size="14" style="0"/>
+                  <foreground color="-1"/>
                   <text value=""/>
                 </properties>
               </component>
@@ -161,7 +231,9 @@
                   </grid>
                 </constraints>
                 <properties>
+                  <background color="-15981000"/>
                   <font name="Roboto" size="14" style="0"/>
+                  <foreground color="-1"/>
                 </properties>
               </component>
               <component id="49037" class="javax.swing.JTextField" binding="languageField">
@@ -171,7 +243,9 @@
                   </grid>
                 </constraints>
                 <properties>
+                  <background color="-15981000"/>
                   <font name="Roboto" size="14" style="0"/>
+                  <foreground color="-1"/>
                   <text value=""/>
                 </properties>
               </component>
@@ -182,7 +256,9 @@
                   </grid>
                 </constraints>
                 <properties>
+                  <background color="-15981000"/>
                   <font name="Roboto" size="14" style="0"/>
+                  <foreground color="-1"/>
                 </properties>
               </component>
               <component id="93e98" class="javax.swing.JTextField" binding="titleField">
@@ -192,7 +268,9 @@
                   </grid>
                 </constraints>
                 <properties>
+                  <background color="-15981000"/>
                   <font name="Roboto" size="14" style="0"/>
+                  <foreground color="-1"/>
                 </properties>
               </component>
               <component id="16629" class="javax.swing.JLabel">
@@ -201,6 +279,7 @@
                 </constraints>
                 <properties>
                   <font name="Roboto" size="14" style="0"/>
+                  <foreground color="-16739636"/>
                   <text value="Book Description"/>
                 </properties>
               </component>
@@ -210,6 +289,7 @@
                 </constraints>
                 <properties>
                   <font name="Roboto" size="14" style="0"/>
+                  <foreground color="-16739636"/>
                   <text value="Price"/>
                 </properties>
               </component>
@@ -219,6 +299,7 @@
                 </constraints>
                 <properties>
                   <font name="Roboto" size="14" style="0"/>
+                  <foreground color="-16739636"/>
                   <text value="Genre"/>
                 </properties>
               </component>
@@ -228,6 +309,7 @@
                 </constraints>
                 <properties>
                   <font name="Roboto" size="14" style="0"/>
+                  <foreground color="-16739636"/>
                   <text value="Author"/>
                 </properties>
               </component>
@@ -237,6 +319,7 @@
                 </constraints>
                 <properties>
                   <font name="Roboto" size="14" style="0"/>
+                  <foreground color="-16739636"/>
                   <text value="Publish Date"/>
                 </properties>
               </component>
@@ -246,6 +329,7 @@
                 </constraints>
                 <properties>
                   <font name="Roboto" size="14" style="0"/>
+                  <foreground color="-16739636"/>
                   <text value="ISBN"/>
                 </properties>
               </component>
@@ -255,6 +339,7 @@
                 </constraints>
                 <properties>
                   <font name="Roboto" size="14" style="0"/>
+                  <foreground color="-16739636"/>
                   <text value="Language"/>
                 </properties>
               </component>
@@ -264,6 +349,7 @@
                 </constraints>
                 <properties>
                   <font name="Roboto" size="14" style="0"/>
+                  <foreground color="-16739636"/>
                   <text value="Subtitle"/>
                 </properties>
               </component>
@@ -273,6 +359,7 @@
                 </constraints>
                 <properties>
                   <font name="Roboto" size="14" style="0"/>
+                  <foreground color="-16739636"/>
                   <text value="Title"/>
                 </properties>
               </component>
@@ -290,7 +377,9 @@
                   </grid>
                 </constraints>
                 <properties>
+                  <background color="-15981000"/>
                   <font name="Roboto" size="14" style="0"/>
+                  <foreground color="-1"/>
                   <model/>
                 </properties>
               </component>
@@ -301,18 +390,20 @@
                   </grid>
                 </constraints>
                 <properties>
+                  <background color="-15981000"/>
                   <font name="Roboto" size="14" style="0"/>
+                  <foreground color="-1"/>
                 </properties>
               </component>
             </children>
           </grid>
-          <vspacer id="c0c0">
-            <constraints>
-              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
-            </constraints>
-          </vspacer>
         </children>
       </grid>
+      <vspacer id="dc47c">
+        <constraints>
+          <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </vspacer>
     </children>
   </grid>
 </form>
