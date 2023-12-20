@@ -2,7 +2,6 @@ package de.srh.library.util;
 
 import cn.hutool.core.lang.Validator;
 
-import javax.swing.*;
 
 public class ValidatorUtils {
 
@@ -23,61 +22,53 @@ public class ValidatorUtils {
     Validator.validateMatchRegex(
         "^.{1,50}$", name, "The length of name must be between 6 and 50 characters.");
     }
+    public static void validateAdmin(String username){
+        Validator.validateMatchRegex("^[\\p{L}0-9@.-]{1,150}$",username,"Username field can not be empty");
+    }
     public static void validateFirstName(String firstName){
-        Validator.validateMatchRegex("\\S+",firstName,"First Name field cannot be empty");
-        Validator.validateMatchRegex(
-                "[a-zA-Z]+", firstName, "First Name field should only contain letters");
+        Validator.validateMatchRegex("^[\\p{L}]{1,60}$",firstName,"First Name field cannot be empty and should only contain alphabets");
     }
     public static void validateLastName(String lastName){
-        Validator.validateMatchRegex("\\S+",lastName,"Last Name field cannot be empty");
-        Validator.validateMatchRegex(
-                "[a-zA-Z]+", lastName, "Last Name field should only contain letters");
+        Validator.validateMatchRegex("^[\\p{L}]{1,60}$",lastName,"Last Name field cannot be empty and should only contain alphabets");
     }
 
     public static void validateAddress(String address){
-    Validator.validateMatchRegex(
-        "^[\\p{L}0-9.,\\s-]{1,255}$", address, "Invalid address.");
+    Validator.validateMatchRegex("^[\\p{L}0-9.,\\s-]{1,255}$", address, "Invalid address.");
     }
     public static void validateLanguage(String language){
-        Validator.validateMatchRegex("\\S+",language,"Language field cannot be empty");
-        Validator.validateMatchRegex(
-                "[a-zA-Z]+", language, "Language field should only contain letters");
+        Validator.validateMatchRegex("^[\\p{L}]{1,60}$",language,"Language field cannot be empty and should only contain alphabets");
+
     }
     public static void validateAuthor(String author){
-        Validator.validateMatchRegex("\\S+",author,"Author field cannot be empty");
-        Validator.validateMatchRegex(
-                "[a-zA-Z]+", author, "Author field should only contain letters");
+        Validator.validateMatchRegex("^[\\p{L}\\s-]{1,255}$",author,"Author field cannot be empty and/or should only contain alphabets");
     }
     public  static void validateIsbn(String isbn){
-        Validator.validateMatchRegex("\\S+",isbn,"ISBN field cannot be empty");
-        Validator.validateMatchRegex("^[0-9\\-]+",isbn,"ISBN field should only contain numbers and \"-\"");
+        Validator.validateMatchRegex("^[0-9-]{1,100}$",isbn,"ISBN field cannot be empty and/or should only contain numbers and \"-\"");
     }
     public  static void validatePrice(String price){
-        Validator.validateMatchRegex("\\S+",price,"Price field cannot be empty");
-        Validator.validateMatchRegex("\\d+",price,"Price field should only contain numbers");
+        Validator.validateMatchRegex("^[0-9.]{1,40}$",price,"Price field cannot be empty and should only contain numbers");
     }
     public  static void validateBookId(String bookId){
-        Validator.validateMatchRegex("\\d+",bookId,"Book ID field should only contain numbers");
+        Validator.validateMatchRegex("^[0-9]{1,15}$",bookId,"Book ID field should only contain numbers");
     }
     public  static void validateUserId(String userId){
-        Validator.validateMatchRegex("\\d+",userId,"User ID field should only contain numbers");
+        Validator.validateMatchRegex("^[0-9]{1,15}$",userId,"User ID field should only contain numbers");
     }
     public static void validateBookName(String bookName){
-        Validator.validateMatchRegex("\\S+",bookName,"Book Title field cannot be empty");
+        Validator.validateMatchRegex("^[\\p{L}0-9.,\\s-]{1,200}$",bookName,"Book Title field cannot be empty");
     }
     public static void validateBookDescription(String description){
-        Validator.validateMatchRegex("\\S+",description,"Book Description field cannot be empty");
+        Validator.validateMatchRegex("^[\\p{L}0-9.,\\s-]{1,300}$",description,"Book Description field cannot be empty");
     }
     public static void validateSubtitles(String subtitles){
-        Validator.validateMatchRegex("\\S+",subtitles,"Subtitle field cannot be empty");
+        Validator.validateMatchRegex("^[\\p{L}0.,\\s]{1,200}",subtitles,"Subtitle field cannot be empty and should only contain alphabets");
     }
 
     public static void validatePublishDate(String publishDate){
-        Validator.validateMatchRegex("\\S+",publishDate,"Publish Date field cannot be empty");
-        Validator.validateMatchRegex("^[0-9\\-]+",publishDate,"Please enter a date with format YYYY-MM-DD");
+        Validator.validateMatchRegex("^[0-9\\-]{1,20}$",publishDate,"Please enter a date with format YYYY-MM-DD");
     }
     public static void validateDoi(String doi){
-        Validator.validateMatchRegex("^[0-9\\-]*$|^$",doi,"DOI field should only contain numbers and \"-\"");
+        Validator.validateMatchRegex("^[0-9\\-]*$|^$",doi,"DOI field cannot be empty and/or should only contain numbers and \"-\"");
 
     }
 

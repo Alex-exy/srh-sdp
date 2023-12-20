@@ -14,15 +14,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
-import javax.swing.event.MouseInputListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 
 public class BrowseLibrary extends JFrame {
@@ -37,7 +33,6 @@ public class BrowseLibrary extends JFrame {
     private JTextField bookTitleTextField;
     private JTextField bookAuthorTextField;
     private JComboBox searchLibrary;
-    private JList<BookDto> resultsList;
     private JLabel labelResults;
     private JTextField doiTextField;
     private JTable resultsTableDisplay;
@@ -48,21 +43,18 @@ public class BrowseLibrary extends JFrame {
     private BookService bookService;
     private Map<String, Integer> genresMap;
     private Map<String,Integer> libraryMap;
-   private Map<Long,List<String>> isbnBooks;
-   private Map<Long,List<String>> doiBooks;
-   private Map<Long,List<String>> nameBooks;
-   private Map<Long,List<String>> authorBooks;
-    private Map<Long,List<String>> bookGenre;
-    private Map<Long,List<String>> bookLibrary;
+
+    private Map<Long,List<String>> findBooks;
+    private int currentPage = 1;
+    private int itemsPerPage = 10;
+    private int totalRows;
     public BrowseLibrary() {
 
         bookService = BookServiceImpl.createInstance();
         getLibraries();
         getGenres();
-
-
         resultsTableDisplay.setModel(getjTableDefault());
-        mouseClick(resultsTableDisplay);
+
 
 
         searchGenre.insertItemAt("None",0);
@@ -73,8 +65,10 @@ public class BrowseLibrary extends JFrame {
         setContentPane(browseLibrary);
         setTitle("Browse Library");
         setSize(1280, 720);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
+        toFront();
         logger.info("Opening create browse library window ...");
 
 
@@ -84,90 +78,24 @@ public class BrowseLibrary extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                if(bookTitleTextField.getText().trim().isEmpty() && bookAuthorTextField.getText().trim().isEmpty()
-                        && enterISBN.getText().trim().isEmpty() && doiTextField.getText().trim().isEmpty()
-                        && bookIDTextField.getText().trim().isEmpty() && searchGenre.getSelectedItem().equals("None")
-                        && searchLibrary.getSelectedItem().equals("None")){
-                    JOptionPane.showMessageDialog(null, "Please enter or select atleast 1 search parameter");
+                boolean bookTitleText = bookTitleTextField.getText().trim().isEmpty(),
+                        bookAuthorText = bookAuthorTextField.getText().trim().isEmpty(),
+                        isbnText = enterISBN.getText().trim().isEmpty(),
+                        doiText = doiTextField.getText().trim().isEmpty(),
+                        bookIdText = bookIDTextField.getText().trim().isEmpty(),
+                        bookGenre = Objects.equals(searchGenre.getSelectedItem(), "None"),
+                        bookLibrary = Objects.equals(searchLibrary.getSelectedItem(), "None");
+
+                
+                if(bookTitleText && bookAuthorText && isbnText && doiText && bookIdText && bookGenre && bookLibrary){
+                    JOptionPane.showMessageDialog(null, "Please enter or select at least 1 search parameter");
                     resultsTableDisplay.setModel(getjTableDefault());
-                }
-                else if(!bookIDTextField.getText().trim().isEmpty()){
-                    try{
-                        ValidatorUtils.validateBookId(bookIDTextField.getText());
-                    }catch (ValidateException ve ){
-                        JOptionPane.showMessageDialog(null, ve.getMessage());
-                        return;
-                    }
-                    long bookId = Long.parseLong(bookIDTextField.getText());
-                    BookDto bookDto = new BookDto();
-                    bookDto.setBookId(bookId);
-                    if(bookFound(bookDto)){
-                        resultsTableDisplay.setModel(getjTableId());
+                } else  {
+                    if(bookFoundAndValidation()) {
+                        resultsTableDisplay.setModel(findBooksJTable());
                     }else{
                         resultsTableDisplay.setModel(getjTableDefault());
                     }
-                }
-                else if(!enterISBN.getText().trim().isEmpty()){
-                    try{
-                        ValidatorUtils.validateIsbn(enterISBN.getText());
-                    }catch (ValidateException ve ){
-                        JOptionPane.showMessageDialog(null, ve.getMessage());
-                        return;
-                    }
-
-                    BookDto bookDto = new BookDto();
-                    bookDto.setIsbn(enterISBN.getText().trim());
-                    if(bookFound(bookDto)){
-                        resultsTableDisplay.setModel(getJTableIsbn());
-                    }else {
-                        resultsTableDisplay.setModel(getjTableDefault());
-                    }
-
-                }
-                else if(!doiTextField.getText().trim().isEmpty()){
-                    try{
-                        ValidatorUtils.validateDoi(doiTextField.getText());
-                    }catch (ValidateException ve ){
-                        JOptionPane.showMessageDialog(null, ve.getMessage());
-                        return;
-                    }
-                    BookDto bookDto = new BookDto();
-                    bookDto.setDoi(doiTextField.getText().trim());
-                    if(bookFound(bookDto)){
-                        resultsTableDisplay.setModel(getJTableDoi());
-                    }else{
-                        resultsTableDisplay.setModel(getjTableDefault());
-                    }
-
-                }else if(!bookTitleTextField.getText().trim().isEmpty()){
-                    BookDto bookDto = new BookDto();
-                    bookDto.setBookName(bookTitleTextField.getText().trim());
-                    if(bookFound(bookDto)){
-                        resultsTableDisplay.setModel(getJTableName());
-                    }else{
-                        resultsTableDisplay.setModel(getjTableDefault());
-                    }
-                }else if(!bookAuthorTextField.getText().trim().isEmpty()){
-                    BookDto bookDto = new BookDto();
-                    bookDto.setBookAuthor(bookAuthorTextField.getText().trim());
-                    if(bookFound(bookDto)){
-                        resultsTableDisplay.setModel(getJTableAuthor());
-                    }else{
-                        resultsTableDisplay.setModel(getjTableDefault());
-                    }
-
-                }else if(!searchGenre.getSelectedItem().equals("None")){
-                    BookDto bookDto = new BookDto();
-                    long bookId = bookDto.getBookId();
-                    bookDto.getGenreName(bookId);
-                    resultsTableDisplay.setModel(getJTableGenre());
-                }else if(!searchLibrary.getSelectedItem().equals("None")){
-                    BookDto bookDto = new BookDto();
-                    long bookId = bookDto.getBookId();
-                    bookDto.getLibraryName(bookId);
-                    resultsTableDisplay.setModel(getJTableLibrary());
-                }else {
-                    resultsTableDisplay.setModel(getjTableDefault());
                 }
             }
         });
@@ -179,190 +107,32 @@ public class BrowseLibrary extends JFrame {
                 mainMenu.setVisible(true);
             }
         });
-    }
-    private void mouseClick(JTable jTable){
-        jTable.addMouseListener(new MouseInputListener() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if(e.getClickCount() == 2){
-                    int row = jTable.getSelectedRow();
-                    int column = jTable.getSelectedColumn();
-                    if (row != -1 && column != -1) {
-                        String cellValue = jTable.getValueAt(row, column).toString();
-                        System.out.println("Double-clicked cell value: " + cellValue);
-                    }
-            }
-            }
 
-            @Override
-            public void mousePressed(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseDragged(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseMoved(MouseEvent e) {
-
-            }
-        });
     }
 
-    private  TableModel getjTableId() {
-        String[] columnNames = {"Book ID", "Title","Book Author","Genre","ISBN","DOI","In Library"};
+
+    private  TableModel findBooksJTable() {
+        DefaultTableModel tableModel = createTableModel();
+
         bookService = BookServiceImpl.createInstance();
-        long bookId = Long.parseLong(bookIDTextField.getText().trim());
-        BookDto bookDto = bookService.getBookById(bookId).getData();
-        Object[][] data = {
-                {bookDto.getBookId(),bookDto.getBookName(),bookDto.getBookAuthor(),bookDto.getGenreName(bookId),
-                bookDto.getIsbn(),bookDto.getDoi(),bookDto.getLibraryName(bookId)}
-        };
-        DefaultTableModel tableModel = new DefaultTableModel(data, columnNames);
-        return tableModel;
-    }
-    private  TableModel getJTableIsbn() {
 
-        DefaultTableModel tableModel = new DefaultTableModel();
-        tableModel.addColumn("Book ID");
-        tableModel.addColumn("Title");
-        tableModel.addColumn("Book Author");
-        tableModel.addColumn("Genre");
-        tableModel.addColumn("ISBN");
-        tableModel.addColumn("DOI");
-        tableModel.addColumn("In Library");
-        bookService = BookServiceImpl.createInstance();
-        ApiResponse<Map<Long,List<String>>> apiResponseIsbn = bookService.getBookByIsbn(enterISBN.getText().trim());
-        if(ApiResponseCode.SUCCESS.getCode() == apiResponseIsbn.getCode()){
-            isbnBooks = apiResponseIsbn.getData();
-            for(Map.Entry<Long,List<String>> entry : isbnBooks.entrySet()) {
+
+        ApiResponse<Map<Long,List<String>>> apiResponseFind = bookService.findBooks(
+                (bookTitleTextField.getText().trim().isEmpty() ? null : bookTitleTextField.getText().trim()),
+                (bookAuthorTextField.getText().trim().isEmpty() ? null : bookAuthorTextField.getText().trim()),
+                genresMap.get(Objects.requireNonNull(searchGenre.getSelectedItem()).toString()) == null ?  0: genresMap.get(searchGenre.getSelectedItem().toString()),
+                (enterISBN.getText().trim().isEmpty() ? null : enterISBN.getText().trim()),
+                (doiTextField.getText().trim().isEmpty() ? null : doiTextField.getText().trim()),
+                (parseBookID(bookIDTextField.getText().trim())),
+                libraryMap.get(Objects.requireNonNull(searchLibrary.getSelectedItem()).toString()) == null ? 0: libraryMap.get(searchLibrary.getSelectedItem().toString()
+                ));
+
+        if(ApiResponseCode.SUCCESS.getCode() == apiResponseFind.getCode()){
+            findBooks = apiResponseFind.getData();
+            for(Map.Entry<Long,List<String>> entry : findBooks.entrySet()) {
                 List<String> values = entry.getValue();
-                Object[] rowData = new Object[7];
-                rowData[0] = entry.getKey();
-                for (int i = 0; i < values.size(); i++) {
-                    rowData[i + 1] = values.get(i);
-                }
-                tableModel.addRow(rowData);
-            }
-        }
-        return tableModel;
-    }
-    private  TableModel getJTableName() {
 
-        DefaultTableModel tableModel = new DefaultTableModel();
-        tableModel.addColumn("Book ID");
-        tableModel.addColumn("Title");
-        tableModel.addColumn("Book Author");
-        tableModel.addColumn("Genre");
-        tableModel.addColumn("ISBN");
-        tableModel.addColumn("DOI");
-        tableModel.addColumn("In Library");
-        bookService = BookServiceImpl.createInstance();
-        ApiResponse<Map<Long,List<String>>> apiResponseName = bookService.getBookByName(bookTitleTextField.getText().trim());
-
-        if(ApiResponseCode.SUCCESS.getCode() == apiResponseName.getCode()){
-            nameBooks = apiResponseName.getData();
-            for(Map.Entry<Long,List<String>> entry : nameBooks.entrySet()) {
-                List<String> values = entry.getValue();
-                Object[] rowData = new Object[7];
-                rowData[0] = entry.getKey();
-                for (int i = 0; i < values.size(); i++) {
-                    rowData[i + 1] = values.get(i);
-                }
-                tableModel.addRow(rowData);
-            }
-        }
-        return tableModel;
-    }
-
-    private  TableModel getJTableGenre() {
-
-        DefaultTableModel tableModel = new DefaultTableModel();
-        tableModel.addColumn("Book ID");
-        tableModel.addColumn("Title");
-        tableModel.addColumn("Book Author");
-        tableModel.addColumn("Genre");
-        tableModel.addColumn("ISBN");
-        tableModel.addColumn("DOI");
-        tableModel.addColumn("In Library");
-        bookService = BookServiceImpl.createInstance();
-        ApiResponse<Map<Long,List<String>>> apiResponseGenre = bookService.bookByGenre(genresMap.get(searchGenre.getSelectedItem().toString()));
-
-        if(ApiResponseCode.SUCCESS.getCode() == apiResponseGenre.getCode()){
-            bookGenre = apiResponseGenre.getData();
-            for(Map.Entry<Long,List<String>> entry : bookGenre.entrySet()) {
-                List<String> values = entry.getValue();
-                Object[] rowData = new Object[7];
-                rowData[0] = entry.getKey();
-                for (int i = 0; i < values.size(); i++) {
-                    rowData[i + 1] = values.get(i);
-                }
-                tableModel.addRow(rowData);
-            }
-        }
-        return tableModel;
-    }
-
-    private  TableModel getJTableLibrary() {
-
-        DefaultTableModel tableModel = new DefaultTableModel();
-        tableModel.addColumn("Book ID");
-        tableModel.addColumn("Title");
-        tableModel.addColumn("Book Author");
-        tableModel.addColumn("Genre");
-        tableModel.addColumn("ISBN");
-        tableModel.addColumn("DOI");
-        tableModel.addColumn("In Library");
-        bookService = BookServiceImpl.createInstance();
-        ApiResponse<Map<Long,List<String>>> apiResponseLibrary = bookService.bookByLibrary(libraryMap.get(searchLibrary.getSelectedItem().toString()));
-
-        if(ApiResponseCode.SUCCESS.getCode() == apiResponseLibrary.getCode()){
-            bookLibrary = apiResponseLibrary.getData();
-            for(Map.Entry<Long,List<String>> entry : bookLibrary.entrySet()) {
-                List<String> values = entry.getValue();
-                Object[] rowData = new Object[7];
-                rowData[0] = entry.getKey();
-                for (int i = 0; i < values.size(); i++) {
-                    rowData[i + 1] = values.get(i);
-                }
-                tableModel.addRow(rowData);
-            }
-        }
-        return tableModel;
-    }
-    private  TableModel getJTableDoi() {
-        DefaultTableModel tableModel = new DefaultTableModel();
-        tableModel.addColumn("Book ID");
-        tableModel.addColumn("Title");
-        tableModel.addColumn("Book Author");
-        tableModel.addColumn("Genre");
-        tableModel.addColumn("ISBN");
-        tableModel.addColumn("DOI");
-        tableModel.addColumn("In Library");
-        bookService = BookServiceImpl.createInstance();
-        ApiResponse<Map<Long,List<String>>> apiResponseDoi = bookService.getBookByDoi(doiTextField.getText().trim());
-        if(ApiResponseCode.SUCCESS.getCode() == apiResponseDoi.getCode()){
-            doiBooks = apiResponseDoi.getData();
-            for(Map.Entry<Long,List<String>> entry : doiBooks.entrySet()) {
-                List<String> values = entry.getValue();
-                Object[] rowData = new Object[7];
+                Object[] rowData = new Object[8];
                 rowData[0] = entry.getKey();
                 for (int i = 0; i < values.size(); i++) {
                     rowData[i + 1] = values.get(i);
@@ -372,34 +142,6 @@ public class BrowseLibrary extends JFrame {
         }
         return tableModel;
 
-    }
-
-    private  TableModel getJTableAuthor() {
-        DefaultTableModel tableModel = new DefaultTableModel();
-        tableModel.addColumn("Book ID");
-        tableModel.addColumn("Title");
-        tableModel.addColumn("Book Author");
-        tableModel.addColumn("Genre");
-        tableModel.addColumn("ISBN");
-        tableModel.addColumn("DOI");
-        tableModel.addColumn("In Library");
-        bookService = BookServiceImpl.createInstance();
-        ApiResponse<Map<Long, List<String>>> apiResponseAuthor = bookService.getBookByAuthor(bookAuthorTextField.getText().trim());
-
-        if(ApiResponseCode.SUCCESS.getCode() == apiResponseAuthor.getCode()){
-
-            authorBooks = apiResponseAuthor.getData();
-            for(Map.Entry<Long,List<String>> entry : authorBooks.entrySet()) {
-                List<String> values = entry.getValue();
-                Object[] rowData = new Object[7];
-                rowData[0] = entry.getKey();
-                for (int i = 0; i < values.size(); i++) {
-                    rowData[i + 1] = values.get(i);
-                }
-                tableModel.addRow(rowData);
-            }
-        }
-        return tableModel;
     }
 
     private  TableModel getjTableDefault() {
@@ -409,6 +151,17 @@ public class BrowseLibrary extends JFrame {
                         ,"No Record Found","No Record Found"}
         };
         return new DefaultTableModel(data, columnNames);
+    }
+    private DefaultTableModel createTableModel() {
+        DefaultTableModel tableModel = new DefaultTableModel();
+        tableModel.addColumn("Book ID");
+        tableModel.addColumn("Title");
+        tableModel.addColumn("Book Author");
+        tableModel.addColumn("Genre");
+        tableModel.addColumn("ISBN");
+        tableModel.addColumn("DOI");
+        tableModel.addColumn("In Library");
+        return tableModel;
     }
 
     private void getGenres(){
@@ -432,13 +185,64 @@ public class BrowseLibrary extends JFrame {
             sortedLibrariesMap.forEach((s, i) -> searchLibrary.addItem(s));
         }
     }
+    public boolean bookFoundAndValidation() {
+        BookDto bookDto = new BookDto();
+        String bookTitle = bookTitleTextField.getText().trim();
+        String bookId = bookIDTextField.getText().trim();
+        String isbn = enterISBN.getText().trim();
+        String doi = doiTextField.getText().trim();
+        String bookAuthor =  bookAuthorTextField.getText().trim();
 
-    private boolean bookFound(BookDto bookDto) {
+        if (isbn.isEmpty()) {
+            bookDto.setIsbn(null);
+        } else {
+            try {
+                ValidatorUtils.validateIsbn(isbn);
+                bookDto.setIsbn(isbn);
+            } catch (ValidateException ve) {
+                JOptionPane.showMessageDialog(null, ve.getMessage());
+            }
+        }
+        if (doi.isEmpty()) {
+            bookDto.setDoi(null);
+        } else {
+            try {
+                ValidatorUtils.validateDoi(doi);
+                bookDto.setDoi(doi);
+            } catch (ValidateException ve) {
+                JOptionPane.showMessageDialog(null, ve.getMessage());
+            }
+        }
+        if (bookAuthor.isEmpty()) {
+            bookDto.setBookAuthor(null);
+        } else {
+            try {
+                ValidatorUtils.validateAuthor(bookAuthor);
+                bookDto.setBookAuthor(bookAuthor);
+            } catch (ValidateException ve) {
+                JOptionPane.showMessageDialog(null, ve.getMessage());
+            }
+        }
+        bookDto.setBookId(parseBookID(bookId));
+        bookDto.setBookName(bookTitle.isEmpty() ? null : (bookTitle));
+        bookDto.setGenreId(
+                genresMap.get(searchGenre.getSelectedItem()) == null ?  0: genresMap.get(searchGenre.getSelectedItem())
+        );
+        bookDto.getLibraryName(libraryMap.get(
+                libraryMap.get(searchLibrary.getSelectedItem())) == null ? 0: libraryMap.get(searchLibrary.getSelectedItem())
+        );
         bookService = BookServiceImpl.createInstance();
         bookService.bookFound(bookDto);
         return bookService.bookFound(bookDto).getData() != 0;
     }
-
+    public long parseBookID(String input) {
+        try {
+            return input.isEmpty() ? 0L : Long.parseLong(input);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Invalid input for book ID. Please enter a valid number.");
+            throw e;
+        }
+    }
 
 
     public static void main(String[] args) {

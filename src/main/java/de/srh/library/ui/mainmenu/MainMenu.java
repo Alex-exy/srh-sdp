@@ -1,6 +1,6 @@
 package de.srh.library.ui.mainmenu;
 
-import de.srh.library.dto.Global;
+import de.srh.library.cache.Global;
 import de.srh.library.dto.UserDto;
 import de.srh.library.service.user.UserService;
 import de.srh.library.service.user.UserServiceImpl;
@@ -34,12 +34,15 @@ public class MainMenu extends JFrame {
         setContentPane(mainMenuWindow);
         setTitle("Main Menu");
         setSize(1280, 720);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setVisible(true);
+        toFront();
         logger.info("Opening main menu window ...");
         browseLibraries.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                dispose();
                 BrowseLibrary browseLibrary = new BrowseLibrary();
                 browseLibrary.setVisible(true);
             }
@@ -65,8 +68,6 @@ public class MainMenu extends JFrame {
         logOut.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                // CONFIRMATION TESTING
                 ConfirmationRequest confirmation = new ConfirmationRequest();
                 if(confirmation.userDecision) {
                     JOptionPane.showMessageDialog(null, "Logged out!");

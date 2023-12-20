@@ -7,6 +7,8 @@ import java.util.Date;
 
 public class BookDto {
     private long bookId;;
+    private String borrowStatus;
+    private long borrowId;
     private String bookName;
     private String subtitles;
     private String language;
@@ -26,8 +28,10 @@ public class BookDto {
     private Date updateDate;
     private BookService bookService;
 
-
-
+    public String getFine(int overdueDays) {
+        Double price = Double.parseDouble(this.price);
+        return String.valueOf(overdueDays * 0.5 > price * 2 ? price * 2 : overdueDays * 0.5);
+    }
 
     public long getBookId() {
         return bookId;
@@ -67,6 +71,38 @@ public class BookDto {
 
     public void setIsbn(String isbn) {
         this.isbn = isbn;
+    }
+
+    public String getBorrowStatus() {
+        return borrowStatus;
+    }
+
+    public void setBorrowStatus(String borrowStatus) {
+        this.borrowStatus = borrowStatus;
+    }
+
+    public long getBorrowId() {
+        return borrowId;
+    }
+
+    public void setBorrowId(long borrowId) {
+        this.borrowId = borrowId;
+    }
+
+    public String getGenreName() {
+        return genreName;
+    }
+
+    public String getLibraryName() {
+        return libraryName;
+    }
+
+    public BookService getBookService() {
+        return bookService;
+    }
+
+    public void setBookService(BookService bookService) {
+        this.bookService = bookService;
     }
 
     public String getPublishDate() {

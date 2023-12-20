@@ -1,15 +1,20 @@
 package de.srh.library.ui.edituserdata;
 
+import cn.hutool.core.exceptions.ValidateException;
 import de.srh.library.constant.UserRole;
 import de.srh.library.constant.UserStatus;
 import de.srh.library.dto.ApiResponse;
 import de.srh.library.dto.ApiResponseCode;
 import de.srh.library.dto.UserDto;
 import de.srh.library.entity.User;
+import de.srh.library.service.borrow.BorrowService;
+import de.srh.library.service.borrow.BorrowServiceImpl;
 import de.srh.library.service.user.UserService;
 import de.srh.library.service.user.UserServiceImpl;
+import de.srh.library.ui.ConfirmationRequest;
 import de.srh.library.ui.editusers.EditUsers;
 import de.srh.library.ui.login.LoginWindow;
+import de.srh.library.util.ValidatorUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -52,6 +57,7 @@ public class EditUserData extends JFrame {
     private JButton saveButton;
     private static UserService userService;
     private Map<String, Integer> schoolsMap;
+    private static BorrowService borrowService;
 
 
     public EditUserData(UserDto user) {
@@ -63,8 +69,10 @@ public class EditUserData extends JFrame {
         setContentPane(editUserDataWindow);
         setTitle("Edit User Data");
         setSize(1280, 720);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setVisible(true);
+        toFront();
         logger.info("Opening edit user data window ...");
         long userId = user.getUserId();
         loadCurrentUserData(user);
@@ -74,16 +82,39 @@ public class EditUserData extends JFrame {
         saveChangesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null, "Changes Saved!");
-                updateUserData(userId);
-                saveChangesButton.setEnabled(false);
+                try{
+                    inputValidation();
+                }catch (ValidateException ve ){
+                    JOptionPane.showMessageDialog(null, ve.getMessage());
+                    return;
+                }
+
+                ConfirmationRequest confirmation = new ConfirmationRequest();
+                if(confirmation.userDecision) {
+                    updateUserData(userId);
+                    saveChangesButton.setEnabled(false);
+                    JOptionPane.showMessageDialog(null, "Changes saved!");
+                }
+                else {
+                    JOptionPane.showMessageDialog(null, "Changes discarded!");
+                }
             }
         });
         deleteUserButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            userService = UserServiceImpl.createInstance();
-            userService.removeUser(userId);
+                ConfirmationRequest confirmation = new ConfirmationRequest();
+                if(userBorrowCount(userId)) {
+                    if (confirmation.userDecision) {
+                        userService = UserServiceImpl.createInstance();
+                        userService.removeUser(userId);
+                        JOptionPane.showMessageDialog(null, "User deleted!");
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Deletion canceled!");
+                    }
+                }else {
+                    JOptionPane.showMessageDialog(null, "User has not returned borrowed books yet! Cancelling deletion.");
+                }
             }
         });
         editDataButton.addActionListener(new ActionListener() {
@@ -160,7 +191,7 @@ public class EditUserData extends JFrame {
         });
         user.setFamilyName(lastName.getText());
         user.setEmail(userEmail.getText());
-        user.setAddress(addressLabel.getText());
+        user.setAddress(userAddress.getText());
         user.setUpdateDate(new Date());
         return userService.updateUserData(user);
     }
@@ -179,6 +210,18 @@ public class EditUserData extends JFrame {
             school.removeAllItems();
             sortedLibrariesMap.forEach((s, i) -> school.addItem(s));
         }
+    }
+    public void inputValidation(){
+        ValidatorUtils.validateFirstName(firstName.getText());
+        ValidatorUtils.validateLastName(lastName.getText());
+        ValidatorUtils.validateEmail(userEmail.getText());
+        ValidatorUtils.validateAddress(userAddress.getText());
+
+    }
+    public boolean userBorrowCount(long userId){
+        borrowService = BorrowServiceImpl.createInstance();
+       return borrowService.userBorrowCount(userId).getData() == 0;
+
     }
 
     public static void main(String[] args) {

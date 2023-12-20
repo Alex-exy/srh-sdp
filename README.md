@@ -28,8 +28,6 @@ https://www.figma.com/files/project/171786541/Prototype?fuid=1298925131150705972
 * Maven
 * Junit
 
-## System Architecture
-
 ## ER Models
 https://lucid.app/lucidchart/74500020-8b33-40e5-97d6-c7aa1c55939c/edit?invitationId=inv_3f0344a3-3228-4ce6-b00d-3001bfe7f2ee&page=0_0#
 

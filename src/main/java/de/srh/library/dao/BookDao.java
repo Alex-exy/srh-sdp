@@ -24,21 +24,6 @@ public class BookDao {
         }
     }
 
-    public Map<Long,List<String>> getBookByAuthor(String bookAuthor) {
-        try (SqlSession session = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession()) {
-            BookMapper mapper = session.getMapper(BookMapper.class);
-            List<BookDto> authorBooks = mapper.getBookByAuthor(bookAuthor);
-            Map<Long, List<String>> authorBookMap = new HashMap<>();
-            for (BookDto bookDto : authorBooks) {
-                long bookId = bookDto.getBookId();
-                authorBookMap.put(bookDto.getBookId(), Arrays.asList(bookDto.getBookName(),
-                        bookDto.getBookAuthor(),bookDto.getGenreName(bookId),
-                        bookDto.getIsbn(),bookDto.getDoi(),bookDto.getLibraryName(bookId)));
-            }
-            return authorBookMap;
-        }
-    }
-
     public int removeBook(long bookId) {
         try (SqlSession session = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession(true)) {
             BookMapper mapper = session.getMapper(BookMapper.class);
@@ -69,69 +54,20 @@ public class BookDao {
             return mapper.bookLibraryName(bookId);
         }
     }
-    public Map<Long,List<String>> getBookByIsbn(String isbn) {
+
+    public Map<Long,List<String>> findBooks(String bookName, String bookAuthor,int genreId,
+                                            String isbn,String doi,long bookId,int libraryId)
+    {
         try (SqlSession session = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession()) {
             BookMapper mapper = session.getMapper(BookMapper.class);
-            List<BookDto> isbnBooks = mapper.getBookByIsbn(isbn);
-            Map<Long, List<String>> isbnBookMap = new HashMap<>();
-            for (BookDto bookDto : isbnBooks) {
-                long bookId = bookDto.getBookId();
-                isbnBookMap.put(bookDto.getBookId(), Arrays.asList(bookDto.getBookName(),
-                        bookDto.getBookAuthor(),bookDto.getGenreName(bookId),
-                        bookDto.getIsbn(),bookDto.getDoi(),bookDto.getLibraryName(bookId)));
-            }return isbnBookMap;
-        }
-    }
-    public Map<Long,List<String>> bookByGenre(int genreId) {
-        try (SqlSession session = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession()) {
-            BookMapper mapper = session.getMapper(BookMapper.class);
-            List<BookDto> bookByGenre = mapper.bookByGenre(genreId);
-            Map<Long, List<String>> bookByGenreMap = new HashMap<>();
-            for (BookDto bookDto : bookByGenre) {
-                long bookId = bookDto.getBookId();
-                bookByGenreMap.put(bookDto.getBookId(), Arrays.asList(bookDto.getBookName(),
-                        bookDto.getBookAuthor(),bookDto.getGenreName(bookId),
-                        bookDto.getIsbn(),bookDto.getDoi(),bookDto.getLibraryName(bookId)));
-            }return bookByGenreMap;
-        }
-    }
-    public Map<Long,List<String>> bookByLibrary(int libraryId) {
-        try (SqlSession session = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession()) {
-            BookMapper mapper = session.getMapper(BookMapper.class);
-            List<BookDto> bookByLibrary = mapper.bookByLibrary(libraryId);
-            Map<Long, List<String>> bookByLibraryMap = new HashMap<>();
-            for (BookDto bookDto : bookByLibrary) {
-                long bookId = bookDto.getBookId();
-                bookByLibraryMap.put(bookDto.getBookId(), Arrays.asList(bookDto.getBookName(),
-                        bookDto.getBookAuthor(),bookDto.getGenreName(bookId),
-                        bookDto.getIsbn(),bookDto.getDoi(),bookDto.getLibraryName(bookId)));
-            }return bookByLibraryMap;
-        }
-    }
-    public Map<Long,List<String>> getBookByName(String bookName) {
-        try (SqlSession session = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession()) {
-            BookMapper mapper = session.getMapper(BookMapper.class);
-            List<BookDto> nameBooks = mapper.getBookByName(bookName);
-            Map<Long, List<String>> nameBooksMap = new HashMap<>();
-            for (BookDto bookDto : nameBooks) {
-                long bookId = bookDto.getBookId();
-                nameBooksMap.put(bookDto.getBookId(), Arrays.asList(bookDto.getBookName(),
-                        bookDto.getBookAuthor(),bookDto.getGenreName(bookId),
-                        bookDto.getIsbn(),bookDto.getDoi(),bookDto.getLibraryName(bookId)));
-            }return nameBooksMap;
-        }
-    }
-    public Map<Long,List<String>> getBookByDoi(String doi) {
-        try (SqlSession session = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession()) {
-            BookMapper mapper = session.getMapper(BookMapper.class);
-            List<BookDto> doiBooks = mapper.getBookByDoi(doi);
-            Map<Long, List<String>> doiBooksMap = new HashMap<>();
-            for (BookDto bookDto : doiBooks) {
-                long bookId = bookDto.getBookId();
-                doiBooksMap.put(bookDto.getBookId(), Arrays.asList(bookDto.getBookName(),
-                        bookDto.getBookAuthor(),bookDto.getGenreName(bookId),
-                        bookDto.getIsbn(),bookDto.getDoi(),bookDto.getLibraryName(bookId)));
-            }return doiBooksMap;
+            List<BookDto> findBooks = mapper.findBooks(bookName,bookAuthor,genreId,isbn,doi,bookId,libraryId);
+            Map<Long, List<String>> findBooksMap = new HashMap<>();
+            for (BookDto bookDto : findBooks) {
+                long bookIdTemp = bookDto.getBookId();
+                findBooksMap.put(bookDto.getBookId(), Arrays.asList(bookDto.getBookName(),
+                        bookDto.getBookAuthor(),bookDto.getGenreName(bookIdTemp),
+                        bookDto.getIsbn(),bookDto.getDoi(),bookDto.getLibraryName(bookIdTemp)));
+            }return findBooksMap;
         }
     }
 }

@@ -9,6 +9,7 @@ import de.srh.library.dto.ApiResponseCode;
 import de.srh.library.entity.User;
 import de.srh.library.service.user.UserService;
 import de.srh.library.service.user.UserServiceImpl;
+import de.srh.library.ui.ConfirmationRequest;
 import de.srh.library.ui.login.LoginWindow;
 import de.srh.library.util.EmailSender;
 import de.srh.library.util.PasswordUtils;
@@ -44,12 +45,13 @@ public class CreateNewUser extends JFrame {
     private JButton buttonContinue;
     private JComboBox selectSchool;
     private JPasswordField enterPassword;
-    private JLabel lableEnterPassword;
-    private JLabel lableReenterPassword;
+    private JLabel labelEnterPassword;
+    private JLabel labelReenterPassword;
     private JPasswordField reenterPassword;
     private JCheckBox agreementCheckBox;
     private JButton getVerificationCodeButton;
     private JTextField verificationCode;
+    private JButton cancelButton;
 
     private UserService userService;
     private Map<String, Integer> schoolsMap;
@@ -71,8 +73,9 @@ public class CreateNewUser extends JFrame {
         setContentPane(createNewUser);
         setTitle("New User Registration");
         setSize(1280, 720);
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setVisible(true);
+        toFront();
         logger.info("Opening create new user window ...");
 
         buttonContinue.addActionListener(new ActionListener() {
@@ -84,14 +87,22 @@ public class CreateNewUser extends JFrame {
                     JOptionPane.showMessageDialog(null, ve.getMessage());
                     return;
                 }
-                ApiResponse response = createUser();
-                if (ApiResponseCode.SUCCESS.getCode() == response.getCode()){
-                    JOptionPane.showMessageDialog(null, "Success!");
-                    dispose();
-                    LoginWindow loginWindow = new LoginWindow();
-                    loginWindow.setVisible(true);
-                }else {
-                    JOptionPane.showMessageDialog(null, response.getCode() + response.getMessage());
+
+                ConfirmationRequest confirmation = new ConfirmationRequest();
+                if(confirmation.userDecision) {
+                    ApiResponse response = createUser();
+                    if (ApiResponseCode.SUCCESS.getCode() == response.getCode()){
+                        JOptionPane.showMessageDialog(null, "Success!");
+                        dispose();
+//                        LoginWindow loginWindow = new LoginWindow();
+//                        loginWindow.setVisible(true);
+                        JOptionPane.showMessageDialog(null, "New user created!");
+                    }else {
+                        JOptionPane.showMessageDialog(null, response.getCode() + response.getMessage());
+                    }
+                }
+                else {
+                    JOptionPane.showMessageDialog(null, "Creation canceled!");
                 }
             }
         });
@@ -124,6 +135,12 @@ public class CreateNewUser extends JFrame {
                     return;
                 }
                 JOptionPane.showMessageDialog(null, "Verification code sent successfully.");
+            }
+        });
+        cancelButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
             }
         });
     }
@@ -171,4 +188,5 @@ public class CreateNewUser extends JFrame {
     public static void main(String[] args) {
         CreateNewUser createNewUser = new CreateNewUser();
     }
+
 }

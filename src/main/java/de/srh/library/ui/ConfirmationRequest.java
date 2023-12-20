@@ -16,7 +16,7 @@ public class ConfirmationRequest extends WindowAdapter {
     }
 
     public void requestConfirmation(){
-        int a = JOptionPane.showConfirmDialog(f, "Are you sure?", "Please confirm!", JOptionPane.YES_NO_OPTION);
+        int a = JOptionPane.showConfirmDialog(f, "Are you sure?", "Please Confirm!", JOptionPane.YES_NO_OPTION);
         if(a == JOptionPane.YES_OPTION) {
             userDecision = true;
             logger.info("Confirmed by user . . .");

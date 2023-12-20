@@ -1,6 +1,7 @@
 package de.srh.library.ui.infossettings;
 
 import cn.hutool.core.exceptions.ValidateException;
+import de.srh.library.cache.Global;
 import de.srh.library.constant.UserRole;
 import de.srh.library.dto.*;
 import de.srh.library.entity.User;
@@ -55,8 +56,10 @@ public class InfosSettings extends JFrame {
         setContentPane(infosSettingsWindow);
         setTitle("Infos and Settings");
         setSize(1280, 720);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
+        toFront();
         logger.info("Opening infos and settings window ...");
 
         changeInformationButton.addActionListener(new ActionListener() {
@@ -81,6 +84,8 @@ public class InfosSettings extends JFrame {
                 }
                 userService = UserServiceImpl.createInstance();
                 updateUserInfo(userId);
+                JOptionPane.showMessageDialog(null, "User data changed!");
+                saveButton.setEnabled(false);
             }
         });
         changePasswordButton.addActionListener(new ActionListener() {
@@ -145,7 +150,7 @@ public class InfosSettings extends JFrame {
         user.setSchoolId(schoolsMap.get(userSelectSchool.getSelectedItem().toString()));
         user.setFamilyName(userLastName.getText());
         user.setEmail(userEmail.getText());
-        user.setAddress(addressLabel.getText());
+        user.setAddress(userAddress.getText());
         user.setUserRole(
                 switch(userRole.getText().toString()){
                     case "Student" -> "S";
@@ -186,7 +191,7 @@ public class InfosSettings extends JFrame {
         ValidatorUtils.validateFirstName(userFirstName.getText());
         ValidatorUtils.validateLastName(userLastName.getText());
         ValidatorUtils.validateEmail(userEmail.getText());
-        ValidatorUtils.validateAddress(addressLabel.getText());
+        ValidatorUtils.validateAddress(userAddress.getText());
 
     }
 

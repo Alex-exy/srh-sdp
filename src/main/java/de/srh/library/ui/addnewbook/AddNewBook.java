@@ -7,6 +7,7 @@ import de.srh.library.dto.ApiResponseCode;
 import de.srh.library.dto.BookDto;
 import de.srh.library.service.book.BookService;
 import de.srh.library.service.book.BookServiceImpl;
+import de.srh.library.ui.ConfirmationRequest;
 import de.srh.library.ui.login.LoginWindow;
 import de.srh.library.util.ValidatorUtils;
 import org.slf4j.Logger;
@@ -54,8 +55,9 @@ public class AddNewBook extends JFrame {
         setContentPane(addNewBookWindow);
         setTitle("Add New Book");
         setSize(720, 1000);
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setVisible(true);
+        toFront();
         logger.info("Opening add new book window ...");
 
 
@@ -70,21 +72,27 @@ public class AddNewBook extends JFrame {
                     return;
                 }
 
-              bookService = BookServiceImpl.createInstance();
-                bookDto = new BookDto();
-                bookDto.setBookName(titleField.getText());
-                bookDto.setSubtitles(subtitleField.getText());
-                bookDto.setLanguage(languageField.getText());
-                bookDto.setIsbn(isbnField.getText());
-                bookDto.setPublishDate(publishDateField.getText());
-                bookDto.setBookAuthor(authorField.getText());
-                bookDto.setGenreId(genresMap.get(genreDropDown.getSelectedItem()));
-                bookDto.setPrice(priceField.getText());
-                bookDto.setBookDescription(descriptionField.getText());
-                bookDto.setLibraryId(libraryMap.get(libraryDropDown.getSelectedItem()));
-                bookDto.setDoi(doiField.getText());
-                bookService.insertBook(bookDto);
-
+                ConfirmationRequest confirmation = new ConfirmationRequest();
+                if(confirmation.userDecision) {
+                    bookService = BookServiceImpl.createInstance();
+                    bookDto = new BookDto();
+                    bookDto.setBookName(titleField.getText());
+                    bookDto.setSubtitles(subtitleField.getText());
+                    bookDto.setLanguage(languageField.getText());
+                    bookDto.setIsbn(isbnField.getText());
+                    bookDto.setPublishDate(publishDateField.getText());
+                    bookDto.setBookAuthor(authorField.getText());
+                    bookDto.setGenreId(genresMap.get(genreDropDown.getSelectedItem()));
+                    bookDto.setPrice(priceField.getText());
+                    bookDto.setBookDescription(descriptionField.getText());
+                    bookDto.setLibraryId(libraryMap.get(libraryDropDown.getSelectedItem()));
+                    bookDto.setDoi(doiField.getText());
+                    bookService.insertBook(bookDto);
+                    JOptionPane.showMessageDialog(null, "Book added to database!");
+                }
+                else {
+                    JOptionPane.showMessageDialog(null, "Book adding canceled!");
+                }
             }
         });
         cancelButton.addActionListener(new ActionListener() {

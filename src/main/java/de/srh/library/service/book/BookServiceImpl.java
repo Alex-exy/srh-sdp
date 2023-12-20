@@ -61,55 +61,20 @@ public class BookServiceImpl implements BookService{
         }
     }
 
+
+
     @Override
-    public ApiResponse<Map<Long, List<String>>> getBookByIsbn(String isbn) {
+    public ApiResponse<Map<Long, List<String>>> findBooks(String bookName, String bookAuthor,int genreId, String isbn,
+                                                          String doi,long bookId,int libraryId)
+    {
         try{
-            return ApiResponse.success(bookDao.getBookByIsbn(isbn));
+            return ApiResponse.success(bookDao.findBooks(bookName,bookAuthor,genreId,isbn,doi,bookId,libraryId));
         }catch (Exception e){
-            logger.error("Querying Book ISBN failed.", e);
+            logger.error("Querying Book failed.", e);
             return ApiResponse.error(ApiResponseCode.ERROR_DATABASE);
         }
     }
 
-    @Override
-    public ApiResponse<Map<Long, List<String>>> getBookByName(String bookName) {
-        try{
-            return ApiResponse.success(bookDao.getBookByName(bookName));
-        }catch (Exception e){
-            logger.error("Querying Book Name failed.", e);
-            return ApiResponse.error(ApiResponseCode.ERROR_DATABASE);
-        }
-    }
-
-    @Override
-    public ApiResponse<Map<Long, List<String>>> bookByGenre(int genreId) {
-        try{
-            return ApiResponse.success(bookDao.bookByGenre(genreId));
-        }catch (Exception e){
-            logger.error("Querying Book by Genre failed.", e);
-            return ApiResponse.error(ApiResponseCode.ERROR_DATABASE);
-        }
-    }
-
-    @Override
-    public ApiResponse<Map<Long, List<String>>> bookByLibrary(int libraryId) {
-        try{
-            return ApiResponse.success(bookDao.bookByLibrary(libraryId));
-        }catch (Exception e){
-            logger.error("Querying Book by Library failed.", e);
-            return ApiResponse.error(ApiResponseCode.ERROR_DATABASE);
-        }
-    }
-
-    @Override
-    public ApiResponse<Map<Long,List<String>>> getBookByDoi(String doi) {
-        try{
-            return ApiResponse.success(bookDao.getBookByDoi(doi));
-        }catch (Exception e){
-            logger.error("Querying Book DOI failed.", e);
-            return ApiResponse.error(ApiResponseCode.ERROR_DATABASE);
-        }
-    }
 
     @Override
     public ApiResponse<Integer> updateBookInfo(BookDto bookDto) {
@@ -131,15 +96,7 @@ public class BookServiceImpl implements BookService{
         }
     }
 
-    @Override
-    public ApiResponse<Map<Long, List<String>>>getBookByAuthor(String bookAuthor) {
-        try{
-            return ApiResponse.success(bookDao.getBookByAuthor(bookAuthor));
-        }catch (Exception e){
-            logger.error("Book Information update failed.", e);
-            return ApiResponse.error(ApiResponseCode.ERROR_DATABASE);
-        }
-    }
+
 
     @Override
     public ApiResponse<Integer> removeBook(long bookId) {

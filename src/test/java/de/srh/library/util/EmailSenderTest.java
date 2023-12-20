@@ -25,7 +25,7 @@ class EmailSenderTest {
     Map<String, Object> dataModel = new HashMap<>();
     dataModel.put("books", books);
 
-    EmailSender.send(ListUtil.toList("kun.pang@stud.hochschule-heidelberg.de"),
+    EmailSender.send(ListUtil.toList("a.b@stud.hochschule-heidelberg.de"),
             "Overdue Book Notification - Heidelberg Library",
             dataModel,
             "overdue-notification-mail.html",
