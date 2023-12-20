@@ -32,7 +32,7 @@
     </select>
 
     <select id="userBorrowCount" resultType="int">
-        select count(1) from borrows where user_id = #{userId}
+        select count(1) from borrows where user_id = #{userId} AND borrow_status != 'R'
     </select>
 
     <update id="updateBorrowStatus">
