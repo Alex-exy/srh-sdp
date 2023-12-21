@@ -9,7 +9,7 @@ import java.util.List;
 public interface BorrowService {
     ApiResponse<List<Borrow>> getOngoingBorrows(Long userId);
 
-    ApiResponse<Borrow> getByBookId(Long bookId);
+    ApiResponse<Integer> countBorrowedBookByBookId(Long bookId);
 
     ApiResponse<Integer> insertBorrow(Borrow borrow);
     ApiResponse<Integer> userBorrowCount(long bookId);

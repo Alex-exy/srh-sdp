@@ -126,8 +126,8 @@ public class BorrowReturn extends JFrame {
                     JOptionPane.showMessageDialog(null, "Book not found!");
                     return;
                 }
-                Borrow currentBorrow = borrowService.getByBookId(Long.valueOf(enteredBookID)).getData();
-                if (currentBorrow != null && currentBorrow.getBorrowStatus() != 'R') {
+                int bookedCurrentBorrowedCount = borrowService.countBorrowedBookByBookId(Long.valueOf(enteredBookID)).getData();
+                if (bookedCurrentBorrowedCount >= 1) {
                     JOptionPane.showMessageDialog(null, "Book already borrowed!");
                     return;
                 }

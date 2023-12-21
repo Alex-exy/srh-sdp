@@ -37,10 +37,10 @@ public class BorrowsDao {
         }
     }
 
-    public Borrow getByBookId(Long bookId) {
+    public int countBorrowedBookByBookId(Long bookId) {
         try (SqlSession session = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession()) {
             BorrowsMapper mapper = session.getMapper(BorrowsMapper.class);
-            return mapper.getByBookId(bookId);
+            return mapper.countBorrowedBookByBookId(bookId);
         }
     }
 

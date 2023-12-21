@@ -36,9 +36,9 @@ public class BorrowServiceImpl implements BorrowService{
     }
 
     @Override
-    public ApiResponse<Borrow> getByBookId(Long bookId) {
+    public ApiResponse<Integer> countBorrowedBookByBookId(Long bookId) {
         try{
-            Borrow result = borrowsDao.getByBookId(bookId);
+            int result = borrowsDao.countBorrowedBookByBookId(bookId);
             return ApiResponse.success(result);
         }catch (Exception e){
             logger.error("Query Borrow by bookId failed, bookId = " + bookId, e);

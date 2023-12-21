@@ -27,8 +27,8 @@
         (#{userId}, #{bookId}, #{borrowStatus}, #{expectedReturnDate})
     </insert>
 
-    <select id="getByBookId" resultType="de.srh.library.entity.Borrow">
-        select * from borrows where book_id = #{bookId}
+    <select id="countBorrowedBookByBookId" resultType="int">
+        select count(1) from borrows where book_id = #{bookId} and borrow_status != 'R'
     </select>
 
     <select id="userBorrowCount" resultType="int">

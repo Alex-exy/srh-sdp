@@ -15,8 +15,6 @@ public interface BorrowsMapper {
     int insertBorrow(Borrow borrow);
     int userBorrowCount(long userId);
 
-    Borrow getByBookId(Long bookId);
-
     void updateBorrowStatus(@Param("borrowId") Long borrowId, @Param("borrowStatus")char borrowStatus);
 
     void updateExtensionsAndExpectedReturnDate(@Param("borrowId") Long borrowId,
@@ -28,4 +26,6 @@ public interface BorrowsMapper {
     List<Long> findDelayedUserIds();
 
     List<Borrow> findOverdueBooksByUserId(Long userId);
+
+    int countBorrowedBookByBookId(Long bookId);
 }
